@@ -1,0 +1,123 @@
+### SSH
+
+ssh [user@host]                           # ssh поключение
+scp [file.txt] [user@host:/path/file.txt] # Залить файл на удалённый сервер
+
+### Archives
+
+tar cf [file.tar] [file] # Заархивировать файл в tar
+tar xf [file.tar]        # Разархивировать файл
+
+### Process
+
+ps                   # Показать активные процессы
+pstree               # Показать активные процессы в виде дерева
+top                  # Показать активные процессы в виде таблицы (%CPU, % MEM, TIME)
+kill [process_id]    # Убить процесс по id
+pkill [process_name] # Убить процесс по имени
+lsof                 # Список файлов, открытых процессами
+
+### Disk commads
+
+df -h                             # Информация о свободном месте на жёстком диске
+fdisk -l                          # Информация о разделах диска
+du -ah                            # Показать все файлы на жёстком диске с размерами файлов и путями
+findmnt                           # Показать в виде дерева все подмонтированные дирректории
+mount [device_path] [mount_point] # Подмонтировать устройство
+
+### Users
+
+groupadd [group_name]      # Создать новую группу пользователей
+adduser [user]             # Создать нового пользователя в системе
+passwd [user]              # Задать пароль
+usermod -aG [wheel] [user] # Пользователям, принадлежащим к группе wheel, разрешается использовать команду sudo
+last                       # Информация о последних сессиях с указанием времени и пользователе
+who                        # Подключенные пользователи
+userdel [user]             # Удалить пользователя
+usermod                    # Используется для изменения свойств пользователя
+
+### Search
+
+grep [pattern] [file_name]              # Поиск по паттерну в файле
+grep -r [pattern] [dir_name]            # Поиск по паттерну в файлах папки
+find [/folder/location] -name [pattern] # Поиск файлов по паттерну
+find [/folder/location] -size [10M]     # Поиск файлов по размеру
+
+### File Permission
+
+chmod 777 [file_name]            # Дать все права всем пользователям на файл
+chmod 755 [file_name]            # Все права владельцу файла, остальным - чтение и запуск
+chmod 766 [file_name]            # Все права владельцу файла, остальным - чтение и запись
+chown [user] [file_name]         # Изменить владельца файла
+chown [user]:[group] [file_name] # Изменить владельца и группу для файла
+
+### System information
+
+uname -r    # Краткая информация о системе
+uname -a    # Расширенная информация о системе
+uptime      # Время работы системы
+hostname    # Имя хоста
+hostname -i # Текущий ip адрес
+last reboot # История перезагрузок устройства
+date        # Текущая дата и время
+cal         # Календарь
+w           # Подключенные пользователи
+whoami      # Текущий пользователь
+
+### Network
+
+ip addr show        # Таблица ip адресов всех интерфейсов
+ip address add [ip] # Добавить ip адрес к интерфейсу eth0
+ifconfig            # Таблица ip адресов всех интерфейсов
+netstat -pnltu      # Показать активные открытые порты
+whois [domain]      # Информация о домене
+host [domain]       # ip адрес домена
+wget [file]         # Скачать файл
+
+### Hardware information
+
+dmesg             # Отображает сообщения, пришедшие при загрузке системы
+cat /proc/cpuinfo # Информация о процессоре
+free -h           # Информация об используемой оперативной памяти
+lshw              # Полная информация о всех подключенных устройствах
+lspci -tv         # Информация о PCI устройствах в виде дерева
+lsusb -tv         # Информация о usb устройствах в виде дерева
+dmidecode         # Информация о BIOS
+
+### Install
+
+apt install [package_name] # Установка пакета через apt
+yum install [package_name] # Установка пакета через yum
+dnf install [package_name] # Установка пакета через dnf
+rpm -i [package_name]      # Установка пакета через rpm
+
+tar zxvf [source_code.tar.gz] #
+cd [source_code]              # Установка
+./configure                   # из
+make                          # исходников
+make install                  #
+
+### Files
+
+ls -lart                               # Показать файлы (включая скрытые) в виде списка с правами, датой создания
+mkdir [dir_name]                       # Создать папку
+rm [file_name]                         # Удалить файл
+rm -r [dir_name]                       # Удалить папку
+rm -rf [dir_name]                      # Удалить папку без запросов на подтверждение
+cp [file_name1] [file_name2]           # Скопировать файл
+cp -r [dir_name1] [dir_name2]          # Скопировать папку
+mv [file_name1] [file_name2]           # Переименовать файл
+ln -s [/path/to/file_name] [link_name] # Создать символическую ссылку
+touch [file_name]                      # Создать файл
+more [file_name]                       # Показать текст файла
+head [file_name]                       # Показать первые 10 строк в файле
+tail [file_name]                       # Показать последние 10 строк в файле 
+wc [file_name]                         # Показать число слов, количество строк и байт в файле
+
+### Locales
+
+localectl list-locales               # Показать список доступных локалей в системе
+localectl                            # Отобразить активную locale
+dnf install glibc-langpack-ru        # Устанавливаем русскую локаль
+localectl set-locale LANG=ru_RU.utf8 # Установка по умолчанию русской локали
+

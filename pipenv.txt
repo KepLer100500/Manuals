@@ -1,0 +1,5 @@
+sudo pip install pipenv
+mkdir test_proj && cd test_proj
+sudo pipenv install django gunicorn psycopg2-binary
+sudo pipenv shell
+exit

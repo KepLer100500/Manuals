@@ -1,0 +1,51 @@
+### Установка в Ubuntu
+
+cat /etc/os-release                                                                  # Информация о дистрибутиве
+sudo apt update                                                                      # Обновить списка репозиториев
+sudo apt install apt-transport-https ca-certificates curl software-properties-common # Установка доп модулей
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -         # Добавить ключ GPG официального репозитория Docker
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" # Добавить репозиторий Docker в apt
+sudo apt update            # Обновить списка репозиториев
+apt-cache policy docker-ce # Убедиться, что устанавливаем докер из репозитория докера, а не из другого
+sudo apt install docker-ce # Установить докер
+
+### Установка в Raspbian
+
+curl -fsSL https://get.docker.com -o get-docker.sh # Скачать установочный скрипт
+sudo sh get-docker.sh                              # Установить
+
+### Установка в CentOS
+
+sudo yum check-update                   # Проверка на доступные обновления
+curl -fsSL https://get.docker.com/ | sh # Скачать установочный sh скрипт и запустить его
+
+### Команды Docker
+
+sudo systemctl start docker   # Старт службы
+sudo systemctl enable docker  # Добавить службу в автозагрузку
+sudo systemctl status docker  # Статус службы
+sudo usermod -aG docker $USER # Добавить текущего пользователя в группу docker (чтобы не писать sudo)
+
+docker -v                         # Версия Docker
+docker info                       # Информация об установленных образах и системе в целом
+docker search hello-world         # Поиск на DockerHub образа "hello-world"
+docker pull hello-world           # Скачать образ с DockerHub
+docker run hello-world            # Запустить образ "hello-world" (или скачать его)
+docker images                     # Просмотр загруженных на компьютер образов
+docker ps                         # Список сейчас запущенных контейнеров
+docker ps -a                      # Общий список контейнеров
+docker ps -aq                     # Общий список контейнеров (только их id)
+docker stop 8802a79d0ec2          # Остановить контейнер по id из docker ps
+docker rm 8802a79d0ec2            # Удалить контейнер по id из docker ps
+docker rmi nginx:latest           # Удалить образ по имени
+docker rm -f $(docker ps -aq)     # Удалить все контейнеры
+docker rmi -f $(docker images -q) # Удалить все образы
+
+docker run -it --entrypoint bash nginx # Запустить контейнер с заменой точки входа на bash
+docker exec -it 8802a79d0ec2 /bin/bash # Запустить интерактивно /bin/bash в контейнере 8802a79d0ec2
+docker run -it -p 8888:80 nginx        # Запустить контейнер в интерактивном режиме и перенаправить порт 80 -> 8888
+docker run -d -p 8888:80 nginx         # Запустить контейнер в режиме демона с перенаправлением портов
+docker run --mount 'type=bind,source=/home/kepler,target=/tmp/volume' -it --entrypoint bash nginx # Запуск контейнера в интерактивном режиме с заменой точки входа и монтированием /home/kepler (основная система) в /tmp/volume (контейнер)
+
+docker commit 8802a79d0ec2 newimage:latest # Создать Image с именем newimage_v2:latest из контейнера 8802a79d0ec2
+docker build -t myimage:latest .           # Создать Image с именем myimage:latest из локального Dockerfile

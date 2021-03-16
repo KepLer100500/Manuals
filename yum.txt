@@ -1,0 +1,16 @@
+### Менеджер пакетов yum
+
+yum install git           # Установка пакета
+yum remove git            # Удаление пакета
+yum reinstall git         # Переустановка пакета
+yum search mutt           # Поиск по пакетам
+yum list mysql*           # Проверить, установлен ли пакет
+yum check-update          # Проверка наличия доступных обновлений
+yum update                # Обновление всех установленных пакетов
+yum info git              # Получение информации о пакете
+yum deplist git           # Получение списка зависимостей пакета
+yum update git            # Обновление конкретного пакета
+yum downgrade git         # Откат пакета к предыдущей версии
+yum list available | less # Список всех доступных пакетов
+yum list installed | less # Спискок всех установленных пакетов
+

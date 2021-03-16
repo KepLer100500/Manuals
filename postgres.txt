@@ -1,0 +1,57 @@
+### Установка и настройка Postgres12 в CentOS8
+
+dnf module list postgresql           # Список доступных потоков для модуля postgresql
+sudo dnf module enable postgresql:12 # Активировать поток модуля для Postgres версии 12
+sudo dnf install postgresql-server   # Установка PostgreSQL 12 и всех зависимостей
+sudo postgresql-setup --initdb       # Создать новый кластер баз данных
+sudo systemctl start postgresql      # Запустить службу PostgreSQL
+systemctl status postgresql          # Статус службы PostgreSQL
+sudo systemctl enable postgresql     # Активировать запуск службы при загрузке сервера
+
+sudo -i -u postgres                  # Переключиться на учетную запись postgres
+cd /var/lib/pgsql/data               # Конфиги postgre тут
+vi pg_hba.conf                       # Конфигурация соединений 
+                                     # host    all             kepler          all                     trust
+vi postgresql.conf                   # Конфигурация сервера
+                                     # listen_addresses = '*'
+                                     # port = 5432
+                                     # max_connections = 1000
+exit                                 # Выйти из сеанса postgres
+
+sudo firewall-cmd --permanent --add-service=postgres # Добавить службу http и открыть для TCP-трафика порт 5432
+sudo firewall-cmd --reload                           # Обновить конфигурацию брандмауера
+
+sudo -u postgres psql                     # Вход в консоль Postgres без промежуточной командной строки bash
+sudo -u postgres createuser --interactive # Создать новую роль для пользователя (kepler)
+sudo -u postgres createdb test_db         # Создать базу данных "test_db"
+psql -d test_db                           # Войти в базу данных "test_db"
+
+### Команды psql
+
+psql                   # Командная строка Postgres
+\q                     # Выйти из командной строки Postgres
+\conninfo              # Данные о текущем подключении
+create database test2; # Создать базу данных test2
+\c test2               # Подключиться к БД test2
+\l                     # Cписок баз данных
+\dt                    # Cписок всех таблиц
+\d test_table          # Cтруктура таблицы test_table
+\du                    # Cписок всех пользователей и их привилегий
+\dt+                   # Cписок всех таблиц с описанием
+\dt *s*                # Cписок всех таблиц, содержащих s в имени
+\i FILE                # Выполнить команды из файла FILE
+\o FILE                # Cохранить результат запроса в файл FILE
+
+### pgAdmin 4
+
+sudo mkdir /var/lib/pgadmin       # Создать папку с настройками pgadmin
+sudo mkdir /var/log/pgadmin       # Создать папку с логами pgadmin
+sudo chown $USER /var/lib/pgadmin # Дать права пользователю на папку
+sudo chown $USER /var/log/pgadmin # Дать права пользователю на папку
+mkdir pgadmin && cd pgadmin       # Создать и перейти в папку pgadmin
+virtualenv venv                   # Создать виртуальное окружение
+source venv/bin/activate          # Активировать виртуальное окружение
+pip install pgadmin4              # Установить pgadmin4
+pgadmin4                          # Будет предложено ввести почту и пароль,
+                                  # далее pgadmin будет доступен http://127.0.0.1:5050
+

@@ -1,0 +1,19 @@
+pip3 freeze > requirements.txt # Сохранить список пакетов в файл
+
+'''
+beautifulsoup4==4.9.1
+lxml==4.5.2
+openpyxl==3.0.4
+requests==2.24.0
+selenium==3.141.0
+'''
+
+pip3 download -r requirements.txt --dest dist --only-binary :all:                     # Выкачать пакеты из файла requirements.txt 
+                                                                                      # в папку dist
+pip3 install -r requirements.txt --no-index -f dist                                   # Оффлайн установка пакетов из файла 
+                                                                                      # requirements.txt и из папки dist
+pip3 download auto-py-to-exe --python-version 38 --platform win32 --only-binary :all: # Скачать пакет 'auto-py-to-exe' и все 
+                                                                                      # зависимые пакеты в текущую дирректорию, 
+                                                                                      # для версии 3.8 и для платформы win32
+pip3 install --no-index --find-links=. auto_py_to_exe-2.7.11-py2.py3-none-any.whl     # Установить из текущей дирректории пакет 
+                                                                                      # auto_py_to_exe со всеми зависимостями

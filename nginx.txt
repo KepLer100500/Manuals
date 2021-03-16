@@ -1,0 +1,182 @@
+### Команды nginx
+
+service nginx status  # Статус сервера
+service nginx start   # Запуск сервера
+service nginx stop    # Остановка сервера
+service nginx reload  # Мягкая перезагрузка службы
+service nginx restart # Выключение и включение службы
+
+nginx -t          # Тест конфига
+nginx -V          # Версия nginx
+curl -I 127.0.0.1 # Запрос хедеров
+
+### Установка
+
+apt install nginx           # Установка в Ubuntu
+yum install epel-release    # Установка репозитория для centOS
+yum install nginx           # Установка в centOS
+systemctl start nginx       # Старт службы
+systemctl status nginx      # Статус службы
+sudo systemctl enable nginx # Добавить службу в автозагрузку
+
+### Установка из исходников
+
+cat /etc/lsb-release                                                  # Версия дистрибутива (Linux Mint 20.1 Ulyssa)
+apt install build-essential                                           # Установить инструменты для компиляции
+wget https://nginx.org/download/nginx-1.19.6.tar.gz                   # Скачать последнюю версию
+tar -zxvf nginx-1.19.6.tar.gz                                         # Разархивировать в текущую папку
+apt install libpcre3 libpcre3-dev libssl-dev zlib1g-dev libpcrecpp0v5 # Доустановка необходимых пакетов для сборки nginx
+
+./configure --sbin-path=/usr/bin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --with-pcre --with-http_ssl_module
+
+--sbin-path=/usr/bin/nginx                # Указание пути хранения исполняемых файлов
+--conf-path=/etc/nginx/nginx.conf         # Указание пути хранения конфигов nginx
+--error-log-path=/var/log/nginx/error.log # Указание пути хранения логов ошибок
+--http-log-path=/var/log/nginx/access.log # Указание пути хранения Ошибок доступа
+--with-pcre                               # Возможность использования регулярных выражений
+--with-http_ssl_module                    # Сборка с компонентом ssl
+
+sudo make         # Сброка
+sudo make install # Установка
+sudo nginx        # Старт сервера на localhost:80
+
+### Создание сервиса (service)
+
+cd /etc/init.d/                                                                          # Управления службами
+sudo wget https://raw.githubusercontent.com/JasonGiedymin/nginx-init-ubuntu/master/nginx # Скачиваем init файл в /etc/init.d/
+sudo chmod +x nginx                                                                      # Права на запуск
+sudo update-rc.d nginx defaults                                                          # Обновляем конфигурацию rc.d
+
+cd /etc/default/nginx # Дефолтные конфиги тут
+sudo vi nginx         # Создать конфиг
+
+Содержимое /etc/default/nginx:
+NGINX_CONF_FILE=/etc/nginx/nginx.conf
+DAEMON=/usr/bin/nginx
+
+### Конфигурация nginx -> /etc/nginx/nginx.conf
+
+user www-data;         # Задаёт пользователя и группу, с правами которого будут работать рабочие процессы
+worker_processes auto; # Задаёт число рабочих процессов
+pid /run/nginx.pid;    # Задаёт файл, в котором будет храниться номер (PID) главного процесса
+
+# include /etc/nginx/modules-enabled/*.conf; # Подключение всех доступных модулей
+
+events {
+	worker_connections 1024; # Задаёт максимальное число соединений, 
+                                 # которые одновременно может открыть рабочий процесс
+	multi_accept on;         # Если multi_accept выключен, рабочий процесс за один раз будет принимать 
+                                 # только одно новое соединение. В противном случае рабочий процесс 
+                                 # за один раз будет принимать сразу все новые соединения
+}
+
+http {
+	include /etc/nginx/mime.types; # Обозначение форматов получаемых клиентом документов
+	charset utf-8;                 # Кодировка по умолчанию - utf-8
+
+	# Настройки сжатия gzip
+	gzip on;                    # Разрешает или запрещает сжатие ответа методом gzip
+	gzip_min_length 100;        # Устанавливает минимальную длину ответа, который будет сжиматься методом gzip (В байтах)
+	gzip_comp_level 3;          # Устанавливает степень сжатия ответа методом gzip
+	gzip_types text/plain;      # Разрешает сжатие ответа методом gzip для указанных MIME-типов (текст)
+	gzip_types text/css;        # Разрешает сжатие ответа методом gzip для указанных MIME-типов (css)
+	gzip_types text/javascript; # Разрешает сжатие ответа методом gzip для указанных MIME-типов (js)
+	gzip_disable 'msie6';       # Запрещает сжатие ответа методом gzip для запросов с полями заголовка "User-Agent", 
+	                            # совпадающими с заданными регулярными выражениями
+
+	# Настройки FastCGI
+	fastcgi_cache_path /tmp/nginx_cache levels=1:2 keys_zone=microcache:10m max_size=500m; # Параметры кэша (путь, уровни, имя:размер, размер)
+	fastcgi_cache_key '$scheme$request_method$host$request_uri';                           # Задаёт ключ для кэширования
+	add_header microcache-status $upstream_cache_status;                                   # Добавить в заголовки статус кэша FastCGI
+
+	# Настройки кэширования
+	open_file_cache max=1000 inactive=20s; # Задаёт кэш (максимальное число элементов в кэше + время, после которого элемент кэша удаляется)
+	open_file_cache_valid 30s;             # Определяет время, через которое следует проверять актуальность информации об элементе
+	open_file_cache_min_uses 2;            # Задаёт минимальное число обращений к файлу
+	open_file_cache_errors on;             # Разрешает или запрещает кэширование ошибок поиска файлов
+	
+	# Настройки буфера
+	client_body_buffer_size 16k;      # Задаёт размер буфера для чтения тела запроса клиента
+	client_header_buffer_size 1k;     # Задаёт размер буфера для чтения заголовка запроса клиента
+	client_max_body_size 8m;          # Задаёт максимально допустимый размер тела запроса клиента, указываемый в поле "Content-Length" заголовка запроса
+	large_client_header_buffers 2 1k; # Задаёт максимальное число и размер буферов для чтения большого заголовка запроса клиента
+	
+	# Настройки таймаутов
+	client_body_timeout 12;   # Задаёт таймаут при чтении тела запроса клиента
+	client_header_timeout 12; # Задаёт таймаут при чтении заголовка запроса клиента
+	keepalive_timeout 300;    # Таймаут, в течение которого keep-alive соединение с клиентом не будет закрыто со стороны сервера (милесекунды)
+	send_timeout 10;          # Задаёт таймаут при передаче ответа клиенту (секунды)
+
+	server {
+		listen 80;                                      # Задаёт адрес и порт
+		server_name localhost;                          # Задаёт имена виртуального сервера
+		access_log /var/log/nginx/localhost.access.log; # Задаёт путь и файл для записи логов доступа
+		error_log /var/log/nginx/localhost.error.log;   # Задаёт путь и файл для записи логов ошибок
+		root   /home/pi/vklove_template;                # Задаёт корневой каталог для запросов
+		index  index.html index.htm;                    # Определяет файлы, которые будут использоваться в качестве индекса
+
+		### Настройка байпаса кэша
+		set $no_cache 0;                                      # Устанавливает значение переменной $no_cache в 0
+		if ($request_method = POST) { set $no_cache 1; }      # Если запрос типа POST -> $no_cache 1
+		if ($query_string != '') { set $no_cache 1; }         # Если есть аргументы в запросе -> $no_cache 1
+		if ($request_uri ~* '/wp-admin') { set $no_cache 1; } # Если запрашивается каталог /wp-admin -> $no_cache 1
+
+		location = /test2 {                        # Чувствительно к регистру (Приоритет 1)
+			                                   # Точное совпадение uri с test2
+			return 200 'User went only test2'; # Вернуть код 200 и текст
+		}
+
+		location ^~ /test777 {                                  # Чувствительно к регистру (Приоритет 2)
+			                                                # Совпадение включая регулярное выражение + повышенный приоритет
+			return 200 'User went test777 with preference'; # Вернуть код 200 и текст
+		}
+
+		location ~ /test[3-9] {                                     # Чувствительно к регистру (Приоритет 3)
+			                                                    # Совпадение включая регулярное выражение
+			return 200 'User went test3-test9, case sensitive'; # Вернуть код 200 и текст
+		}
+
+		location ~* /test[3-9] {                                      # Не чувствительно к регистру (Приоритет 3)
+			                                                      # Совпадение включая регулярное выражение
+			return 200 'User went test3-test9, case insensitive'; # Вернуть код 200 и текст
+		}
+
+		location /test1 {                     # Чувствительно к регистру (Приоритет 4)
+			                              # -> localhost/test1, 
+			                              # -> localhost/test11111
+			                              # -> localhost/test1/trampampam
+			return 200 'User went test1'; # Вернуть код 200 и текст
+		}
+
+		location /home_test {
+			rewrite ^ /index.html;         # Перенаправление с /home_test на /index.html
+		}
+
+		location ^~ /download { 
+			root /home/pi/sites_test_data; # Переопределяем корневой каталог
+			try_files $uri =404;           # Пробуем забрать файлы по адресу uri или вернём 404
+		}
+
+		location ~* ^.+.(js|css|png|jpg|jpeg|gif|ico|woff|woff2|swf|ttf|svg)$ {     # Фильтр по картинкам и шрифтам
+			access_log off;                                                     # Отключить логирование доступа
+			expires 30d;                                                        # Максимальный срок хранения кэше - 30 дней
+			add_header Pragma public;                                           # Заголовок для кэша
+			add_header Cache-Control public;                                    # Заголовок для кэша
+			add_header Vary Accept-Encoding;                                    # Заголовок для кэша
+		}
+
+		location ~* /(images|cache|media|logs|tmp)/.*.(php|pl|py|jsp|asp|sh|cgi)$ {     # Запретить исполнение скриптов в перечисленных директориях
+			return 404;                                                             # Вернуть код 404
+		}
+
+		location ~ /.git {     # Если запрашивется дирректория .gif (Закрыть доступ к .git)
+			return 404;    # Вернуть код 404
+		}
+
+		location ~ /amp/$ {                       # При переходе на URL заканчивающийся на amp
+			rewrite ^(.*/)amp/$ $1 permanent; # Если указанное регулярное выражение соответствует URI запроса, URI изменяется в соответствии со строкой замены
+			                                  # permanent - возвращает постоянное перенаправление с кодом 301
+			                                  # редирект на url, отрезая с конца /amp/
+		}
+	}
+}

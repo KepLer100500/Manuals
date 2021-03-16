@@ -1,0 +1,4 @@
+virtualenv venv          # создать виртуальное окружение в папке с проектом
+source venv/bin/activate # активировать виртуальное окружение (Linux)
+venv\Scripts\activate    # активировать виртуальное окружение (Windows)
+deactivate               # деактивировать виртуальное окружение

@@ -1,0 +1,28 @@
+### Установка firewalld
+
+sudo systemctl stop iptables   # Перед установкой остановить iptables
+sudo systemctl status iptables # Проверить, что служба остановилась
+
+sudo dnf install firewalld -y                 # Установка через dnf
+sudo yum install firewalld firewall-config -y # Установка через yum
+sudo apt-get remove ufw                       # Если под ubuntu, сначала удалить ufw
+sudo apt-get install firewall-applet          # Установка через apt
+systemctl start firewalld                     # Запуск службы фаервола
+systemctl status firewalld                    # Статус службы фаервола
+
+### Команды firewalld
+
+sudo firewall-cmd --get-zones                                 # Отобразить активные зоны фаервола
+sudo firewall-cmd --get-default-zone                          # Показать зону по умолчанию
+sudo firewall-cmd --set-default-zone=public                   # Установить активную зону по умолчанию
+sudo firewall-cmd --permanent --zone=public --add-port=80/tcp # Добавить 80 tcp порт в public зону (permanent)
+sudo firewall-cmd --zone=public --list-ports                  # Отобразить открытые порты в public зоне
+sudo firewall-cmd --zone=public --list-all                    # Отобразить всё что открыто в public зоне
+sudo firewall-cmd --zone=public --remove-port=80/tcp          # Удалить 80 tcp порт из public зоны
+
+firewall-cmd --get-services                           # Отобразить службы, которые можно активировать в фаерволе
+firewall-cmd --permanent --list-all                   # Отобразить службы, которые разрешены фаерволом
+sudo firewall-cmd --zone=public --add-service=http    # Добавить службу http и открыть для TCP-трафика порт 80
+sudo firewall-cmd --zone=public --remove-service=http # Удалить службу http
+sudo firewall-cmd --reload                            # Обновить конфигурацию брандмауера
+
