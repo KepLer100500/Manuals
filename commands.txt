@@ -1,12 +1,29 @@
 ### SSH
 
-ssh [user@host]                           # ssh поключение
-scp [file.txt] [user@host:/path/file.txt] # Залить файл на удалённый сервер
+ssh [user@host]                                        # ssh поключение
+scp [file.txt] [user@host:/path/file.txt]              # Залить файл на удалённый сервер
+scp -r [user@host:/home/dir/] [/home/local/my/]        # Скачать папку с удалённого сервера на локальный
+scp -r [user@host1:/home/dir/] [user@host2:/home/dir/] # Перекачка папки с одного сервера на другой
 
 ### Archives
 
-tar cf [file.tar] [file] # Заархивировать файл в tar
-tar xf [file.tar]        # Разархивировать файл
+tar -cvf [file.tar] [file]          # Заархивировать файл в tar
+tar -zcvf [files.tar.gz] [~/files]  # Заархивировать папку в gzip
+tar -jcvf [files.tar.bz2] [~/files] # Заархивировать папку в bzip2
+
+tar -xvf [file.tar]                 # Распаковать файл tar
+tar -zxvf [files.tar.gz]            # Распаковать файл gzip
+tar -jxvf [files.tar.bz2]           # Распаковать файл bzip2
+
+zip [-e mypass] [-r] [-9] [file.zip] [/home/user/*] [/home/folder1/*] [-x "/home/user/folder2/*"]
+    # -r - архивировать рекурсивно
+    # -9 - степень сжатия от 1 до 9. 0 - «архивирование» совсем без сжатия.
+    # file.zip - имя архива
+    # /home/user/* /home/folder1/* - архивируемые директории через пробел. * - все файлы
+    # -x "/home/user/folder2/" - опция, позволяющая исключить указанную папку или файл из архива
+    # -e mypass - задать пароль на архив
+
+unzip [file.zip] # Распаковка архива
 
 ### Process
 
