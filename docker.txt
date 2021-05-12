@@ -41,11 +41,32 @@ docker rmi nginx:latest           # Удалить образ по имени
 docker rm -f $(docker ps -aq)     # Удалить все контейнеры
 docker rmi -f $(docker images -q) # Удалить все образы
 
+### Ключи docker run
+--detach, -d      # позволяет запускать контейнер в фоне и не выводить на экран содержимое потоков ввода-вывода
+--entrypoint      # устанавливает или переопределяет используемую по умолчанию команду (и параметры) из docker-образа
+--env, -e         # устанавливает переменные окружения КЛЮЧ=ЗНАЧЕНИЕ. Если есть список переменных окружения в файле, тогда использовать --env-file
+--ip              # назначает docker-контейнеру IP-адрес, например, --ip=192.168.0.50
+--name            # назначает docker-контейнеру имя (--name my-super-container)
+--publish, -p     # сопоставляет порт(ы) docker-контейнера порту(ам) на хост системе
+--publish-all, P  # откроет доступ к портам, описанным в Dockerfile с помощью директивы EXPOSE
+--rm              # автоматически удалить контейнер после завершения его работы (в том числе, при завершении с ошибкой)
+--tty, -t         # назначает псевдо-TTY, подключенный к STDIN контейнера
+--interactive, -i # если нужно подключиться к оболочке (bash) внутри docker-контейнера для выполнения каких-то действий
+--volume, -v      # монтирование тома
+--workdir, -w     # устанавливает рабочую директорию внутри docker-контейнера
+
+docker run -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust -d --name postgres -v $(pwd):/workspace postgres
+# Запустить postgres на порту 5432 с переменной окружения POSTGRES_HOST_AUTH_METHOD=trust в виде службы с подмонтированной дирректорией /workspace
+
+docker run --rm -e POSTGRES_HOST_AUTH_METHOD=trust --name psql --link postgres:postgres -v $(pwd):/workspace postgres psql -h postgres -U postgres -f /workspace/task2-public.sql
+# Удаляет после выполнения контейнер psql, связанный с postgres и выполняющий скрипт task2-public.sql
+
 docker run -it --entrypoint bash nginx # Запустить контейнер с заменой точки входа на bash
 docker exec -it 8802a79d0ec2 /bin/bash # Запустить интерактивно /bin/bash в контейнере 8802a79d0ec2
 docker run -it -p 8888:80 nginx        # Запустить контейнер в интерактивном режиме и перенаправить порт 80 -> 8888
 docker run -d -p 8888:80 nginx         # Запустить контейнер в режиме демона с перенаправлением портов
-docker run --mount 'type=bind,source=/home/kepler,target=/tmp/volume' -it --entrypoint bash nginx # Запуск контейнера в интерактивном режиме с заменой точки входа и монтированием /home/kepler (основная система) в /tmp/volume (контейнер)
+docker run --mount 'type=bind,source=/home/kepler,target=/tmp/volume' -it --entrypoint bash nginx 
+# Запуск контейнера в интерактивном режиме с заменой точки входа и монтированием /home/kepler (основная система) в /tmp/volume (контейнер)
 
 docker commit 8802a79d0ec2 newimage:latest # Создать Image с именем newimage_v2:latest из контейнера 8802a79d0ec2
 docker build -t myimage:latest .           # Создать Image с именем myimage:latest из локального Dockerfile
