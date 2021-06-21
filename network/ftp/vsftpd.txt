@@ -1,0 +1,28 @@
+yum check-update   # проверка наличия доступных обновлений
+yum update         # обновление всех установленных пакетов
+yum install vsftpd # устанавливаем vsftpd
+
+vi /etc/vsftpd/vsftpd.conf # редактируем конфиг
+
+useradd -s /sbin/nologin ftp-user # создадим ftp пользователя без доступа к ОС
+passwd ftp-user                   # создадим пароль для ftp пользователя
+
+vi /etc/pam.d/vsftpd # надо заккоментировать строку (#auth required pam_shells.so)
+
+mkdir /etc/vsftpd/users                                        # создаём дирректорию с конфигами пользователей
+touch /etc/vsftpd/users/ftp-user                               # создаём конфиг для нового ftp пользователя
+echo 'local_root=/ftp/ftp-user/' >> /etc/vsftpd/users/ftp-user # указываем ftp пользователю его домашний каталог
+mkdir /ftp && chmod 0777 /ftp                                  # даём права на домашний каталог пользователя
+mkdir /ftp/ftp-user && chown ftp-user. /ftp/ftp-user/          # делаем владельцем этой дирректории ftp пользователя
+
+touch /etc/vsftpd/chroot_list          # создаём список пользователей, котоым можно выходить из домашней дирриктории
+echo 'root' >> /etc/vsftpd/chroot_list # добавляем в этот список root'a 
+
+touch /etc/vsftpd/user_list                                                      # создаём спискок пользователей, которым разрешён ftp (или чистим руками от лишних пользователей)
+echo 'root' >> /etc/vsftpd/user_list && echo 'ftp-user' >> /etc/vsftpd/user_list # добавляем в этот список root'a и нашего пользователя
+
+touch /var/log/vsftpd.log && chmod 600 /var/log/vsftpd.log # создаём файл логов и даём права на чтение и запись
+
+systemctl enable vsftpd # добавить службу в автозагрузку
+!!! проверь owner'a файла vsftpd.conf и кодировку файла, в vsftpd.conf -> tcp_wrappers в ContOS8 - выключить !!!
+systemctl start vsftpd  # запустить ftp демона 
