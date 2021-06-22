@@ -1,0 +1,36 @@
+systemd (проверял на CentOS)
+Unit # модули, которыми оперирует systemd
+.service # службы
+.mount   # точки монтирования
+.device  # устройства
+.socket  # сокеты
+
+/usr/lib/systemd # дирректория с юнитами по умолчанию (в папке system - для системы, в папке user - для пользователя)
+/etc/systemd     # дирректория с управляющими юнитами
+
+systemctl list-units # показать список всех загруженных юнитов
+systemctl --failed   # список загруженных юнитов с ошибкой
+systemctl list-units --type=service # показать юниты отвечающие за службы
+systemctl status crond.service # статус службы cron (stop / start / reload / restart)
+
+boot targets (загрузочные таргеты)
+poweroff.target   # выключение
+rescue.target     # однопользовательский режим
+multy-user.target # настраиваемый режим
+multy-user.target # многопользовательский режим
+graphical.target  # графика
+reboot.target     # перезагрузка
+
+systemctl list-units --type=target     # посмотреть запущенные таргеты
+systemctl isolate [name].target        # переключиться на другой таргет
+systemctl set-default -f [name].target # установить по умолчанию
+
+systemctl reboot | poweroff | suspend | hibernate | hubrid-sleep # службы управления питанием
+
+journalctl -f # показывает сообщения юнитов из журнала по мере их возникновения
+journalctl -n 10 # вывести последние 10 сообщений юнитов из журнала
+journalctl _UID=0 # вывести сообщения юнитов из журнала для конкретного пользователя (id=0)
+
+
+
+
