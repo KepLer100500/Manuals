@@ -1,0 +1,11 @@
+### STP
+show spanning-tree # проверка ролей интерфейса для коммутатора
+	This bridge is the root - означает, что выбранный коммутатор корневой
+	role: Root - корневой порт, Altn - назначенный порт, Desg - порт передачи данных
+	Sts: FWD - порт для передачи данных, BLK - заблокированный порт
+
+interface fastEthernet 0/2    # выбираем свободный поднятый интерфейс
+shutdown                      # обрываем его
+no shutdown                   # поднять интерфейс
+
+spanning-tree mode rapid-pvst # включить RSTP (быстрое резервирование)

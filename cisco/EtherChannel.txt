@@ -1,0 +1,29 @@
+### EtherChannel (агрегация канала)
+
+## статическое агрегирование
+en
+conf t
+interface range fa0/1-2 # редактировать сразу 2 интерфейса
+channel-group 1 mode on # создать логический интерфейс, который обьединяет 2 физических
+end
+wr mem
+
+## динамическое агрегирование (LACP)
+# на центральном комутаторе
+en
+conf t
+interface range fa0/1-2
+channel-protocol lacp       # выбираем протокол агрегации канала LACP
+channel-group 1 mode active # обьединяем порты в группу
+exit
+
+# на комутаторе пользователей
+en
+conf t
+interface range fa0/1-2
+channel-protocol lacp       
+channel-group 1 mode passive # потому что выбрали active на центральном коммутаторе
+exit
+
+show etherchannel summary      # статус etherchannel портов
+show etherchannel port-channel # статус etherchannel портов

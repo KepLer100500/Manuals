@@ -1,0 +1,16 @@
+### VLAN
+conf t          # режим конфигурирования
+vlan 2          # создать vlan 2
+name buhgaltery # задать имя для vlan
+exit
+interface fastEthernet 0/1 # int fa0/2 # конфигурировать порт fastEthernet 0/1
+switchport mode access     # указываем, что порт fa0/1 (fastEthernet 0/1) работает в режиме access
+switchport access vlan 2   # привязываем порт fa0/1 к vlan 2
+
+show vlan         # показать информацию о vlan
+show vlan brief   # показать информацию о vlan (компактно)
+mac address-table # показать таблицу mac адресов
+
+interface gigabitEthernet 0/1     # конфигурировать порт gigabitEthernet 0/1
+switchport mode trunk             # указать, что порт для соединения с другим коммутатором
+switchport trunk allowed vlan 2,3 # указать, какие vlan'ы будут передаваться по этому порту
