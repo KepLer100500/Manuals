@@ -1,0 +1,4 @@
+# Let's Encrypt
+sudo yum install certbot                               # установка ACME-клиента (для управления ssl сертификатами)
+sudo certbot --nginx --register-unsafely-without-email # (после вводим имя домена)
+/etc/letsencrypt/live/[имя домена]                     # тут хранятся сертификаты
