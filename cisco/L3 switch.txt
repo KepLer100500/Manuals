@@ -1,0 +1,99 @@
+### L3 коммутатор
+## 3 компьютера (2.2.2.2, 3.3.3.3, 4.4.4.4) подключим к комутатору L3
+en
+conf t
+vlan 2     # создать vlan 2
+name VLAN2 # задать vlan 2 имя VLAN2
+exit
+vlan 3
+name VLAN3
+exit
+vlan 4
+name VLAN4
+exit
+int fa0/1
+switchport mode access   # указываем, что интерфейс fa0/1 работает в режиме access
+switchport access vlan 2 # привязываем интерфейс fa0/1 к vlan 2
+exit
+int fa0/2
+switchport mode access
+switchport access vlan 3
+exit
+int fa0/3
+switchport mode access
+switchport access vlan 4
+exit
+int vlan 2                       # начинаем конфигурирование vlan 2
+ip address 2.2.2.1 255.255.255.0 # задать ip адрес для vlan 2
+exit
+int vlan 3
+ip address 3.3.3.1 255.255.255.0
+exit
+int vlan 4
+ip address 4.4.4.1 255.255.255.0
+exit
+ip routing                       # разрешить маршрутизацию трафика
+
+## (2 комп -> L2) -> L3 + (2 комп -> L2) -> L3
+## (2.2.2.2 + 3.3.3.2) + (2.2.2.3 + 3.3.3.3)
+L2(1) -> en
+L2(1) -> conf t
+L2(1) -> int fa0/1
+L2(1) -> switchport mode access
+L2(1) -> switchport access vlan 2          # создать и привязать vlan 2 к fa0/1
+L2(1) -> exit
+L2(1) -> int fa0/2
+L2(1) -> switchport mode access
+L2(1) -> switchport access vlan 3
+L2(1) -> exit
+L2(1) -> int gi0/1
+L2(1) -> switchport mode trunk             # определяем гигабитный интерфейс, как trunk порт
+L2(1) -> switchport trunk allowed vlan 2,3 # закидываем в него vlan 2 и 3
+L2(1) -> end
+L2(1) -> wr mem
+
+L2(2) -> en
+L2(2) -> conf t
+L2(2) -> int fa0/1
+L2(2) -> switchport mode access
+L2(2) -> switchport access vlan 2
+L2(2) -> exit
+L2(2) -> int fa0/2
+L2(2) -> switchport mode access
+L2(2) -> switchport access vlan 3
+L2(2) -> exit
+L2(2) -> int gi0/1
+L2(2) -> switchport mode trunk
+L2(2) -> switchport trunk allowed vlan 2,3 # закидываем в него vlan 2 и 3
+L2(2) -> end
+L2(2) -> wr mem
+
+L3 -> en
+L3 -> conf t
+L3 -> int gi0/1
+L3 -> switchport mode trunk                # определяем интерфейс gi0/1, как trunk порт
+L3 -> switchport trunk encapsulation dot1q # указываем инкапсуляцию dot1q
+L3 -> switchport mode trunk
+L3 -> switchport trunk allowed vlan 2,3
+L3 -> exit
+L3 -> int gi0/2
+L3 -> switchport mode trunk
+L3 -> switchport trunk encapsulation dot1q
+L3 -> switchport mode trunk
+L3 -> switchport trunk allowed vlan 2,3
+L3 -> exit
+L3 -> vlan 2
+L3 -> name VLAN2
+L3 -> exit
+L3 -> vlan 3
+L3 -> name VLAN3
+L3 -> exit
+L3 -> int vlan 2
+L3 -> ip address 2.2.2.1 255.255.255.0
+L3 -> exit
+L3 -> int vlan 3
+L3 -> ip address 3.3.3.1 255.255.255.0
+L3 -> exit
+L3 -> ip routing
+L3 -> end
+L3 -> wr mem
