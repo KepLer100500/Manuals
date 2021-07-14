@@ -1,0 +1,54 @@
+### Маршрутизатор
+# 3 компа на разных vlan -> L2 -> Router
+# 192.168.2.2, 192.168.3.2, 192.168.4.2
+
+L2 -> en
+L2 -> conf t
+L2 -> vlan 2
+L2 -> name VLAN2
+L2 -> exit
+L2 -> vlan 3
+L2 -> name VLAN3
+L2 -> exit
+L2 -> vlan 4
+L2 -> name VLAN4
+L2 -> exit
+L2 -> int fa0/1
+L2 -> switchport mode access
+L2 -> switchport access vlan 2
+L2 -> exit
+L2 -> int fa0/2
+L2 -> switchport mode access
+L2 -> switchport access vlan 3
+L2 -> exit
+L2 -> int fa0/3
+L2 -> switchport mode access
+L2 -> switchport access vlan 4
+L2 -> exit
+L2 -> int fa0/4
+L2 -> switchport mode trunk
+L2 -> switchport trunk allowed vlan 2,3,4
+L2 -> end
+L2 -> wr mem
+
+R -> en
+R -> conf t
+R -> int fa0/0
+R -> no shutdown
+R -> exit
+R -> int fa0/0.2           # конфигурирование саб-интерфейса
+R -> encapsulation dot1Q 2 # указываем инкапсуляцию
+R -> ip address 192.168.2.1 255.255.255.0
+R -> no shutdown
+R -> exit
+R -> int fa0/0.3
+R -> encapsulation dot1Q 3
+R -> ip address 192.168.3.1 255.255.255.0
+R -> no shutdown
+R -> exit
+R -> int fa0/0.4
+R -> encapsulation dot1Q 4
+R -> ip address 192.168.4.1 255.255.255.0
+R -> no shutdown
+R -> end
+R -> wr mem
