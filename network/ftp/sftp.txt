@@ -1,0 +1,50 @@
+sudo apt install openssh-server # установка ssh сервера
+sudo apt install ssh            # установка ssh клиента
+
+sudo groupadd sftpg                                     # создать группу sftpg
+sudo useradd -g sftpg keplersftp                        # созадть пользователя и добавить его в группу sftpg
+sudo passwd keplersftp                                  # задать пароль новому пользователю
+sudo mkdir -p /data/keplersftp/upload                   # создать цепочку папок
+sudo chown -R root:sftpg /data/keplersftp               # дать рекурсивно пользователю root и группе sftpg права на дирректорию
+sudo chown -R keplersftp:sftpg /data/keplersftp/upload/ # дать права пользователю keplersftp и группе sftpg права на дирректорию
+
+Добавить в /etc/ssh/sshd_config
+
+Match Group sftpg
+	ChrootDirectory /data/%u
+	ForceCommand internal-sftp
+
+# разрешить только группу sftpg
+# разрешить доступ только к /data/%u (%u - текущий юзер)
+# использовать встроенный sftp-сервер
+
+sudo systemctl restart sshd # перезагрузить службу sshd
+
+# Команды sftp
+
+bye                         # Выйти из sftp
+exit                        # Выйти из sftp
+quit                        # Выйти из sftp
+cd [path]                   # Изменит удаленный каталог к path.
+lcd [path]                  # Изменит локальный каталог к path.
+pwd                         # Показать имя удаленного рабочего каталога.
+lpwd                        # Сообщить имя локального рабочего каталога.
+ls [-1afhlnrSt] [path]      # Отображает либо содержимое каталога path на удаленной машине, либо текущего каталога, если путь не указан.
+lls [-1afhlnrSt] [path]     # Отображает либо содержимое локального каталога path, либо текущего каталога, если path не указан.
+mkdir [path]                # Создать удаленный каталог заданный в path.
+lmkdir [path]               # Создать локальный каталог указанный в path.
+rename [oldpath] [newpath]  # Переименовать удаленный файл из oldpath в newpath.
+rmdir [path]                # Переместить удаленный каталог указанный в path.
+rm [path]                   # Удалить удаленный файл указанный в пути.
+ln [oldpath] [newpath]      # Создать символическую ссылку от oldpath к newpath.
+chgrp [grp] [path]          # Изменяет идентификатор группы файла path в значение grp. grp должен быть цифровым GID.
+chmod [mode] [path]         # Изменяет права доступа файла path в mode.
+chown [owner] [path]        # Изменяет владельца группы файла path в значение own. own должен быть цифровым UID.
+symlink [oldpath] [newpath] # Создать символическую ссылку из oldpath к newpath.
+progress                    # Отобразить индикатор прогресса.
+version                     # Показать версию sftp-протокола.
+! command                   # Выполнить команду в локальной оболочке.
+!                           # Выйти в локальную оболочку.
+
+get [-afPpRr] [remote_path] [local_path] # Получает [remote_path] и сохраняет его на локальной машине. Если имя локального пути не указано, то ему назначается имя, аналогичное имени на удаленной машине. Если указан флаг -P, то будут скопированы полные права доступа и время доступа к файлу.
+put [-afPpRr] [local-path] [remote-path] # Переносит [local-path] и сохраняет его на удаленной машине. Если имя пути на удаленной машине не указано, то будет назначено тоже-самое имя, как на локальной машине. Если указан флаг -P, то будут скопированы полные права доступа и время доступа к файлу.
