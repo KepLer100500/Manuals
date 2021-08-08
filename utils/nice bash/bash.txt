@@ -1,0 +1,12 @@
+apt install figlet
+
+Скопировать в ~ файл .bashrc
+
+Очистить motd (message of the day)
+
+# Для raspbian
+echo "" > /etc/motd
+
+# Для ubuntu
+sudo echo "" > /etc/update-motd.d/00-header
+sudo echo "" > /etc/update-motd.d/10-help-text
