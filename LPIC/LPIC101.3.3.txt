@@ -1,0 +1,12 @@
+upstart (задумывалась для Ubuntu)
+
+Service, Task # то чем оперирует upstart (служба аварийно перезапускается, а задача - нет)
+/etc/init     # каталог файлов-заданий (jobs)
+initctl       # утилита управления upstart
+
+cat /etc/init/rc-sysinit.conf # тут можно поменять runlevel по умолчанию
+
+status ufw           # статус службы ufw (также можно дать start или stop)
+
+initctl show-config  # показывает задачи для выполнения
+initctl check-config # проверяет конфигурацию джобов
