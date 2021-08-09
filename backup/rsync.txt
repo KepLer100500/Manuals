@@ -1,0 +1,32 @@
+### На Product сервере
+
+sudo apt install rsync
+sudo vi /etc/ssh/sshd_config # Раскомментировать строки
+	PubkeyAuthentication yes
+	AuthorizedKeysFile      .ssh/authorized_keys .ssh/authorized_keys2
+
+sudo systemctl restart sshd  # Рестарт службы ssh
+sudo adduser ssh_backup      # создать пользователя для входа по ssh
+
+### На Backup сервере
+
+sudo apt install rsync
+sudo pip3 install rdiff-backup
+cd ~/.ssh
+ssh-keygen                                                       # Генерация ssh ключа, задаём имя для ключа, пароль оставляем пустым
+ssh-copy-id -i ~/.ssh/backup_ubuntu.pub ssh_backup@192.168.1.253 # Установим на прод сгенерированный ssh ключ. Указываем публичный ключ, ssh пользователя на проде и ip адрес прода
+ssh -i ~/.ssh/backup_ubuntu ssh_backup@192.168.1.253             # Теперь можно ходить на прод без запроса пароля
+mkdir log home incremental                                       # Создать папки для логов, самого backup 1 к 1 (home в данном случае) и для инкрементного архива backup'ов
+
+rsync --delete -e "ssh -i ~/.ssh/backup_ubuntu" -zauP ssh_backup@192.168.1.253:/home/kepler ~/backup_ubuntu/home # Если файлы были удалены на проде, то и на backup сервере их не будет (--delete)
+
+rdiff-backup -v5 --print-statistics ~/backup_ubuntu/home/ ~/backup_ubuntu/incremental/                           # Архивирование созданного backup, указаываем источник и путь, куда складывать архивы
+
+sudo cronetab -e
+	0	2	*	*	*	rsync --delete -e "ssh -i ~/.ssh/backup_ubuntu" -zauP ssh_backup@192.168.1.253:/home/kepler ~/backup_ubuntu/home > ~/backup_ubuntu/log/rsync_log_$(date +\%Y-\%m-\%d).txt 2> ~/backup_ubuntu/log/rsync_error_$(date +\%Y-\%m-\%d).txt
+	0	3	*	*	*	rdiff-backup --remove-older-than 4W ~/backup_ubuntu/incremental
+	0	4	*	*	*	rdiff-backup -v5 --print-statistics ~/backup_ubuntu/home/ ~/backup_ubuntu/incremental/ > ~/backup_ubuntu/log/rdiff_backup_log_$(date +\%Y-\%m-\%d).txt 2> ~/backup_ubuntu/log/rdiff_backup_error_$(date +\%Y-\%m-\%d).txt
+
+	1) Зеркальное копирование данных с прода
+	2) Удаление старых архивов 4W - 4 недели
+	3) Архивирование текущей копии
