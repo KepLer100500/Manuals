@@ -1,0 +1,75 @@
+### DHCP
+# 1 роутер -> 1 коммутатор -> 3 компьютера
+
+R -> en
+R -> conf t
+R -> int fa0/0
+R -> no shutdown
+R -> ip address 192.168.1.1 255.255.255.0   # указываем ip адрес для интерфейса
+R -> exit
+R -> ip dhcp pool DHCP                      # создаём пул адресов и называем его DHCP
+R -> network 192.168.1.0 255.255.255.0      # указываем для какой сети будет работать созданный пул
+R -> default-router 192.168.1.1             # узкаываем маршрут по умолчанию (адрес самого маршрутизатора)
+R -> dns-server 8.8.8.8                     # укажем DNS сервер гугла
+R -> exit
+R -> ip dhcp excluded-address 192.168.1.100 # исключить адрес из выдачи по DHCP (для серверов с прописанным вручную ip)
+R -> ip dhcp excluded-address 192.168.1.1   # исключить из выдачи адрес самого роутера
+R -> exit
+R -> wr mem
+R -> show ip dhcp binding                   # показать список dhcp клиентов
+
+# 1 роутер -> 1 коммутатор -> 2 VLAN по 2 компьютера + 1 DHCP сервер
+
+L2 -> en
+L2 -> conf t
+L2 -> vlan 2
+L2 -> name VLAN2
+L2 -> exit
+L2 -> vlan 3
+L2 -> name VLAN3
+L2 -> exit
+L2 -> vlan 4
+L2 -> name DHCP
+L2 -> exit
+L2 -> int range fa0/1-2        # настроим сразу два порта под VLAN2
+L2 -> switchport mode access
+L2 -> switchport access vlan 2
+L2 -> exit
+L2 -> int range fa0/3-4
+L2 -> switchport mode access
+L2 -> switchport access vlan 3
+L2 -> exit
+L2 -> int fa0/5                # настроим порт под DHCP сервер
+L2 -> switchport mode access
+L2 -> switchport access vlan 4
+L2 -> exit
+L2 -> int gi0/1                # прокинем наши vlan'ы до маршрутизатора
+L2 -> switchport mode trunk
+L2 -> switchport trunk allowed vlan 2,3,4
+L2 -> exit
+L2 -> end
+L2 -> wr mem
+
+R -> en
+R -> conf t
+R -> int gi0/0
+R -> no shutdown
+R -> exit
+R -> int gi0/0.2                          # создаём саб-интерфейс для vlan 2
+R -> encapsulation dot1Q 2
+R -> ip address 192.168.2.1 255.255.255.0
+R -> ip helper-address 192.168.4.2        # перенаправлять все приходящие широковещательные запросы dhcp на DHCP сервер 192.168.4.2
+R -> no shutdown
+R -> exit
+R -> int gi0/0.3                          # создаём саб-интерфейс для vlan 3
+R -> encapsulation dot1Q 3
+R -> ip address 192.168.3.1 255.255.255.0
+R -> ip helper-address 192.168.4.2
+R -> no shutdown
+R -> exit
+R -> int gi0/0.4                          # создаём саб-интерфейс для vlan 4
+R -> encapsulation dot1Q 4
+R -> ip address 192.168.4.1 255.255.255.0
+R -> ip helper-address 192.168.4.2
+R -> no shutdown
+R -> exit
