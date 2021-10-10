@@ -1,0 +1,10 @@
+cd ~/.ssh                                      # перейти в каталог с ssh ключами
+ssh-keygen -t rsa -b 4096 -C "email@email.com" # сгенерировать ключ для почты email@email.com (два раза подтвердить ничего не вводя)
+cat id_rsa.pub                                 # открыть файл id_rsa.pub и скопировать в буфер обмена его содержимое (длинный файл, начинается на ssh-rsa)
+
+Открыть страницу ssh настроек github (Аватарка, верхний правый угол -> Settings -> SSH and GPG keys -> New SSH key)
+Запонить Title (Home, к примеру)
+В поле Key вставить из буфера обмена содержимое файла id_rsa.pub (обязательно после ключа вставить пустую строку)
+
+git remote remove origin                                   # удалить старую привязку к удалённому репозиторию
+git remote add origin git@github.com:UserName/RepoName.git # добавть привязку к удалённому репозиторию
