@@ -1,0 +1,19 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
+
+<h1>{{ question.text }}</h1>
+
+{% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+<form action="{% url 'mainapp:vote' question.id %}" method="post">
+{% csrf_token %}
+{% for choise in question.choise_set.all %}
+    <input type="radio" name="choise" id="choise{{ forloop.counter0 }}" value="{{ choise.id }}">
+    <label for="choise{{ forloop.counter0 }}">{{ choise.text }} (choise{{ forloop.counter0 }} | {{ choise.id }})</label>
+    <br><br>
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
+<a href="{% url 'mainapp:index' %}">На главную</a>

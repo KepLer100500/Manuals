@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container pt-5" id="app" v-cloak>
+        <div class="card">
+            <h1 :style="{
+                color: '#' + inputValue.length * 11 + '0000',
+                fontSize: 2 + inputValue.length * 0.1 + 'rem'
+            }">
+                {{ title }}
+            </h1>
+            <div class="form-control">
+                <input type="text" :placeholder="placeholderString"
+                                   v-model="inputValue"
+                                   @keypress.enter="addNote">
+            </div>
+            <button class="btn" @click="addNote">Добавить</button>
+            <hr>
+            {{ toUpper(inputValue) }}
+            <hr>
+            <ul class="list" v-if="notes.length !== 0">
+                <li class="list-item" v-for="(note, idx) in notes">
+                    <span :class="note.length > 5 ? 'primary' : 'bold'">№{{ idx + 1 }}: {{ note }}</span>
+                    <span :class="{
+                        'primary': true,
+                        'bold': note.length > 5
+                    }">№{{ idx + 1 }}: {{ note }}</span>
+                    <span :class="['bold', {'primary': note.length > 5}]">№{{ idx + 1 }}: {{ note }}</span>
+                    <button class="btn danger" @click="removeNote(idx)">Удалить</button>
+                </li>
+            </ul>
+            <div v-else>Заметок нет. Введите первую.</div>
+            <hr>
+            Количество заметок: {{ notes.length }} | Удвоенное количество заметок: {{ doubleCount }}
+
+        </div>
+    </div>
+
+    <script src="js/vue3.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>

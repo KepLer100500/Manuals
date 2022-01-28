@@ -1,0 +1,15 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
+
+<h1>{{ question.text }}</h1>
+<ul>
+{% for choise in question.choise_set.all %}
+    <li>
+        {{ choise.text }} - {{ choise.votes }} Голос{{ choise.votes|pluralize:'ов' }}
+    </li>
+{% endfor %}
+
+</ul>
+<a href="{% url 'mainapp:detail' question.id %}">Проголосовать ещё?</a>
+<br><br>
+<a href="{% url 'mainapp:index' %}">На главную</a>

@@ -1,0 +1,6 @@
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.url=jdbc:postgresql://ec2-54-220-243-77.eu-west-1.compute.amazonaws.com:5432/d9f4ipean4e070
+spring.datasource.username=sgrahzpbusdbuy
+spring.datasource.password=fe2fd4c97b75504208520ec07254bb05d71e152e4bc7e17160cf0e41b46304a2
+spring.datasource.driver-class-name=org.postgresql.Driver
+#spring.jpa.show-sql: true

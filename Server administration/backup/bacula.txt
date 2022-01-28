@@ -1,0 +1,174 @@
+sudo apt install bacula-sd bacula-director bacula-console
+sudo apt install bacula-director-pgsql # Установить для работы с Postgres
+
+### alternatives --config libbaccats.so ### Для CentOS
+
+sudo vim /etc/postgresql/12/main/pg_hba.conf   # Установить разрешение для пользователя postgres
+	local   all             postgres                                md5
+sudo systemctl restart postgresql              # Перезапуск службы
+
+cd /usr/share/bacula-director                  # Скрипты для БД могут лежать или в /usr/libexec/bacula или в /etc/bacula/script, поискать их через find / -name bacula
+sudo vim create_postgresql_database            # Задать имя для БД
+	db_name=bacula
+sudo ./create_postgresql_database -U postgres  # Создать БД (по факту выполнится postgres=# create database bacula;)
+sudo vim make_postgresql_tables                # Задать имя для БД
+	db_name=bacula
+sudo ./make_postgresql_tables -U postgres      # Создать таблицы для bacula
+sudo vim grant_postgresql_privileges           # Задать пользователя, БД и пароль для пользователя
+	db_user=bacula
+	db_name=bacula
+	db_password=bacula
+sudo ./grant_postgresql_privileges -U postgres # Задать права пользователю на БД bacula (по факту выполнится postgres=# create user bacula with encrypted password 'bacula'; и grant all privileges on database bacula to bacula;)
+
+/etc/bacula/ # Папка с конфигами bacula
+
+### Написал скрипт меняющий все пароли в конфигах на "bacula", не забыть дать chmod +x
+#!/bin/bash
+
+new_password="bacula"
+
+for i in bacula-dir.conf bacula-sd.conf bacula-fd.conf bconsole.conf
+        do
+                echo "Passwords in file $i:"
+                grep -Po '(?<=Password = ").*(?=")' $i
+                echo "Will be replaced by -> $new_password"
+                sed -i "s/Password = .*/Password = \"$new_password\"/g" $i
+        done
+###
+
+mkdir /backup # Создать дирректорию, где будет храниться бекап
+sudo chown -R bacula:bacula /backup # Дать права пользователю bacula на дирректорию
+
+/etc/bacula/bacula-sd.conf # Конфигурация storage демона, надо добивать в конец следующее:
+
+Device {
+  Name = KepLerBackupDev
+  Media Type = File
+  Archive Device = /backup
+  LabelMedia = yes;
+  Random Access = Yes;
+  AutomaticMount = yes;
+  RemovableMedia = no;
+  AlwaysOpen = no;
+  Maximum Concurrent Jobs = 20
+}
+
+Autochanger {
+  Name = KepLerChgr
+  Device = KepLerBackupDev
+  Changer Command = ""
+  Changer Device = /dev/null
+}
+
+/etc/bacula/bacula-dir.conf # Настройка директора bacula
+
+# В блоке Catalog изменить: dbname, dbuser и dbpassword
+# Теперь настроим расписание бекапов и работу с конкретным стореджем, надо добавить
+# Конфигурируем конкретную джобу и исключаем дирректории, которые не должны попасть в бекап
+
+Catalog {
+  Name = KepLerCatalog
+  dbname = "bacula"; dbuser = "bacula"; dbpassword = "bacula"
+}
+
+Schedule {
+  Name = KepLerSchedule
+  Run = Level=Full sun at 2:05
+  Run = Level=Incremental mon-sat at 2:05
+}
+
+Storage {
+  Name = KepLerStorage
+# Do not use "localhost" here
+  Address = 127.0.0.1
+  SDPort = 9103
+  Password = "bacula"
+  Device = KepLerChgr
+  Media Type = File
+  Maximum Concurrent Jobs = 20
+}
+
+Job {
+  Name = "KepLer_localhost"
+  JobDefs = "DefaultJob"
+  Client = "KepLerClient"
+  FileSet = "KepLerFileSet"
+  Schedule = "KepLerSchedule"
+# Maximum Bandwidth = 70mb/s
+  SpoolData = yes
+  Spool Size = 20G
+  Maximum Concurrent Jobs = 20
+}
+
+FileSet {
+  Name = KepLerFileSet
+  Include {
+    Options {
+	  wilddir = "lost+found"
+	  regexfile = "\\.core$"
+	  signature = MD5
+	  recurse = yes
+	  onefs = no
+	  Compression = gzip
+	}
+	# common
+	File = /
+  }
+  Exclude {
+    # Указать WorkingDirectory для bacula (может быть /var/lib/bacula), см в начале этого файла
+    File = /var/spool/bacula
+	File = /var/lib/bacula
+	File = /tmp
+	File = /proc
+	File = /sys
+	File = /.journal
+	File = /.fsck
+	# Exclude dir, where backup!!! 
+	File = /backup
+  }
+}
+
+Client {
+  Name = "KepLerClient"
+  Address = "localhost"
+  FDPort = 9102
+  Catalog = KepLerCatalog
+  Password = "bacula"
+  File Retention = 7 days
+  Job Retention = 7 days
+  AutoPrune = yes
+  Maximum Concurrent Jobs = 20
+}
+
+### Важный момент!!! Media Type - должен быть одинаковый для bacula-sd.conf и для bacula-dir.conf
+# Запустим демонов и проверим работу
+
+sudo service bacula-fd start
+sudo service bacula-sd start
+sudo service bacula-dir start
+sudo bconsole # Подключиться к директору. Внимательно читай!!! То что тут написано, может не совпасть с тем, что будет в bconsole!!!
+	add
+	2   (File)
+	1   (File1 -> Storage name из bacula-dir.conf)
+	2   (Создать 2 тома)
+	Vol (Имя)
+	1   (Starting number)
+
+Ctrl+D                # Выйти из bconsole	
+
+sudo service bacula-sd restart
+sudo service bacula-fd restart
+sudo service bacula-dir restart
+
+# Ещё команды bconsole
+list volumes          # покажет потом список созданных дисковых пространств)
+delete volume=Vol0001 # Удалить выбранное пространство 
+status dir            # Показать запланированные и текущие задания
+status storage=File1  # Показать статус хранилища бекапов
+run localhost         # Запустить полный бекап (localhost - имя задания из bacula-dir.conf)
+cancel jobid=number   # Отменить запущенное задание по id из status dir
+
+
+
+
+

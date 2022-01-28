@@ -1,0 +1,115 @@
+##### Bacula
+### ----- Создание backup -----
+В наличии 3 сервера:
+1) Astralinux (192.168.1.50) - для функционирования Director Daemon главного сервера, осуществляющего резервное копирование
+2) CentOS (192.168.1.134) - для функциониования Storage Daemon - машины, на которой будут размещаться резевные копии данных
+3) Debian (192.168.1.61) - для функционирования File Daemon машины, с которой будут копироваться данные и на которую будут восстанавливаться резервные копии данных
+
+# --- Astralinux --- (Director Daemon)
+sudo apt install postgresql -y # Установка БД postgres
+cd /etc/postgresql/9.6/main    # Конфиги БД
+sudo nano pg_hba.conf          # Изменить метод доступа для локальных подлючений и для удалённых с подсети 192.168.1.x
+local   all             postgres                             trust
+host    bacula          bacula          192.168.1.0/24       md5
+
+sudo systemctl restart postgresql # Перезапуск службы
+psql -U postgres                  # Проверка локальной доступности БД
+
+sudo apt install bacula-director        # Установка bacula-director
+sudo apt install bacula-director-pgsql  # Установка bacula-director компонента для работы с postgres
+!!! alternatives --config libbaccats.so # Для работы с postgres в CentOS!!!
+
+cd /usr/share/bacula-director                  # Скрипты для БД могут лежать или в /usr/libexec/bacula или в /etc/bacula/script, поискать их через find / -name bacula
+
+sudo vim create_postgresql_database            # Задать имя для БД
+	db_name=bacula
+sudo ./create_postgresql_database -U postgres  # Создать БД (по факту выполнится postgres=# create database bacula;)
+
+sudo vim make_postgresql_tables                # Задать имя для БД
+	db_name=bacula
+sudo ./make_postgresql_tables -U postgres      # Создать таблицы для bacula
+
+sudo vim grant_postgresql_privileges           # Задать пользователя, БД и пароль для пользователя
+	db_user=bacula
+	db_name=bacula
+	db_password=bacula
+sudo ./grant_postgresql_privileges -U postgres # Задать права пользователю на БД bacula (по факту выполнится postgres=# create user bacula with encrypted password 'bacula'; и grant all privileges on database bacula to bacula;)
+
+cd /etc/bacula/ # Папка с конфигами bacula
+# Написал скрипт bacula_new_pass.sh, меняющий все пароли в конфиг файлах на "bacula", не забыть дать chmod +x
+
+# Использовать конфиг bacula-dir.conf
+
+export PATH=$PATH:/usr/sbin                       # Добавить в переменную окружения PATH путь /usr/sbin, теперь можно вызвать bacula-dir
+sudo bacula-dir -t -c /etc/bacula/bacula-dir.conf # Проверка корректности конфигурации bacula-dir.conf
+
+sudo systemctl restart bacula-director.service
+sudo systemctl status bacula-director.service
+
+!!! При возникновении ошибки при старте службы "Could not open console message file /var/lib/bacula/bacula-dir.conmsg: ERR=Отказано в доступе"
+Т.к. в bacula-dir.conf у меня WorkingDirectory = "/var/lib/bacula", выставить права на чтение/запись 
+sudo chown -R bacula:bacula /var/lib/bacula/
+sudo chmod 700 /var/lib/bacula/
+!!!
+
+# --- CentOS --- (Storage Daemon)
+
+sudo yum install postgresql -y                  # Установка postgres клиента
+psql -U bacula -h 192.168.1.50 -p 5432          # Проверка доступности БД
+sudo yum install bacula-storage.x86_64 -y       # Установка bacula Storage Daemon
+sudo mkdir /backup_bacula                       # Создать дирректорию, где будет храниться бекап
+sudo chown -R bacula:bacula /backup_bacula/     # Дать права пользователю bacula на дирректорию
+
+# Использовать конфиг bacula-sd.conf
+
+export PATH=$PATH:/usr/sbin                     # Добавить в переменную окружения PATH путь /usr/sbin, теперь можно вызвать bacula-sd
+sudo bacula-sd -t -c /etc/bacula/bacula-sd.conf # Проверка корректности конфигурации bacula-sd.conf
+
+sudo systemctl restart bacula-sd.service
+sudo systemctl status bacula-sd.service
+
+!!! При возникновении ошибки при старте службы "Failed to open Plugin directory /usr/lib64/bacula: ERR=No such file or directory"
+sudo mkdir /usr/lib64/bacula
+!!!
+
+# --- Debian --- (File Daemon)
+
+sudo apt install postgresql-client -y  # Установка postgres клиента
+psql -U bacula -h 192.168.1.50 -p 5432 # Проверка доступности БД
+sudo apt install bacula-fd -y          # Установка bacula File Daemon
+
+# Использовать конфиг bacula-fd.conf
+
+sudo bacula-fd -t -c /etc/bacula/bacula-fd.conf # Проверка корректности конфигурации bacula-fd.conf
+
+sudo systemctl restart bacula-fd.service
+sudo systemctl status bacula-fd.service
+
+# - bconsole - (На сервере с director daemon)
+
+# Использовать конфиг bconsole.conf
+
+export PATH=$PATH:/usr/sbin # Добавить в переменную окружения PATH путь /usr/sbin, теперь можно вызвать bconsole
+sudo bconsole               # Подключиться к директору. Внимательно читай!!! То что тут написано, может не совпасть с тем, что будет в bconsole!!!
+	add
+	2   (File)
+	1   (File1 -> Storage name из bacula-dir.conf)
+	2   (Создать 2 тома)
+	Vol (Имя)
+	1   (Starting number)
+
+Ctrl+D                # Выйти из bconsole	
+
+sudo service bacula-sd restart
+sudo service bacula-fd restart
+sudo service bacula-dir restart
+
+# Ещё команды bconsole
+list volumes          # покажет потом список созданных дисковых пространств)
+delete volume=Vol0001 # Удалить выбранное пространство 
+status dir            # Показать запланированные и текущие задания
+status storage=File1  # Показать статус хранилища бекапов
+run localhost         # Запустить полный бекап (localhost - имя задания из bacula-dir.conf)
+cancel jobid=number   # Отменить запущенное задание по id из status dir
+
+

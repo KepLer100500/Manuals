@@ -1,0 +1,17 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
+
+<h1>{{ title }}</h1>
+
+{% for question in questions %}
+    <a href="{% url 'mainapp:detail' question.id %}">{{ question.text }} ({{ question.pub_date }})</a>
+    <ul>
+        {% for choise in question.choise_set.all %}
+
+                <li>
+                    {{ choise.text }} - {{ choise.votes }}
+                </li>
+
+        {% endfor %}
+    </ul>
+{% endfor %}
