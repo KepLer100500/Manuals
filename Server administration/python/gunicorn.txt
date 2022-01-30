@@ -1,0 +1,87 @@
+/etc/systemd/system/gunicorn.socket
+
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+# Our service won't need permissions for the socket, since it
+# inherits the file descriptor by socket activation
+# only the nginx daemon will need access to the socket
+SocketUser=www-data
+# Optionally restrict the socket permissions even more.
+# SocketMode=600
+
+[Install]
+WantedBy=sockets.target
+
+# -----------------------------------------------------
+
+systemctl enable --now gunicorn.socket
+
+# -----------------------------------------------------
+
+/etc/systemd/system/gunicorn.service
+
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=kepler
+Group=www-data
+WorkingDirectory=/home/kepler/www
+ExecStart=/home/kepler/.local/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          vk_love.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+# -----------------------------------------------------
+
+/etc/nginx/nginx.conf
+
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+        worker_connections 1024;
+        multi_accept on;
+}
+
+http {
+	include /etc/nginx/mime.types;
+	charset utf-8;
+
+	server {
+		listen 88;
+		server_name 194.87.111.12;
+		access_log /var/log/nginx/localhost.access.log;
+		error_log /var/log/nginx/localhost.error.log;
+		root   /home/kepler/camera;
+		index  index.html index.htm;
+	}
+
+	server {
+		listen 80;
+		server_name vk-find-love.ru;
+
+		location = /favicon.ico {
+			access_log off;
+			log_not_found off;
+		}
+
+		location /static/ {
+			root /home/kepler/www/main;
+		}
+
+		location / {
+			include proxy_params;
+			proxy_pass http://unix:/run/gunicorn.sock;
+		}
+	}
+}
