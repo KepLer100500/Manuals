@@ -1,0 +1,5 @@
+wget https://git.io/vpn -O openvpn-install.sh
+chmod +x openvpn-install.sh
+./openvpn-install.sh
+
+scp user@ip:/root/client.ovpn ~/client.ovpn
