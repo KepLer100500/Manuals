@@ -1,0 +1,3 @@
+mvn clean package # собрать jar проект, указать <packaging>jar</packaging> в pom файле после dependencies
+mvn spring-boot:run # запустить проект
+C:\Users\user\Java\maven\bin\mvn spring-boot:run -offline
