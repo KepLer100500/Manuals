@@ -1,3 +1,4 @@
-mvn clean package # собрать jar проект, указать <packaging>jar</packaging> в pom файле после dependencies
-mvn spring-boot:run # запустить проект
-C:\Users\user\Java\maven\bin\mvn spring-boot:run -offline
+mvn clean package   # собрать jar проект, указать <packaging>jar</packaging> в pom файле после dependencies
+mvn spring-boot:run # запустить spring проект
+C:\Users\user\Java\maven\bin\mvn spring-boot:run -offline          # запустить spring проект
+C:\Users\user\Java\maven\bin\mvn exec:java -Dexec.mainClass="Main" # запустить класс Main
