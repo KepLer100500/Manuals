@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="myPet1"
+          class="learn_xml_context.Cat"
+          init-method="init"
+          destroy-method="destroy">
+    </bean>
+
+    <bean id="myPet2"
+          class="learn_xml_context.Dog"
+          scope="singleton"
+          init-method="init"
+          destroy-method="destroy">
+    </bean>
+
+    <bean id="myPet3"
+          class="learn_xml_context.Parrot"
+          scope="prototype"
+          init-method="init"
+          destroy-method="destroy">
+    </bean>
+
+    <bean id="myPersonByConstructor" class="learn_xml_context.Person">
+        <constructor-arg index="0" ref="myPet2"/>
+        <constructor-arg index="1" value="Mini Chuvak"/>
+        <constructor-arg index="2" value="35"/>
+    </bean>
+
+    <bean id="myPersonBySetter" class="learn_xml_context.Person">
+        <property name="pet" ref="myPet1"/>
+        <property name="name" value="Chuvak"/>
+        <property name="age" value="25"/>
+    </bean>
+
+    <context:property-placeholder location="classpath:app.properties"/>
+    <bean id="myPersonBySetterFromFile" class="learn_xml_context.Person">
+        <property name="pet" ref="myPet2"/>
+        <property name="name" value="${person.name}"/>
+        <property name="age" value="${person.age}"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,1 @@
+C:\Users\k.repin\Java\maven\bin\mvn compile exec:java -Dexec.mainClass="learn_annotation_context_without_xml.Main"
