@@ -1,0 +1,13 @@
+2022-05-06 12:14:25,679 DEBUG o.k.Main [org.kepler.Main.main()] 78 === Debug!
+2022-05-06 12:14:25,700 DEBUG o.k.Main [org.kepler.Main.main()] 79 === Debug!
+2022-05-06 12:14:25,701 INFO o.k.Main [org.kepler.Main.main()] 80 === Information!
+2022-05-06 12:14:25,701 DEBUG o.k.Main [org.kepler.Main.main()] 81 === Debug!
+2022-05-06 12:14:25,701 DEBUG o.k.Main [org.kepler.Main.main()] 82 === Debug!
+2022-05-06 12:14:25,701 INFO o.k.Main [org.kepler.Main.main()] 83 === Information!
+2022-05-06 12:14:25,701 INFO o.k.Main [org.kepler.Main.main()] 84 === Information!
+2022-05-06 12:14:25,702 DEBUG o.k.Main [org.kepler.Main.main()] 85 === Debug!
+2022-05-06 12:14:25,702 INFO o.k.Main [org.kepler.Main.main()] 86 === Information!
+2022-05-06 12:14:25,702 TRACE o.k.Main [org.kepler.Main.main()] 87 === Trace!
+2022-05-06 12:14:25,702 WARN o.k.Main [org.kepler.Main.main()] 88 === Warning!
+2022-05-06 12:14:25,702 DEBUG o.k.Main [org.kepler.Main.main()] 89 === Debug!
+2022-05-06 12:14:25,702 INFO o.k.Main [org.kepler.Main.main()] 90 === Information!
