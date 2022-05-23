@@ -1,0 +1,8 @@
+org\kepler\model\Blog.class
+org\kepler\model\Category$CategoryBuilder.class
+org\kepler\model\Post$PostBuilder.class
+org\kepler\model\Post.class
+org\kepler\model\Category.class
+org\kepler\model\Comment.class
+org\kepler\model\Comment$CommentBuilder.class
+org\kepler\App.class
