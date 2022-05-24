@@ -1,0 +1,5 @@
+org\kepler\model\Interest.class
+org\kepler\model\Interest$InterestBuilder.class
+org\kepler\model\Person$PersonBuilder.class
+org\kepler\model\Person.class
+org\kepler\App.class
