@@ -1,0 +1,11 @@
+2022-05-30 16:38:19,690 TRACE o.k.App [org.kepler.App.main()] Before all BuyAdvice. Two parameters.
+2022-05-30 16:38:19,703 TRACE o.k.App [org.kepler.App.main()] Method signature: public abstract void org.kepler.Library.buyBook(org.kepler.Book,int)
+2022-05-30 16:38:19,704 TRACE o.k.App [org.kepler.App.main()] Returning type: void
+2022-05-30 16:38:19,705 TRACE o.k.App [org.kepler.App.main()] Method name: buyBook
+2022-05-30 16:38:19,705 TRACE o.k.App [org.kepler.App.main()] Field name: org.kepler.Book@77669290
+2022-05-30 16:38:19,705 TRACE o.k.App [org.kepler.App.main()] Book name: Java. Manuals
+2022-05-30 16:38:19,705 TRACE o.k.App [org.kepler.App.main()] Create year: 2018
+2022-05-30 16:38:19,706 TRACE o.k.App [org.kepler.App.main()] Cost: 300
+2022-05-30 16:38:19,706 INFO o.k.App [org.kepler.App.main()] buy SchoolLibrary book. Java. Manuals. Cost: 300
+2022-05-30 16:38:19,706 ERROR o.k.App [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-30 16:38:19,707 TRACE o.k.App [org.kepler.App.main()] Before all BuyAdvice. One any parameter.

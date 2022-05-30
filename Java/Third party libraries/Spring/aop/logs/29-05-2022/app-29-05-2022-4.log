@@ -1,0 +1,13 @@
+2022-05-29 21:10:36,367 TRACE o.k.App [main] Book name: Java. Manuals
+2022-05-29 21:10:36,372 TRACE o.k.App [main] Create year: 2018
+2022-05-29 21:10:36,372 TRACE o.k.App [main] Cost: 300
+2022-05-29 21:10:36,372 INFO o.k.App [main] buy SchoolLibrary book. Java. Manuals. Cost: 300
+2022-05-29 21:10:36,372 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:10:36,372 TRACE o.k.App [main] Before all BuyAdvice. One any parameter.
+2022-05-29 21:10:36,372 INFO o.k.App [main] buy SchoolLibrary magazine. Magazine2 from schoolLibrary
+2022-05-29 21:10:36,383 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:11:50,402 INFO o.k.App [main] Run program
+2022-05-29 21:11:50,992 WARN o.k.App [main] Before only UniLibrary GetBookAdvice. Getting book!
+2022-05-29 21:11:50,992 TRACE o.k.App [main] Before all libraries GetBookAdvice. Getting book!
+2022-05-29 21:11:50,992 INFO o.k.App [main] get UniLibrary book.
+2022-05-29 21:11:50,992 ERROR o.k.App [main] After all. Return and Get and Buy!

@@ -1,0 +1,10 @@
+2022-05-27 11:45:53,391 ERROR o.k.a.Logging [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-27 11:45:53,402 TRACE o.k.a.Logging [org.kepler.App.main()] Before all BuyAdvice. One any parameter.
+2022-05-27 11:45:53,405 INFO o.k.UniLibrary [org.kepler.App.main()] buy UniLibrary magazine. Magazine1 from uniLibrary
+2022-05-27 11:45:53,405 ERROR o.k.a.Logging [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-27 11:45:53,406 TRACE o.k.a.Logging [org.kepler.App.main()] Before all libraries GetBookAdvice. Getting book!
+2022-05-27 11:45:53,406 INFO o.k.SchoolLibrary [org.kepler.App.main()] get SchoolLibrary book.
+2022-05-27 11:45:53,406 ERROR o.k.a.Logging [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-27 11:45:53,407 TRACE o.k.a.Logging [org.kepler.App.main()] Before all MagazineAdvice. Void methods!
+2022-05-27 11:45:53,408 INFO o.k.SchoolLibrary [org.kepler.App.main()] get SchoolLibrary magazine.
+2022-05-27 11:45:53,409 ERROR o.k.a.Logging [org.kepler.App.main()] After all. Return and Get and Buy!

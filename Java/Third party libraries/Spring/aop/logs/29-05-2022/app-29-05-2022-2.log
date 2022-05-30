@@ -1,0 +1,14 @@
+2022-05-29 21:10:36,333 TRACE o.k.App [main] Before all BuyAdvice. Two parameters.
+2022-05-29 21:10:36,342 TRACE o.k.App [main] public abstract void org.kepler.Library.buyBook(org.kepler.Book,int)
+2022-05-29 21:10:36,342 TRACE o.k.App [main] void
+2022-05-29 21:10:36,342 TRACE o.k.App [main] buyBook
+2022-05-29 21:10:36,342 TRACE o.k.App [main] Field name: org.kepler.Book@46cf05f7
+2022-05-29 21:10:36,352 TRACE o.k.App [main] Book name: Java. Manuals
+2022-05-29 21:10:36,352 TRACE o.k.App [main] Create year: 2018
+2022-05-29 21:10:36,352 TRACE o.k.App [main] Cost: 500
+2022-05-29 21:10:36,352 INFO o.k.App [main] buy UniLibrary book. Java. Manuals. Cost: 500
+2022-05-29 21:10:36,352 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:10:36,352 TRACE o.k.App [main] Before all BuyAdvice. One any parameter.
+2022-05-29 21:10:36,352 INFO o.k.App [main] buy UniLibrary magazine. Magazine1 from uniLibrary
+2022-05-29 21:10:36,352 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:10:36,352 TRACE o.k.App [main] Before all libraries GetBookAdvice. Getting book!

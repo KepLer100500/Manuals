@@ -1,0 +1,13 @@
+2022-05-29 21:10:23,952 INFO o.k.App [main] buy SchoolLibrary magazine. Magazine2 from schoolLibrary
+2022-05-29 21:10:23,962 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:10:35,723 INFO o.k.App [main] Run program
+2022-05-29 21:10:36,322 WARN o.k.App [main] Before only UniLibrary GetBookAdvice. Getting book!
+2022-05-29 21:10:36,322 TRACE o.k.App [main] Before all libraries GetBookAdvice. Getting book!
+2022-05-29 21:10:36,322 INFO o.k.App [main] get UniLibrary book.
+2022-05-29 21:10:36,322 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:10:36,322 TRACE o.k.App [main] Before all MagazineAdvice. Void methods!
+2022-05-29 21:10:36,322 INFO o.k.App [main] get UniLibrary magazine.
+2022-05-29 21:10:36,322 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:10:36,322 TRACE o.k.App [main] Before all libraries ReturnAllAdvice. Return methods!
+2022-05-29 21:10:36,322 INFO o.k.App [main] return UniLibrary book.
+2022-05-29 21:10:36,333 ERROR o.k.App [main] After all. Return and Get and Buy!

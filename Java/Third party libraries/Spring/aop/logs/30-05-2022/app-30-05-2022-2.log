@@ -1,0 +1,9 @@
+2022-05-30 16:37:53,668 WARN o.k.App [org.kepler.App.main()] afterAddStudentAdvice!!!
+2022-05-30 16:37:53,686 ERROR o.k.App [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-30 16:37:53,687 WARN o.k.App [org.kepler.App.main()] University(students=[Student(nameSurname=!!! KepLer !!!, course=5, avgRate=500.0), Student(nameSurname=Flame, course=3, avgRate=7.3)])
+2022-05-30 16:37:53,688 INFO o.k.App [org.kepler.App.main()] ------------------------------------
+2022-05-30 16:37:53,689 ERROR o.k.App [org.kepler.App.main()] Catching exception in Advice! java.lang.IndexOutOfBoundsException: Index 1000 out of bounds for length 2
+2022-05-30 16:37:53,690 ERROR o.k.App [org.kepler.App.main()] Catching exception in Main class! java.lang.IndexOutOfBoundsException: Index 1000 out of bounds for length 2
+2022-05-30 16:37:53,691 WARN o.k.App [org.kepler.App.main()] Start around advice!
+2022-05-30 16:37:53,691 WARN o.k.App [org.kepler.App.main()] End around advice!
+2022-05-30 16:37:53,691 WARN o.k.App [org.kepler.App.main()] I change this return!!!

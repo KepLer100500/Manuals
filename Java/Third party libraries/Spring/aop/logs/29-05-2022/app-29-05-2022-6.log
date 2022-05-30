@@ -1,0 +1,13 @@
+2022-05-29 21:11:51,023 TRACE o.k.App [main] Cost: 500
+2022-05-29 21:11:51,033 INFO o.k.App [main] buy UniLibrary book. Java. Manuals. Cost: 500
+2022-05-29 21:11:51,033 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:11:51,033 TRACE o.k.App [main] Before all BuyAdvice. One any parameter.
+2022-05-29 21:11:51,033 INFO o.k.App [main] buy UniLibrary magazine. Magazine1 from uniLibrary
+2022-05-29 21:11:51,033 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:11:51,033 TRACE o.k.App [main] Before all libraries GetBookAdvice. Getting book!
+2022-05-29 21:11:51,033 INFO o.k.App [main] get SchoolLibrary book.
+2022-05-29 21:11:51,033 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:11:51,033 TRACE o.k.App [main] Before all MagazineAdvice. Void methods!
+2022-05-29 21:11:51,033 INFO o.k.App [main] get SchoolLibrary magazine.
+2022-05-29 21:11:51,033 ERROR o.k.App [main] After all. Return and Get and Buy!
+2022-05-29 21:11:51,033 TRACE o.k.App [main] Before all libraries ReturnAllAdvice. Return methods!

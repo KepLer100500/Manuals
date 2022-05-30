@@ -1,0 +1,11 @@
+2022-05-30 16:38:19,670 INFO o.k.App [org.kepler.App.main()] buy UniLibrary magazine. Magazine1 from uniLibrary
+2022-05-30 16:38:19,681 ERROR o.k.App [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-30 16:38:19,688 TRACE o.k.App [org.kepler.App.main()] Before all libraries GetBookAdvice. Getting book!
+2022-05-30 16:38:19,688 INFO o.k.App [org.kepler.App.main()] get SchoolLibrary book.
+2022-05-30 16:38:19,688 ERROR o.k.App [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-30 16:38:19,689 TRACE o.k.App [org.kepler.App.main()] Before all MagazineAdvice. Void methods!
+2022-05-30 16:38:19,689 INFO o.k.App [org.kepler.App.main()] get SchoolLibrary magazine.
+2022-05-30 16:38:19,689 ERROR o.k.App [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-30 16:38:19,690 TRACE o.k.App [org.kepler.App.main()] Before all libraries ReturnAllAdvice. Return methods!
+2022-05-30 16:38:19,690 INFO o.k.App [org.kepler.App.main()] return SchoolLibrary book.
+2022-05-30 16:38:19,690 ERROR o.k.App [org.kepler.App.main()] After all. Return and Get and Buy!

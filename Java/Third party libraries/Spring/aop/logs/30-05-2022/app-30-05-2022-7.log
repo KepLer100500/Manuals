@@ -1,0 +1,9 @@
+2022-05-30 16:38:19,707 INFO o.k.App [org.kepler.App.main()] buy SchoolLibrary magazine. Magazine2 from schoolLibrary
+2022-05-30 16:38:19,722 ERROR o.k.App [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-30 16:38:19,728 INFO o.k.App [org.kepler.App.main()] ------------------------------------
+2022-05-30 16:38:19,744 WARN o.k.App [org.kepler.App.main()] University(students=[Student(nameSurname=KepLer, course=5, avgRate=9.5), Student(nameSurname=Flame, course=3, avgRate=7.3)])
+2022-05-30 16:38:19,746 WARN o.k.App [org.kepler.App.main()] afterAddStudentAdvice!!!
+2022-05-30 16:38:19,746 ERROR o.k.App [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-30 16:38:19,746 WARN o.k.App [org.kepler.App.main()] University(students=[Student(nameSurname=!!! KepLer !!!, course=5, avgRate=500.0), Student(nameSurname=Flame, course=3, avgRate=7.3)])
+2022-05-30 16:38:19,747 INFO o.k.App [org.kepler.App.main()] ------------------------------------
+2022-05-30 16:38:19,747 ERROR o.k.App [org.kepler.App.main()] Catching exception in Advice! java.lang.IndexOutOfBoundsException: Index 1000 out of bounds for length 2

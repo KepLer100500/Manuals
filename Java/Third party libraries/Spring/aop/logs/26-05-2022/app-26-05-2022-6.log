@@ -1,0 +1,10 @@
+2022-05-26 15:12:48,344 INFO o.k.SchoolLibrary [org.kepler.App.main()] You return SchoolLibrary book.
+2022-05-26 15:12:48,377 ERROR o.k.a.Logging [org.kepler.App.main()] After all BookAdvice. Return and Get!
+2022-05-26 15:13:40,374 INFO o.k.App [org.kepler.App.main()] Run program
+2022-05-26 15:13:40,879 TRACE o.k.a.Logging [org.kepler.App.main()] Before all libraries GetBookAdvice. Getting book!
+2022-05-26 15:13:40,879 WARN o.k.a.Logging [org.kepler.App.main()] Before only UniLibrary GetBookAdvice. Getting book!
+2022-05-26 15:13:40,880 INFO o.k.UniLibrary [org.kepler.App.main()] You get UniLibrary book.
+2022-05-26 15:13:40,880 ERROR o.k.a.Logging [org.kepler.App.main()] After all BookAdvice. Return and Get!
+2022-05-26 15:13:40,881 TRACE o.k.a.Logging [org.kepler.App.main()] Before all MagazineAdvice. Return and Get!
+2022-05-26 15:13:40,881 INFO o.k.UniLibrary [org.kepler.App.main()] You get UniLibrary magazine.
+2022-05-26 15:13:40,882 TRACE o.k.a.Logging [org.kepler.App.main()] Before all libraries ReturnBookAdvice. Return book!

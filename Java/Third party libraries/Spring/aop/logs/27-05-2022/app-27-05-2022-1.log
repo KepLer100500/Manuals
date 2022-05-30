@@ -1,0 +1,11 @@
+2022-05-27 11:28:51,714 INFO o.k.App [org.kepler.App.main()] Run program
+2022-05-27 11:28:52,263 TRACE o.k.a.Logging [org.kepler.App.main()] Before all BuyAdvice. Two parameters.
+2022-05-27 11:28:52,279 ERROR o.k.a.Logging [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-27 11:28:52,296 INFO o.k.UniLibrary [org.kepler.App.main()] buy UniLibrary book. Book name. Cost: 500
+2022-05-27 11:28:52,297 ERROR o.k.a.Logging [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-27 11:30:57,567 INFO o.k.App [org.kepler.App.main()] Run program
+2022-05-27 11:30:58,083 TRACE o.k.a.Logging [org.kepler.App.main()] Before all BuyAdvice. Two parameters.
+2022-05-27 11:30:58,138 INFO o.k.UniLibrary [org.kepler.App.main()] buy UniLibrary book. Book name. Cost: 500
+2022-05-27 11:30:58,139 ERROR o.k.a.Logging [org.kepler.App.main()] After all. Return and Get and Buy!
+2022-05-27 11:32:28,360 INFO o.k.App [org.kepler.App.main()] Run program
+2022-05-27 11:32:28,907 TRACE o.k.a.Logging [org.kepler.App.main()] Before all BuyAdvice. Two parameters.
