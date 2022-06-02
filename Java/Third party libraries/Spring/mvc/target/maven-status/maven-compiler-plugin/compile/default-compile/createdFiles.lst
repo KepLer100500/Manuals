@@ -1,0 +1,6 @@
+org\kepler\validation\CheckMailValidator.class
+org\kepler\RegistrationController.class
+org\kepler\GreetingsController.class
+org\kepler\validation\CheckMail.class
+org\kepler\App.class
+org\kepler\User.class
