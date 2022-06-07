@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Appenders>
+        <Console name="LogToConsole" target="SYSTEM_OUT">
+            <PatternLayout disableAnsi="false" 
+                        pattern="%highlight{%d{HH:mm:ss.SSS} [%t] %logger{36} - %msg%n}{TRACE=magenta}"/>
+        </Console>
+
+        <RollingFile name="LogToRollingFile" fileName="logs/app.log"
+                    filePattern="logs/$${date:dd-MM-yyyy}/app-%d{dd-MM-yyyy}-%i.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="100 KB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.kepler" level="trace" additivity="false">
+            <AppenderRef ref="LogToConsole"/>
+            <AppenderRef ref="LogToRollingFile"/>
+        </Logger>
+
+        <Root level="error">
+            <AppenderRef ref="LogToConsole"/>
+        </Root>
+    </Loggers>
+</Configuration>
