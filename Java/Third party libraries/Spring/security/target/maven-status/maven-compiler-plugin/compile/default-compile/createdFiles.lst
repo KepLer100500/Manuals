@@ -1,0 +1,5 @@
+org\kepler\configuration\WebConfig.class
+org\kepler\configuration\SecurityConfig.class
+org\kepler\configuration\SecurityInitializer.class
+org\kepler\controller\MainController.class
+org\kepler\configuration\WebInitializer.class
