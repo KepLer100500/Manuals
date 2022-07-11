@@ -1,0 +1,90 @@
+### Установка в Debian
+
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee \
+	/usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+	https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+	/etc/apt/sources.list.d/jenkins.list > /dev/null
+
+sudo apt-get update
+sudo apt-get install fontconfig openjdk-11-jre
+sudo apt-get install jenkins
+
+sudo nano /etc/default/jenkins
+sudo systemctl restart jenkins.service
+--- or ---
+sudo nano /lib/systemd/system/jenkins.service
+sudo systemctl daemon-reload
+sudo systemctl restart jenkins.service
+
+### Настройка заданий
+
+sudo usermod -a -G docker jenkins
+
+### Простая конфигурация на bash
+
+cp docker-tools/Dockerfile_build ./Dockerfile                                  # Get build Dockerfile
+docker build -t builder:0.1 . && docker run -v `pwd`:/home/app/ -t builder:0.1 # Build project with maven
+cp docker-tools/Dockerfile_java Dockerfile                                     # Prepare app Dockerfile to docker-compose
+cp docker-tools/Dockerfile_nginx docker-tools/Dockerfile                       # Prepare nginx Dockerfile to docker-compose
+cp docker-tools/docker-compose.yml docker-compose.yml                          # Get docker-compose configs
+docker-compose up -d                                                           # Build and run app. Nginx Dockerfile in docker-tools folder 
+
+### Pipeline
+
+pipeline {
+    agent any
+
+    stages {
+		stage('CleanWorkspace') {
+            steps {
+                cleanWs()
+            }
+        }
+		stage('Stop runned containers') {
+            steps {
+                script {
+                    def STATUS_WEB_SERVER = sh(script: 'docker ps -q --filter="name=web_server"', returnStdout: true).trim()
+                    def STATUS_WEB_APP = sh(script: 'docker ps -q --filter="name=web_app"', returnStdout: true).trim()
+
+                    if(STATUS_WEB_SERVER != "") {
+                        sh 'docker stop $(docker ps -q --filter="name=web_server")'
+                    }
+                    if(STATUS_WEB_APP != "") {
+                        sh 'docker stop $(docker ps -q --filter="name=web_app")'
+                    }
+                }
+            }
+        }
+        stage('Get project') {
+            steps {
+                sh 'git clone https://github.com/KepLer100500/Phonogram.git'
+            }
+        }
+        stage('Build app') {
+            steps {
+                dir('Phonogram') {
+                    sh 'cp docker-tools/Dockerfile_build Dockerfile'
+                    sh 'docker build -t builder:0.1 . && docker run -v `pwd`:/home/app/ -t builder:0.1'
+                }
+            }
+        }
+        stage('Prepare to start docker containers') {
+            steps {
+                dir('Phonogram') {
+                    sh 'cp docker-tools/Dockerfile_java Dockerfile'
+                    sh 'cp docker-tools/Dockerfile_nginx docker-tools/Dockerfile'
+                    sh 'cp docker-tools/docker-compose.yml docker-compose.yml'
+                }
+            }
+        }
+        stage('Build and run project') {
+            steps {
+                dir('Phonogram') {
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+    }
+}
