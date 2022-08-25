@@ -1,0 +1,12 @@
+package behavioral.templateMethod;
+
+
+public abstract class WebsiteTemplatePage {
+    public void showPage() {
+        System.out.println("Header");
+        showContent();
+        System.out.println("Footer");
+    }
+
+    public abstract void showContent();
+}
