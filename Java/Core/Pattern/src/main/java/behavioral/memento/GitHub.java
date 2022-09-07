@@ -1,4 +1,4 @@
-package behavioral.momento;
+package behavioral.memento;
 
 public class GitHub {
     private Save save;

@@ -1,4 +1,4 @@
-package behavioral.momento;
+package behavioral.memento;
 
 /**
  * Снимок — это поведенческий паттерн проектирования, который позволяет сохранять и восстанавливать
