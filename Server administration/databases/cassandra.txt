@@ -1,0 +1,113 @@
+### Installing in Debian 10
+
+## Prepare step
+
+sudo apt update
+sudo apt install ca-certificates software-properties-common gnupg2 curl -y
+
+## Install Java 8!!! (Java 11 not worked!!!)
+
+wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
+sudo add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+sudo apt update && sudo apt-get install adoptopenjdk-8-hotspot
+
+## Install cassandra
+
+echo "deb https://debian.cassandra.apache.org 41x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
+sudo apt update
+sudo apt install cassandra
+nodetool status                    # cluster status
+
+cqlsh                              # enter cassandra local console without password
+
+! Update default cassandra password !
+cqlsh> ALTER USER cassandra WITH PASSWORD 'NEWPASSWORD';
+cqlsh> exit
+
+cqlsh -u cassandra -p NEWPASSWORD    # console with password
+cqlsh -u cassandra                   # password ask after
+cqlsh 192.168.1.85 9042 -u cassandra # remote connect
+
+## Configure auth
+
+cd /etc/cassandra/
+sudo cp cassandra.yaml cassandra.yaml_orig # backup config
+sudo nano cassandra.yaml
+	authenticator: PasswordAuthenticator
+	authorizer: CassandraAuthorizer
+
+sudo systemctl restart cassandra.service
+
+## Install client into another computer
+
+sudo apt install python3 python3-pip -y
+pip3 install cqlsh
+
+! in my way cqlsh installing into /home/kepler/.local/bin !
+! sudo cp /home/kepler/.local/bin/cqlsh /bin/cqlsh !
+
+cqlsh --version # test
+
+## Configure cassandra
+
+cd /etc/cassandra
+
+sudo cp cassandra-env.sh cassandra-env.sh_orig # backup config
+sudo nano cassandra-env.sh # java heap config
+	MAX_HEAP_SIZE="1G"
+	HEAP_NEWSIZE="200M"
+
+!!! uncomment this: JVM_OPTS="$JVM_OPTS -Djava.rmi.server.hostname=192.168.1.81"
+
+sudo nano cassandra.yaml             # general settings
+	cluster_name: ‘testcluster’  # name cluster
+	rpc_address: 192.168.1.81    # address for clients
+
+! if we have more 1 server !
+		seed_provider:
+		  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+		    parameters:
+		      - seeds: "192.168.1.81:7000"
+
+	sudo cp cassandra-topology.properties cassandra-topology.properties_orig # backup if file exist
+	sudo nano cassandra-topology.properties                                  # define nodes
+		192.168.1.81=DC1:RAC1
+		192.168.1.82=DC1:RAC2
+		192.168.1.83=DC2:RAC1
+		192.168.1.84=DC2:RAC2
+
+# web client
+
+sudo apt install rubygems ruby-dev
+sudo gem install cassandra-web
+cassandra-web --host 192.168.1.81 --username 'username' --password 'password'
+
+# cqlsh>
+
+DESC KEYSPACES;
+CREATE KEYSPACE gazprom WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+USE gazprom;
+CREATE TABLE w101 (id uuid,  dateTime timestamp, fi001 float, PRIMARY KEY (id, datetime));
+DESC TABLES;
+INSERT INTO w101 (id, datetime, fi001) values (uuid(), toTimestamp(now()), 123.45);
+INSERT INTO w101 (id, datetime, fi001) values (uuid(), toTimestamp(now()), 321);
+INSERT INTO w101 (id, datetime, fi001) values (uuid(), toTimestamp(now()), 456.789);
+SELECT * FROM w101;
+SELECT * FROM w101 WHERE fi001 = 321 ALLOW FILTERING;
+SELECT * FROM w101 WHERE fi001 > 150 ALLOW FILTERING;
+DELETE FROM w101 WHERE id = ee0002af-5ea2-4b43-9f2c-7624990a2ba7;
+TRUNCATE w101;
+DROP TABLE w101;
+
+CREATE TABLE AGKM (id uuid PRIMARY KEY, title list<text>);
+INSERT INTO agkm (id, title) VALUES (uuid(), ['gpu', 'gpz']);
+SELECT * FROM agkm;
+
+CREATE TABLE gpz (id uuid PRIMARY KEY , production_number set <int>);
+INSERT INTO gpz (id, production_number) VALUES (uuid(), {1, 2, 3, 5, 6});
+SELECT * FROM gpz;
+
+CREATE TABLE uppg (id uuid PRIMARY KEY , station map <int, text>);
+INSERT INTO uppg (id, station) VALUES (uuid(), {1: 'uppg1', 2: 'uppg2', 3: 'uppg3', 4: 'uppg4', 6: 'uppg6', 9: 'uppg9'});
+SELECT * FROM uppg;
