@@ -1,0 +1,10 @@
+TerminalOperations.class
+FilterAndEnumerationStream$Person.class
+FilterAndEnumerationStream$PersonComparatorByNameLength.class
+FilterAndEnumerationStream.class
+TerminalOperations$Person.class
+TakeSubStreams.class
+CollectTest.class
+CollectTest$Person.class
+CreateStream.class
+OptionalTest.class
