@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login page</title>
+</head>
+<body>
+    <h1>Login page.</h1>
+    <form action="/login" method="post">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username"></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="text" name="password"></td>
+            </tr>
+        </table>
+        <button type="submit">Login</button>
+    </form>
+    
+    <br>Count tries to login: <span th:text="${loginCount}"></span><br>
+
+    <p th:text="${message}"></p>
+</body>
+</html>

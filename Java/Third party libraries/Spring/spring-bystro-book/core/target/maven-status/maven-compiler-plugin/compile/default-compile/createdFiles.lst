@@ -1,0 +1,5 @@
+org\kepler\ConfigAutoScan.class
+org\kepler\model\Parrot.class
+org\kepler\Cat.class
+org\kepler\Config.class
+org\kepler\App.class
