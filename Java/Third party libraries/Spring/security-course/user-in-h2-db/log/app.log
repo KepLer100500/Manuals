@@ -1,0 +1,104 @@
+2023-02-22 20:27:49,095 INFO com.kepler.H2Application [main] Starting H2Application using Java 11.0.18 on DESKTOP-36EOGNU with PID 6928 (C:\Users\admin\Desktop\Spring Security\user-in-h2-db\target\classes started by admin in C:\Users\admin\Desktop\Spring Security\user-in-h2-db)
+2023-02-22 20:27:49,095 DEBUG com.kepler.H2Application [main] Running with Spring Boot v2.6.3, Spring v5.3.15
+2023-02-22 20:27:49,095 INFO com.kepler.H2Application [main] No active profile set, falling back to default profiles: default
+2023-02-22 20:27:49,655 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-22 20:27:49,705 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 37 ms. Found 2 JPA repository interfaces.
+2023-02-22 20:27:50,145 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
+2023-02-22 20:27:50,155 INFO org.apache.coyote.http11.Http11NioProtocol [main] Initializing ProtocolHandler ["http-nio-8081"]
+2023-02-22 20:27:50,155 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2023-02-22 20:27:50,155 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.56]
+2023-02-22 20:27:50,231 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2023-02-22 20:27:50,231 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1101 ms
+2023-02-22 20:27:50,255 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2023-02-22 20:27:50,336 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2023-02-22 20:27:50,336 INFO org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2023-02-22 20:27:50,465 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-22 20:27:50,505 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.4.Final
+2023-02-22 20:27:50,610 INFO org.hibernate.annotations.common.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-02-22 20:27:50,716 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-02-22 20:27:51,115 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-22 20:27:51,115 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-22 20:27:51,385 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-22 20:27:51,570 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@44ae6b66, org.springframework.security.web.context.SecurityContextPersistenceFilter@486dd616, org.springframework.security.web.header.HeaderWriterFilter@1c7744c1, org.springframework.security.web.authentication.logout.LogoutFilter@4a18e0f1, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@39f8adc0, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@1b800a11, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@5b0e5d5f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@36b761e3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@579ce2e9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@58b5d5fc, org.springframework.security.web.session.SessionManagementFilter@24731caf, org.springframework.security.web.access.ExceptionTranslationFilter@78aa1753, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1d67348a]
+2023-02-22 20:27:51,885 INFO org.apache.coyote.http11.Http11NioProtocol [main] Starting ProtocolHandler ["http-nio-8081"]
+2023-02-22 20:27:51,905 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
+2023-02-22 20:27:51,910 INFO com.kepler.H2Application [main] Started H2Application in 3.114 seconds (JVM running for 3.811)
+2023-02-22 20:27:51,990 DEBUG com.kepler.H2Application [main] Successfully created default values in DB.
+2023-02-22 20:28:36,474 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [http-nio-8081-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-02-22 20:28:36,476 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8081-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-02-22 20:28:36,477 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8081-exec-1] Completed initialization in 1 ms
+2023-02-22 20:31:45,385 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-22 20:31:45,385 INFO org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [SpringApplicationShutdownHook] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2023-02-22 20:31:45,385 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-02-22 20:31:45,385 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-02-22 20:31:50,345 INFO com.kepler.H2Application [main] Starting H2Application using Java 11.0.18 on DESKTOP-36EOGNU with PID 10208 (C:\Users\admin\Desktop\Spring Security\user-in-h2-db\target\classes started by admin in C:\Users\admin\Desktop\Spring Security\user-in-h2-db)
+2023-02-22 20:31:50,345 DEBUG com.kepler.H2Application [main] Running with Spring Boot v2.6.3, Spring v5.3.15
+2023-02-22 20:31:50,345 INFO com.kepler.H2Application [main] No active profile set, falling back to default profiles: default
+2023-02-22 20:31:50,915 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-22 20:31:50,962 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 35 ms. Found 2 JPA repository interfaces.
+2023-02-22 20:31:51,385 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
+2023-02-22 20:31:51,395 INFO org.apache.coyote.http11.Http11NioProtocol [main] Initializing ProtocolHandler ["http-nio-8081"]
+2023-02-22 20:31:51,395 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2023-02-22 20:31:51,395 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.56]
+2023-02-22 20:31:51,475 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2023-02-22 20:31:51,475 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1090 ms
+2023-02-22 20:31:51,500 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2023-02-22 20:31:51,580 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2023-02-22 20:31:51,585 INFO org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2023-02-22 20:31:51,720 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-22 20:31:51,755 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.4.Final
+2023-02-22 20:31:51,855 INFO org.hibernate.annotations.common.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-02-22 20:31:51,935 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-02-22 20:31:52,345 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-22 20:31:52,345 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-22 20:31:52,620 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-22 20:31:52,795 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@44ae6b66, org.springframework.security.web.context.SecurityContextPersistenceFilter@486dd616, org.springframework.security.web.header.HeaderWriterFilter@1c7744c1, org.springframework.security.web.authentication.logout.LogoutFilter@4a18e0f1, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@39f8adc0, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@1b800a11, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@5b0e5d5f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@36b761e3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@579ce2e9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@58b5d5fc, org.springframework.security.web.session.SessionManagementFilter@24731caf, org.springframework.security.web.access.ExceptionTranslationFilter@78aa1753, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1d67348a]
+2023-02-22 20:31:53,130 INFO org.apache.coyote.http11.Http11NioProtocol [main] Starting ProtocolHandler ["http-nio-8081"]
+2023-02-22 20:31:53,145 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
+2023-02-22 20:31:53,155 INFO com.kepler.H2Application [main] Started H2Application in 3.114 seconds (JVM running for 3.793)
+2023-02-22 20:31:53,235 DEBUG com.kepler.H2Application [main] Successfully created default values in DB.
+2023-02-22 20:32:04,169 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [http-nio-8081-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-02-22 20:32:04,170 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8081-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-02-22 20:32:04,171 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8081-exec-1] Completed initialization in 1 ms
+2023-02-22 20:32:08,332 DEBUG com.kepler.rest.WeatherController [http-nio-8081-exec-4] User request weather by ID: 5
+2023-02-22 20:32:21,146 DEBUG com.kepler.rest.WeatherController [http-nio-8081-exec-5] User request weather by ID: 2
+2023-02-22 20:32:42,165 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-22 20:32:42,165 INFO org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [SpringApplicationShutdownHook] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2023-02-22 20:32:42,165 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-02-22 20:32:42,175 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-02-22 20:38:44,727 INFO com.kepler.H2Application [main] Starting H2Application using Java 11.0.18 on DESKTOP-36EOGNU with PID 5600 (C:\Users\admin\Desktop\Spring Security\user-in-h2-db\target\classes started by admin in C:\Users\admin\Desktop\Spring Security\user-in-h2-db)
+2023-02-22 20:38:44,727 DEBUG com.kepler.H2Application [main] Running with Spring Boot v2.6.3, Spring v5.3.15
+2023-02-22 20:38:44,727 INFO com.kepler.H2Application [main] No active profile set, falling back to default profiles: default
+2023-02-22 20:38:45,343 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-22 20:38:45,391 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 40 ms. Found 2 JPA repository interfaces.
+2023-02-22 20:38:46,001 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8081 (http)
+2023-02-22 20:38:46,010 INFO org.apache.coyote.http11.Http11NioProtocol [main] Initializing ProtocolHandler ["http-nio-8081"]
+2023-02-22 20:38:46,010 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2023-02-22 20:38:46,010 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.56]
+2023-02-22 20:38:46,086 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2023-02-22 20:38:46,086 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1330 ms
+2023-02-22 20:38:46,114 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2023-02-22 20:38:46,202 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2023-02-22 20:38:46,211 INFO org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2023-02-22 20:38:46,342 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-22 20:38:46,380 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.4.Final
+2023-02-22 20:38:46,477 INFO org.hibernate.annotations.common.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-02-22 20:38:46,561 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-02-22 20:38:46,961 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-22 20:38:46,966 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-22 20:38:47,254 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-22 20:38:47,439 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@38445703, org.springframework.security.web.context.SecurityContextPersistenceFilter@6e1ad658, org.springframework.security.web.header.HeaderWriterFilter@34cfdd84, org.springframework.security.web.authentication.logout.LogoutFilter@4e0802e0, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@1d67348a, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@579ce2e9, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@44ae6b66, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@a1d926b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@38d4488c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5b0e5d5f, org.springframework.security.web.session.SessionManagementFilter@320e179f, org.springframework.security.web.access.ExceptionTranslationFilter@349996a6, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1a914a00]
+2023-02-22 20:38:47,766 INFO org.apache.coyote.http11.Http11NioProtocol [main] Starting ProtocolHandler ["http-nio-8081"]
+2023-02-22 20:38:47,781 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8081 (http) with context path ''
+2023-02-22 20:38:47,791 INFO com.kepler.H2Application [main] Started H2Application in 3.362 seconds (JVM running for 4.069)
+2023-02-22 20:38:47,873 DEBUG com.kepler.H2Application [main] Successfully created default values in DB.
+2023-02-22 20:38:47,893 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [http-nio-8081-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-02-22 20:38:47,893 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8081-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-02-22 20:38:47,894 INFO org.springframework.web.servlet.DispatcherServlet [http-nio-8081-exec-1] Completed initialization in 1 ms
+2023-02-22 20:38:56,397 DEBUG com.kepler.rest.WeatherController [http-nio-8081-exec-6] User request weather by ID: 2
+2023-02-22 20:39:01,297 DEBUG com.kepler.rest.WeatherController [http-nio-8081-exec-7] User request weather by ID: 1
+2023-02-22 20:39:01,928 DEBUG com.kepler.rest.WeatherController [http-nio-8081-exec-8] User request weather by ID: 10
+2023-02-22 20:39:24,196 INFO org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-22 20:39:24,196 INFO org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [SpringApplicationShutdownHook] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2023-02-22 20:39:24,206 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-02-22 20:39:24,206 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
