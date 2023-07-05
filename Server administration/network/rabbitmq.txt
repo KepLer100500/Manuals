@@ -2,30 +2,46 @@
 
 sudo apt install rabbitmq
 systemctl status rabbitmq
-rabbitmqctl add_user test test                            # Add a new/fresh user, say user test and password test:
-rabbitmqctl set_user_tags test administrator        # Give administrative access to the new user:
-rabbitmqctl set_permissions -p / test ".*" ".*" ".*" # Set permission to newly created user:
 
 http://192.168.1.159:15672/ # web interface (guest / guest)
 
-
 ### RabbitMQ in Docker:
 
-Скачать образ rabbitmq:
-$ docker pull rabbitmq:3.11.0-management
+docker run -d --hostname rabbitmq --name rabbitmq -p 5672:5672 -p 15672:15672 -v rabbitmq_data:/var/lib/rabbitmq --restart=unless-stopped rabbitmq:3.11.0-management
 
-Создать volume:
-$ docker volume create rabbitmq_data
-
-Запустить контейнер с rabbitmq:
-$ docker run -d --hostname rabbitmq --name rabbitmq -p 5672:5672 -p 15672:15672 -v rabbitmq_data:/var/lib/rabbitmq --restart=unless-stopped rabbitmq:3.11.0-management
-Флаги:
+Flags:
 --detach , -d   запустит контейнер в фоновом режиме и вернет идентификатор контейнера в терминал;
 --hostname   адрес контейнера для подключения к нему внутри docker из других контейнеров;
 --name   имя контейнера;
--p    порты: первый порт — тот, по которому мы будет подключаться снаружи docker, а второй — тот, который используется внутри контейнера;
--v   примонтировать volume (том), т. е. внешнее хранилище данных;
+-p порты: первый порт — тот, по которому мы будет подключаться снаружи docker, а второй — тот, который используется внутри контейнера;
+-v примонтировать volume (том), т. е. внешнее хранилище данных;
 --restart=unless-stopped   контейнер будет подниматься заново при каждом перезапуске системы (точнее, при запуске docker);
 
-Подключиться к контейнеру с rabbitmq:
-$ docker exec -it rabbitmq /bin/bash
+docker exec -it rabbitmq /bin/bash # Connect to docker container
+
+### Work with RabbitMQ in cli
+
+docker volume create rabbitmq_data
+docker run -d --hostname rabbitmq --name rabbitmq -p 5672:5672 -p 15672:15672 -v rabbitmq_data:/var/lib/rabbitmq --restart=unless-stopped rabbitmq:3.11.0-management
+docker exec -it rabbitmq /bin/bash
+
+# Create user with password
+rabbitmqctl add_user test_user test_pass
+
+# Grant access to user
+rabbitmqctl set_user_tags test_user administrator
+
+# Create virtual host
+rabbitmqctl add_vhost test_vhost
+
+# Grant permissions to virtual host
+rabbitmqctl set_permissions -p test_vhost test_user ".*" ".*" ".*"
+
+# Create exchange
+rabbitmqadmin declare exchange --vhost=test_vhost name=test_exchange type=direct -u test_user -p test_pass
+
+# Create queue
+rabbitmqadmin declare queue --vhost=test_vhost name=test_queue durable=true -u test_user -p test_pass
+
+# Bind queue to exchange with routing key
+rabbitmqadmin --vhost=test_vhost declare binding source=test_exchange destination_type=queue destination=test_queue routing_key=testRoutingKey -u test_user -p test_pass
