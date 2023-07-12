@@ -1,0 +1,17 @@
+# GET request with user: user, password: user_pass
+curl -X GET http://localhost:8081/api/v1/messages -u "user:user_pass"
+
+# POST request with user: admin, password: admin_pass and json payload
+curl -X POST http://localhost:8081/api/v1/messages -d '{"id":500,"creationTime":"2023-02-16T07:58:54.744+00:00","author":"TEST!!!","text":"test admin post"}' -H "Content-Type: application/json" -u "admin:admin_pass"
+
+# DELETE request with user: admin, password: admin_pass
+curl -X DELETE http://localhost:8081/api/v1/messages/500 -u "admin:admin_pass"
+
+# POST request with json payload from local file
+curl -X POST http://localhost:9092 -d @request.json -H "Content-Type: application/json"
+
+# POST request with json payload from local file and save response to response.json
+curl -X POST http://localhost:9092 -d @request.json -H "Content-Type: application/json" | json_pp > response.json
+
+# GET request with json and Russian charset
+curl -X GET http://localhost:9093/ -d '{"tokens":["утроение","20","буль","и","полубуль"]}' -H "Content-Type: application/json;charset=cp1251"
