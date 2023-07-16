@@ -1,0 +1,163 @@
+# Adding Maven to the Environment Path
+
+export M2_HOME=/usr/local/apache-maven/apache-maven-3.8.4 
+export M2=$M2_HOME/bin 
+export MAVEN_OPTS=-Xms256m -Xmx512m 
+export PATH=$M2:$PATH
+
+# General maven commants:
+
+clean		# clear .class files
+validate	# validate the project is correct and all necessary information is available
+compile	# compile the source code of the project
+test		# test the compiled source code using a suitable unit testing framework
+package	# take the compiled code and package it in its distributable format, such as a JAR
+verify		# run any checks to verify the package is valid and meets quality criteria
+install	# install the package into the local repository, for use as a dependency in other projects locally
+deploy	# copies the final package to the remote repository
+
+# Create maven project
+
+mvn archetype:generate
+-DgroupId={project-packaging}
+-DartifactId={project-name}
+-DarchetypeArtifactId={maven-template}
+-DinteractiveMode=false
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4	# interactive mode
+mvn archetype:generate -DgroupId=com.kepler -DartifactId=my-project -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false		# config inline
+
+# Blocks pom.xml
+
+<packaging>jar</packaging>
+
+<properties>
+	<java.version>11</java.version>
+	<maven.compiler.source>1.8</maven.compiler.source>
+	<maven.compiler.target>1.8</maven.compiler.target>
+	<lombok.version>1.18.26</lombok.version>
+</properties>
+
+<modules>
+	<module>Producer</module>
+	<module>Consumer</module>
+</modules>
+
+<parent>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-parent</artifactId>
+	<version>2.7.5</version>
+	<relativePath/>
+</parent>
+
+<dependencies>
+	<dependency>
+		<groupId>org.ini4j</groupId>
+		<artifactId>ini4j</artifactId>
+		<version>0.5.4</version>
+	</dependency>
+
+	<!-- Define an external dependency --> 
+	<dependency>
+		<groupId>dep</groupId>
+		<artifactId>dep</artifactId>
+		<version>1.0</version>
+		<scope>system</scope>
+		<systemPath>${basedir}/lib/dep.jar</systemPath>
+	</dependency>
+</dependencies>
+
+# Maven in use
+
+mvn compile exec:java -Dexec.mainClass="com.kepler.Main"	# compile and exacute class Main in package com.kepler
+mvn spring-boot:run														# run spring-boot application
+mvn tomcat7:run																# run tomcat webserver
+mvn jetty:run																	# run jetty webserver
+mvn -f dir/pom.xml package												# builds a project from a different location
+mvn clean package -DskipTests											# we do not want to run the tests while packaging
+
+java -jar target/app.jar													# run builded app
+
+# Maven plugins
+
+# maven-compiler-plugin # Compiler Plugin is used to compile the sources of your project
+
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-compiler-plugin</artifactId>
+	<version>3.7.0</version>
+	<configuration>
+		<source>1.8</source>
+		<target>1.8</target>
+	</configuration>
+</plugin>
+
+mvn compiler:testCompile	# This command compiles the test classes of the Maven project
+mvn compiler:compile			# Compile phase and is used to compile the main source files
+
+# maven surefire plugin # The Maven Surefire plugin is the default plugin for running unit tests
+
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-surefire-plugin</artifactId>
+	<version>2.22.0</version>
+	<configuration>
+		<source>1.8</source>
+		<target>1.8</target>
+	</configuration>
+</plugin>
+
+# maven-dependency-plugin
+
+mvn dependency:tree		# show dependencies (maven-dependency-plugin)
+mvn dependency:analyze	# show unused dependencies in project
+
+# spring-boot-maven-plugin
+
+mvn spring-boot:run # run spring boot app
+
+<!--  Create fat jar --> 
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<version>2.7.5</version>
+			<executions>
+				<execution>
+					<goals>
+						<goal>repackage</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+	</plugins>
+</build>
+
+# maven-shade-plugin # package the artifact in an uber-jar, including its dependencies and to shade the packages of some of the dependencies
+
+<build>
+	<plugins>
+		<plugin>
+			<artifactId>maven-shade-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>shade</id>
+					<goals>
+						<goal>shade</goal>                        
+					</goals>
+					<configuration>
+						<transformers>
+							<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"> 
+								<mainClass>com.kepler.Application</mainClass> 
+								<manifestEntries>
+									<Multi-Release>true</Multi-Release> 
+								</manifestEntries>
+							</transformer>
+						</transformers>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+	</plugins>
+</build>
