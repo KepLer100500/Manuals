@@ -1,0 +1,909 @@
+##################################################################################
+SELECT CONCAT(member_name, " [", FamilyMembers.status, "]") AS name_and_status,
+	COUNT(good_name) AS count_payments,
+	sum(p.amount * p.unit_price) AS total
+FROM Payments p
+	INNER JOIN FamilyMembers ON p.family_member = FamilyMembers.member_id
+	JOIN Goods ON p.good = Goods.good_id
+GROUP BY name_and_status
+HAVING count_payments > 5
+	AND total > 2000
+ORDER BY name_and_status
+##################################################################################
+
+DESCRIBE FamilyMembers # узнать типы данных полей
+
+SELECT * FROM FamilyMembers # Вывод всех данных из таблицы
+SELECT member_id, member_name FROM FamilyMembers # Вывод данных из определённых колонок таблицы
+SELECT member_id, member_name AS Name FROM FamilyMembers # Псевдонимы для полей
+SELECT "Строка \n Другая строка" as String 
+SELECT (5 * 2 - 6) / 2 AS Result;
+
+SELECT * FROM FamilyMembers WHERE birthday > '1970-12-30' # YYYY-MM-DD, YYYYMMDD
+SELECT * FROM FamilyMembers WHERE birthday > '19701230'
+SELECT * FROM FamilyMembers WHERE birthday > 19701230
+SELECT * FROM FamilyMembers WHERE birthday > '20200101183030' # YYYY-MM-DD hh:mm:ss, YYYYMMDDhhmmss
+
+SELECT UPPER("Hello world") AS upper_string;
+SELECT LOWER('SQL Academy') AS lower_string;
+SELECT NOW()
+SELECT LENGTH('abcde')
+SELECT YEAR("2022-06-16") AS year;
+SELECT INSTR('sql-academy', 'academy') AS idx; # поиск подстроки в строке, возвращая позицию её первого символа
+
+SELECT member_name,
+	LENGTH(member_name) AS fullname_length
+FROM FamilyMembers;
+
+SELECT UPPER(LEFT('sql-academy', 3)) AS str; # получить первые три буквы в строке и преобразовать их в заглавные
+
+SELECT distinct class FROM Student_in_class; # Исключение дубликатов
+
+SELECT * FROM Student WHERE first_name = "Grigorij" AND YEAR(birthday) > 2000;
+
+# Равенство	=	Если оба значения равны, то результат будет равен 1, иначе 0
+# Эквивалентность	<=>	Аналогичен оператору равенства, за исключением того, что результат будет равен 1 в случае сравнения NULL с NULL и 0, когда идёт # сравнение любого значения с NULL
+# Неравенство	<> или !=	Если оба значения не равны, то результат будет равен 1, иначе 0
+# Результатом сравнения любого значения с NULL является NULL. Исключением является оператор эквивалентности.
+
+SELECT
+    2 = 1,
+	'a' = 'a',
+	NULL <=> NULL,
+	NULL > 5,
+	2 <> 2,
+	3 < 4,
+	10 <= 10,
+	7 > 1,
+	8 >= 10;
+
+# NOT, OR, AND, XOR
+# true, false, NULL
+
+# IS NULL, BETWEEN, IN
+SELECT * FROM Teacher WHERE middle_name IS NOT NULL;
+SELECT * FROM Payments WHERE unit_price > 100 AND unit_price < 500;
+SELECT * FROM Payments WHERE unit_price BETWEEN 100 AND 500;
+SELECT * FROM FamilyMembers WHERE status IN ('father', 'mother');
+
+# LIKE
+SELECT name, email FROM Users WHERE email LIKE '%@hotmail.%'
+# % - Последовательность любых символов (число символов в последовательности может быть от 0 и более)
+# _ - Любой единичный символ
+
+# ESCAPE-символ
+SELECT job_id FROM Jobs WHERE progress LIKE '3!%' ESCAPE '!'; # '!' экранирует %
+
+# REGEXP / RLIKE
+... WHERE table_field REGEXP 'pattern';
+SELECT * FROM Users WHERE name REGEXP '^John'
+select id, address from Rooms where address REGEXP 'Avenue'
+select name, email from Users where email rlike '@(outlook.com|live.com)$'
+
+# ORDER BY [ASC | DESC]
+# ORDER BY столбец_1 DESC, столбец_2 DESC
+select good, (amount * unit_price) as sum from Payments order by sum desc
+select * from FamilyMembers where member_name like "%Quincey" order by status asc, member_name asc
+
+# GROUP BY
+# литералы, т.е. указанное явным образом фиксированные значения
+# результаты агрегатных функций, т.е. вычисленные значения на основании набора значений:
+# SUM(поле_таблицы)	Возвращает сумму значений
+# AVG(поле_таблицы)	Возвращает среднее значение
+# COUNT(поле_таблицы)	Возвращает количество записей
+# MIN(поле_таблицы)	Возвращает минимальное значение
+# MAX(поле_таблицы)	Возвращает максимальное значение
+# поля группировки.
+SELECT home_type, AVG(price) as avg_price FROM Rooms GROUP BY home_type
+
+SELECT home_type, has_tv as avg_price FROM Rooms
+GROUP BY home_type, has_tv order by home_type
+
+SELECT class, count(student) AS count FROM Student_in_class GROUP BY class ORDER BY count desc
+select plane, avg(TIMESTAMPDIFF(second, time_out, time_in)) as time from Trip group by plane
+
+# HAVING
+SELECT [константы, агрегатные_функции, поля_группировки]
+FROM имя_таблицы
+WHERE условия_на_ограничения_строк
+GROUP BY поля_группировки
+HAVING условие_на_ограничение_строк_после_группировки
+ORDER BY условие_сортировки
+
+select home_type, (max(price) - min(price)) as difference from Rooms GROUP by home_type having difference > 2
+
+# JOIN
+
+SELECT поля_таблиц
+FROM таблица_1
+[INNER] | [[LEFT | RIGHT | FULL][OUTER]] JOIN таблица_2
+    ON условие_соединения
+[[INNER] | [[LEFT | RIGHT | FULL][OUTER]] JOIN таблица_n
+    ON условие_соединения]
+
+# соединение через JOIN
+SELECT family_member, member_name, amount * unit_price AS price FROM Payments
+INNER JOIN FamilyMembers
+    ON Payments.family_member = FamilyMembers.member_id
+# соединение через WHERE
+SELECT family_member, member_name FROM Payments, FamilyMembers
+    WHERE Payments.family_member = FamilyMembers.member_id
+
+
+# вывести столбцы, принадлежащие только какой-то конкретной таблице
+SELECT FamilyMembers.* FROM Payments
+INNER JOIN FamilyMembers
+    ON Payments.family_member = FamilyMembers.member_id
+
+# вывести все столбцы из нескольких таблиц
+SELECT Payments.*, FamilyMembers.* FROM Payments
+INNER JOIN FamilyMembers
+    ON Payments.family_member = FamilyMembers.member_id
+
+SELECT good_name
+FROM FamilyMembers
+	JOIN Payments ON FamilyMembers.member_id = Payments.family_member
+	JOIN Goods ON Goods.good_id = Payments.good
+WHERE FamilyMembers.status = "son"
+
+select room_id, avg(rating) as avg_score from Reviews JOIN Reservations ON Reservations.id = Reviews.reservation_id group by room_id
+
+# FULL JOIN реализовано не во всех СУБД, однако его можно очень просто эмулировать:
+SELECT *
+FROM левая_таблица
+LEFT JOIN правая_таблица
+   ON правая_таблица.ключ = левая_таблица.ключ
+UNION ALL
+SELECT *
+FROM левая_таблица
+RIGHT JOIN правая_таблица
+ON правая_таблица.ключ = левая_таблица.ключ
+ WHERE левая_таблица.ключ IS NULL
+
+# Получение данных, относящихся только к левой таблице:
+SELECT поля_таблиц
+FROM левая_таблица LEFT JOIN правая_таблица
+    ON правая_таблица.ключ = левая_таблица.ключ
+WHERE правая_таблица.ключ IS NULL
+
+SELECT first_name,
+	last_name,
+	COUNT(Schedule.id) AS amount_classes
+FROM Teacher
+	LEFT JOIN Schedule ON Schedule.teacher = Teacher.id
+GROUP BY Teacher.id
+
+# LIMIT
+SELECT * FROM Company LIMIT 2, 3; # вывести строки с 3 по 5
+SELECT * FROM Company LIMIT 3 OFFSET 2; # # вывести строки с 3 по 5
+
+# Подзапросы
+# список всех бронирований самого дорогого на данный момент жилого помещения
+SELECT * FROM Reservations
+    WHERE Reservations.room_id = (
+        SELECT id FROM Rooms ORDER BY price DESC LIMIT 1
+    )
+
+SELECT *
+FROM Users
+WHERE id = (
+		SELECT owner_id
+		FROM Rooms
+		WHERE price = (
+				SELECT max(price)
+				FROM Rooms
+			)
+	)
+	
+# Исключение строк
+# EXCEPT (MINUS в СУБД Oracle и MySQL).
+SELECT * FROM table1
+	value
+	1
+	3
+	5
+
+SELECT * FROM table2
+	value
+	2
+	3
+	4
+
+SELECT value FROM table1
+EXCEPT
+SELECT value FROM table2
+	value
+	1
+	5
+	
+# Пересечение строк
+
+SELECT * FROM table1
+	value
+	1
+	3
+	5
+SELECT * FROM table2
+	value
+	2
+	3
+	4
+	
+SELECT value FROM table1
+INTERSECT
+SELECT value FROM table2
+	value
+	3
+
+# Несколько операций
+
+SELECT * FROM table1
+ UNION
+(
+  SELECT * FROM table2
+  EXCEPT
+  SELECT * FROM table3
+)
+ ORDER BY value
+
+# Подзапросы с несколькими строками и одним столбцом
+# ALL, IN, ANY 
+# ALL вернёт TRUE, только если все сравнения отдельного значения со значениями в наборе вернут TRUE
+# IN проверяет входит ли конкретное значение в набор значений
+# ANY возвращает TRUE, если хотя бы одно сравнение отдельного значения со значением в наборе вернёт TRUE
+
+SELECT good_name
+FROM Goods
+WHERE good_id NOT IN (
+		SELECT good
+		FROM Payments
+	)
+
+SELECT * FROM Reservations
+    WHERE (room_id, price) IN (SELECT id, price FROM Rooms);
+
+SELECT *
+FROM Rooms
+WHERE (has_tv, has_internet, has_kitchen, has_air_con) IN (
+		SELECT has_tv,
+			has_internet,
+			has_kitchen,
+			has_air_con
+		FROM Rooms
+		WHERE id = 11
+	)
+
+# Коррелированный подзапрос отличается от некоррелированного подзапроса тем, что он выполняется не один раз перед выполнением запроса, в который он 
+# вложен, а для каждой строки, которая может быть включена в окончательный результат.
+
+SELECT FamilyMembers.member_name, (
+    SELECT SUM(Payments.unit_price * Payments.amount)
+    FROM Payments
+    WHERE Payments.family_member = FamilyMembers.member_id
+) AS total_spent
+FROM FamilyMembers;
+
+SELECT member_name,
+	(
+		SELECT max(unit_price)
+		FROM Payments
+		WHERE family_member = member_id
+	) AS good_price
+FROM FamilyMembers
+
+
+# Обобщённое табличное выражение, оператор WITH
+# WITH название_cte [(столбец_1 [, столбец_2 ] …)] AS (подзапрос)
+#    [, название_cte [(столбец_1 [, столбец_2 ] …)] AS (подзапрос)] …
+
+WITH Aeroflot_trips AS
+    (SELECT TRIP.* FROM Company
+        INNER JOIN Trip ON Trip.company = Company.id WHERE name = "Aeroflot"),
+    Don_avia_trips AS
+    (SELECT TRIP.* FROM Company
+        INNER JOIN Trip ON Trip.company = Company.id WHERE name = "Don_avia")
+
+SELECT * FROM Don_avia_trips UNION SELECT * FROM  Aeroflot_trips;
+
+# UNION
+# по умолчанию убирает повторения в результирующей таблице. Для отображения с повторением есть необязательный параметр ALL
+# Для корректной работы UNION нужно, чтобы результирующие таблицы каждого из SQL запросов имели одинаковое число столбцов, с одним и тем же типом 
+# данных и в той же самой последовательности.
+SELECT поля_таблиц FROM список_таблиц ...
+UNION [ALL]
+SELECT поля_таблиц FROM список_таблиц ... ;
+
+select first_name, middle_name, last_name from Student
+UNION
+select first_name, middle_name, last_name from Teacher
+
+
+# CASE 
+CASE
+    WHEN условие_1 THEN возвращаемое_значение_1
+    WHEN условие_2 THEN возвращаемое_значение_2
+    WHEN условие_n THEN возвращаемое_значение_n
+    [ELSE возвращаемое_значение_по_умолчанию]
+END
+
+SELECT first_name, last_name,
+CASE
+  WHEN TIMESTAMPDIFF(YEAR, birthday, NOW()) >= 18 THEN "Совершеннолетний"
+  ELSE "Несовершеннолетний"
+END AS status
+FROM Student
+
+SELECT name,
+CASE
+  WHEN SUBSTRING(name, 1, INSTR(name, ' ')) IN (10, 11) THEN "Старшая школа"
+  WHEN SUBSTRING(name, 1, INSTR(name, ' ')) IN (5, 6, 7, 8, 9) THEN "Средняя школа"
+  ELSE "Начальная школа"
+END AS stage
+FROM Class
+
+SELECT id,
+	CASE
+		WHEN rating IN (4, 5) THEN "positive"
+		WHEN rating IN (3) THEN "neutral"
+		ELSE "negative"
+	END AS rating
+FROM Reviews
+
+
+# IF
+# IF(условное_выражение, значение_1, значение_2);
+
+SELECT IF(10 > 20, "TRUE", "FALSE");
+
+SELECT id,
+	IF(has_tv = TRUE, "YES", "NO") AS has_tv
+FROM Rooms
+
+# IFNULL
+# Если первый аргумент не равен NULL, то вернётся именно он.
+# Если первый аргумент равен NULL, то вернётся значение, переданное вторым аргументом.
+IFNULL(значение, альтернативное_значение);
+
+SELECT IFNULL("SQL Academy", "Альтернатива SQL Academy") AS sql_trainer;
+SELECT IFNULL(NULL, "Альтернатива SQL Academy") AS sql_trainer;
+
+SELECT first_name,
+	IFNULL(middle_name, "Empty") AS middle_name,
+	last_name
+FROM Teacher
+
+# NULLIF
+# Если значение первого аргумента равно значению второго аргумента, то возвращается NULL
+NULLIF(значение_1, значение_2);
+
+SELECT NULLIF("SQL Academy", "SQL Academy") AS sql_trainer;
+
+
+# INSERT
+
+INSERT INTO имя_таблицы [(поле_таблицы, ...)]
+VALUES (значение_поля_таблицы, ...)
+| SELECT поле_таблицы, ... FROM имя_таблицы ...
+
+INSERT INTO Goods (good_id, good_name, type)
+SELECT 20, 'Table', 2;
+
+INSERT INTO Goods (good_id, good_name, type)
+VALUES (20, 'Table', 2);
+
+# Первичный ключ при добавлении новой записи
+INSERT INTO Goods SELECT COUNT(*) + 1, 'Table', 2 FROM Goods;
+
+INSERT INTO Goods
+SELECT COUNT(*) + 1,
+	"Table",
+	(
+		SELECT good_type_id
+		FROM GoodTypes
+		WHERE good_type_name = "equipment"
+	)
+FROM Goods
+
+# UPDATE
+UPDATE имя_таблицы
+SET поле_таблицы1 = значение_поля_таблицы1,
+    поле_таблицыN = значение_поля_таблицыN
+[WHERE условие_выборки]
+
+UPDATE FamilyMembers
+SET member_name = "Andie Anthony"
+WHERE member_name = "Andie Quincey";
+
+# В запросах на обновление данных можно менять значения, опираясь на предыдущее значение.
+
+UPDATE Payments
+SET unit_price = unit_price * 2;
+
+# DELETE и TRUNCATE
+
+DELETE FROM имя_таблицы
+[WHERE условие_отбора_записей];
+
+TRUNCATE TABLE имя_таблицы;
+
+# DELETE + JOIN
+
+DELETE имя_таблицы_1 [, имя_таблицы_2] FROM
+имя_таблицы_1 JOIN имя_таблицы_2
+ON имя_таблицы_1.поле = имя_таблицы_2.поле
+[WHERE условие_отбора_записей];
+
+DELETE Reservations FROM
+Reservations JOIN Rooms ON
+Reservations.room_id = Rooms.id
+WHERE Rooms.has_kitchen = false;
+
+DELETE Goods
+FROM Goods
+	JOIN GoodTypes ON Goods.type = GoodTypes.good_type_id
+WHERE GoodTypes.good_type_name = "delicacies"
+
+
+# Числовой тип данных в SQL
+
+SELECT 2 * ((22 - 16) / (2 + 1)) AS calc_example;
+
+POW(num, power)	Вычисляет число в указанной степени
+SQRT(num)	Вычисляет квадратный корень числа
+LOG(base, num)	Вычисляет логарифм числа по указанному основанию
+EXP(num)	Вычисляет enum
+SIN(num)	Вычисляет синус числа
+COS(num)	Вычисляет косинус числа
+TAN(num)	Вычисляет тангенс числа
+
+CEIL 		округлять число к ближайшему целому числу в большую сторону 
+FLOOR 		округлять число к ближайшему целому числу в меньшую сторону 
+ROUND		округления к ближайшему целому (с указанием количества знаков после запятой)
+# Второй аргумент функции ROUND может принимать также и отрицательные значения. В этом случае, цифры слева от десятичной точки числа становятся равными # нулю на указанное в аргументе количество, а дробная часть обрезается.
+
+SELECT ROUND(69.499), ROUND(69.5), ROUND(69.501);
+SELECT ROUND(69.7171,1), ROUND(69.7171,2), ROUND(69.7171,3);
+SELECT ROUND(1691.7,-1), ROUND(1691.7,-2), ROUND(1691.7,-3);
+
+TRUNCATE отбрасывает ненужные цифры
+
+SELECT TRUNCATE(69.7979,1), TRUNCATE(69.7979,2), TRUNCATE(69.7979,3);
+	
+SIGN 	возвращает значение -1, если число отрицательно, 0, если число нулевое и 1, если число положительное
+
+SELECT SIGN(-69), SIGN(0), SIGN(69);
+
+ABS возвращает абсолютное значение числа
+
+SELECT ABS(-69), ABS(0), ABS(69);
+
+# Строковое представление временных данных
+
+DATE	YYYY-MM-DD
+DATETIME	YYYY-MM-DD hh:mm:ss
+TIMESTAMP	YYYY-MM-DD hh:mm:ss
+TIME	hhh:mm:sss
+YEAR	YYYY - полный формат
+YY или Y - сокращённый формат, который возвращает год в пределах 2000-2069 для значений 0-69 и год в пределах 1970-1999 для значений 70-99
+
+SELECT  CAST("2022-06-16 16:37:23" AS DATETIME) AS datetime_1,
+        CAST("2014/02/22 16*37*22" AS DATETIME) AS datetime_2,
+        CAST("20220616163723" AS DATETIME) AS datetime_3,
+        CAST("2021-02-12" AS DATE) AS date_1,
+        CAST("160:23:13" AS TIME) AS time_1,
+        CAST("89" AS YEAR) AS year
+
+SELECT STR_TO_DATE('November 13, 1998', '%M %d, %Y') AS date; # принимает произвольную строку, содержащую дату, и формат, описывающий её
+
+SELECT CURDATE(), CURTIME(), NOW();
+
+YEAR	Возвращает год для указанной даты
+MONTH	Возвращает числовое значение месяца года (от 1 до 12) даты
+DAY	Возвращает порядковый номер дня в месяце (от 1 до 31)
+HOUR	Возвращает значение часа (от 0 до 23) для времени
+MINUTE	Возвращает значение минут (от 0 до 59) для времени
+
+SET GLOBAL time_zone = '+03:00';    // глобально
+SET time_zone = '+03:00';           // для текущего пользователя
+SET @@session.time_zone = '+03:00'; // для текущей пользовательской сессии
+
+SELECT FLOOR(DATEDIFF(NOW(), '2003-07-03 14:10:26') / 365); # 
+TIMESTAMPDIFF(YEAR, '2003-07-03 14:10:26', NOW());
+
+select FORMAT(getdate(),'dd.MM.yyyy')
+
+select member_name, TIMESTAMPDIFF(YEAR, birthday, NOW()) as age from FamilyMembers
+
+SELECT town_to,
+	sec_to_time(TIMESTAMPDIFF(second, time_out, time_in)) AS flight_time
+FROM Trip
+WHERE town_from = 'Paris'
+
+
+CAST(значение AS тип_для_конвертации);
+CONVERT(значение, тип_для_конвертации);
+
+SELECT CAST(12005.6 AS DECIMAL), CONVERT(12005.4, DECIMAL);
+
+DATE				Конвертирует значение в DATE. Формат: "YYYY-MM-DD".
+DATETIME			Конвертирует значение в DATETIME. Формат: "YYYY-MM-DD hh:mm:ss".
+TIME				Конвертирует значение в TIME. Формат: "hh:mm:ss".
+DECIMAL[(M[,D])]	Конвертирует значение в DECIMAL. Имеет два необязательных аргумента M и D, определяющих максимальное количество знаков до и после запятой соответственно. По умолчанию, D равен 0, а M равен 10.
+CHAR[(N)]			Конвертирует значение в CHAR. В качестве необязательного аргумента можно передать максимальную длину строки.
+SIGNED				Конвертирует значение в значение BIGINT.
+UNSIGNED			Конвертирует значение в беззнаковое значение BIGINT.
+BINARY				Конвертирует значение в BINARY.
+YEAR				Конвертирует значение в год.
+
+SELECT CAST('SQL Academy' AS DATETIME); # NULL
+ 
+# Оконные функции SQL
+
+SELECT <оконная_функция>(<поле_таблицы>)
+OVER (
+      [PARTITION BY <столбцы_для_разделения>]
+      [ORDER BY <столбцы_для_сортировки>]
+      [ROWS|RANGE <определение_диапазона_строк>]
+)
+
+SELECT
+    Student.first_name,
+    Student.last_name,
+    Student_in_class.class,
+    COUNT(*) OVER (PARTITION BY Student_in_class.class) AS student_count_in_class
+FROM
+    Student_in_class
+JOIN
+    Student ON Student_in_class.student = Student.id;
+
+
+SELECT
+    home_type, price,
+    AVG(price) OVER (PARTITION BY home_type) AS avg_price
+FROM Rooms
+
+
+SELECT
+    home_type, has_tv, price,
+    AVG(price) OVER (PARTITION BY home_type, has_tv) AS avg_price
+    FROM Rooms
+
+
+SELECT user_id,
+       start_date,
+       total AS reservation_price,
+       SUM(total) OVER (
+           PARTITION BY user_id
+           ORDER BY start_date
+       ) AS cumulative_total
+FROM Reservations;
+
+
+SELECT <оконная_функция>(<поле_таблицы>)
+OVER (
+      ...
+      ROWS|RANGE BETWEEN <начало границы окна> AND <конец границы окна>
+)
+
+... ROWS|RANGE BETWEEN 2 PRECEDING AND CURRENT ROW
+... ROWS|RANGE BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING
+
+Возможные определения границ окна
+# UNBOUNDED PRECEDING, все строки, предшествующие текущей
+# N PRECEDING, N строк до текущей строки
+# CURRENT ROW, текущая строка
+# N FOLLOWING, N строк после текущей строки
+# UNBOUNDED FOLLOWING, все последующие строки
+
+Агрегатные оконные функции
+Агрегатные функции — это функции, которые выполняют на наборе данных арифметические вычисления и возвращают итоговое значение.
+
+SUM — подсчитывает общую сумму значений;
+COUNT — считает общее количество записей в колонке;
+AVG — рассчитывает среднее арифметическое;
+MAX — находит наибольшее значение;
+MIN — определяет наименьшее значение.
+
+SELECT id,
+	home_type,
+	price,
+	SUM(price) OVER(PARTITION BY home_type) AS 'Sum',
+	COUNT(price) OVER(PARTITION BY home_type) AS 'Count',
+	AVG(price) OVER(PARTITION BY home_type) AS 'Avg',
+	MAX(price) OVER(PARTITION BY home_type) AS 'Max',
+	MIN(price) OVER(PARTITION BY home_type) AS 'Min'
+FROM Rooms;
+
+# Ранжирующие оконные функции
+
+ROW_NUMBER — возвращает номер строки, используется для нумерации;
+
+RANK — возвращает ранг каждой строки. Вот как это работает:
+Сортировка: во-первых, строки сортируются по одному или нескольким столбцам. Это столбцы указываются в ORDER BY в конструкции OVER.
+Присвоение рангов: каждой уникальной строке или группе строк, имеющих одинаковые значения в столбцах сортировки, присваивается ранг. Ранг начинается с 1.
+Одинаковые значения: если у нескольких строк одинаковые значения в столбцах сортировки, они получают одинаковый ранг. Например, если две строки занимают второе место, обе получают ранг 2.
+Пропуск рангов: после группы строк с одинаковым рангом, следующий ранг увеличивается на количество строк в этой группе. Например, если две строки имеют ранг 2, следующая строка получит ранг 4, а не 3.
+Продолжение сортировки: этот процесс продолжается до тех пор, пока не будут присвоены ранги всем строкам в наборе результатов.
+
+DENSE_RANK — возвращает ранг каждой строки. Но в отличие от функции RANK, она для одинаковых значений возвращает ранг, не пропуская следующий;
+
+SELECT id,
+	home_type,
+	price,
+	ROW_NUMBER() OVER(PARTITION BY home_type ORDER BY price) AS 'row_number',
+	RANK() OVER(PARTITION BY home_type ORDER BY price) AS 'rank',
+	DENSE_RANK() OVER(PARTITION BY home_type ORDER BY price) AS 'dense_rank'
+FROM Rooms;
+
+# Оконные функции смещения
+
+LAG — обращается к данным из предыдущих строк окна.
+Имеет три аргумента: столбец, значение которого необходимо вернуть, количество строк для смещения (по-умолчанию 1), значение, которое необходимо вернуть, если после смещения возвращается значение NULL.
+
+LEAD — обращается к данным из следующих строк. Аналогично LAG имеет 3 аргумента.
+
+FIRST_VALUE — возвращает первое значение в окне. В качестве аргумента принимает столбец, значение которого необходимо вернуть.
+
+LAST_VALUE — возвращает последнее значение в окне. В качестве аргумента принимает столбец, значение которого необходимо вернуть
+
+SELECT id,
+	home_type,
+	price,
+	LAG(price) OVER(PARTITION BY home_type ORDER BY price) AS 'lag',
+	LAG(price, 2) OVER(PARTITION BY home_type ORDER BY price) AS 'lag_2',
+	LEAD(price) OVER(PARTITION BY home_type ORDER BY price) AS 'lead',
+	FIRST_VALUE(price) OVER(PARTITION BY home_type ORDER BY price) AS 'first_value',
+	LAST_VALUE(price) OVER(PARTITION BY home_type ORDER BY price) AS 'last_value'
+FROM Rooms;
+
+SELECT id,
+	home_type,
+	price,
+	DENSE_RANK() OVER(
+		PARTITION BY home_type
+		ORDER BY price
+	) AS room_rank
+FROM Rooms
+
+# Создание транзакций
+
+-- Начало транзакции
+START TRANSACTION;
+
+-- Проверка наличия достаточного баланса у отправителя
+SELECT @balance := user_balance FROM accounts WHERE user_id = 1;
+
+-- Если средств недостаточно, отмена транзакции
+IF @balance < 1000 THEN
+ROLLBACK;
+END IF;
+
+-- Проверка на существование получателя
+SELECT @exists := COUNT(*) FROM accounts WHERE user_id = 2;
+IF @exists = 0 THEN
+ROLLBACK;
+END IF;
+
+-- Обновление баланса счетов, если все проверки пройдены
+UPDATE accounts SET user_balance = user_balance - 1000 WHERE user_id = 1;
+UPDATE accounts SET user_balance = user_balance + 1000 WHERE user_id = 2;
+
+-- Применение изменений
+COMMIT;
+
+### SAVEPOINT my_savepoint; ###
+
+START TRANSACTION;
+
+-- Создаем точку сохранения перед изменением баланса первого пользователя
+SAVEPOINT before_updating_user_1;
+UPDATE accounts SET balance = balance + 100 WHERE user_id = 1;
+
+-- Проверка условия для первого пользователя
+-- например, проверяем логику бизнес-правил
+
+-- Здесь мы предполагаем, что условие не выполнилось, и нам нужно отменить изменение баланса
+ROLLBACK TO SAVEPOINT before_updating_user_1;
+
+-- Обновляем баланс для второго пользователя
+UPDATE accounts SET balance = balance + 200 WHERE user_id = 2;
+
+-- Завершаем транзакцию
+COMMIT;
+
+###
+
+CREATE DATABASE имя_базы_данных;
+
+SHOW DATABASES;
+
+DROP DATABASE имя_базы_данных;
+
+CREATE DATABASE IF NOT EXIST имя_базы_данных;
+
+DROP DATABASE IF EXIST имя_базы_данных;
+
+USE имя_базы_данных;
+
+CREATE TABLE [IF NOT EXIST] имя_таблицы (
+     столбец_1 тип_данных,
+    [столбец_2 тип_данных,]
+    ...
+    [столбец_n тип_данных,]
+);
+
+CREATE TABLE Users (
+    id INT,
+    name VARCHAR(255),
+    age INT
+);
+
+# Дополнительные параметры определения столбцов
+
+PRIMARY KEY	Указывает колонку или множество колонок как первичный ключ.
+
+AUTO_INCREMENT	Указывает, что значение данной колонки будет автоматически увеличиваться при добавлении новых записей в таблицу. Каждая таблица имеет максимум одну AUTO_INCREMENT колонку. Стоит отметить, что данный параметр можно применять только к целочисленным типам и к типам с плавающей запятой.
+
+UNIQUE	Указывает, что значения в данной колонке для всех записей должны быть отличными друг от друга.
+
+NOT NULL	Указывает, что значения в данной колонке должны быть отличными от NULL.
+
+DEFAULT	Указывает значение по умолчанию. Данный параметр не применяется к типам BLOB, TEXT, GEOMETRY и JSON.
+
+
+CREATE TABLE Users (
+    id INT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    age INT NOT NULL DEFAULT 18
+);
+
+DESCRIBE Users; # Описание таблицы
+
+# Первичный ключ.
+
+CREATE TABLE Users (
+    id INT,
+    name VARCHAR(255) NOT NULL,
+    age INT NOT NULL DEFAULT 18,
+    PRIMARY KEY (id)
+);
+
+# Внешние ключи.
+
+CREATE TABLE Users (
+    id INT,
+    name VARCHAR(255) NOT NULL,
+    age INT NOT NULL DEFAULT 18,
+    company INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (company) REFERENCES Companies (id)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+ON DELETE RESTRICT означает, что если попробовать удалить компанию, у которой в таблице Users есть данные, база данных не даст этого сделать
+
+ON DELETE CASCADE, то при удалении компании были бы удалены все пользователи, ссылающиеся на эту компанию
+
+ON DELETE SET NULL. При её использовании база данных запишет NULL в качестве значения поля company для всех пользователей, работавших в удалённой компании
+
+# Удаление таблицы
+
+DROP TABLE [IF EXIST] имя_таблицы;
+
+# Строковый тип данных
+
+# CHAR и VARCHAR
+
+CHAR(X)	Содержит текстовые строки. Длина фиксируемая, её вы указываете при объявлении. В случае, если длина строки меньше указанной, она дополняется правыми пробелами до указанной длины.	Длина может быть любой в диапазоне от 0 до 255
+
+VARCHAR(X)	Содержит текстовые строки. Длина строк динамическая.	Длина может быть любой в диапазоне от 0 до 65,535
+
+# BINARY и VARBINARY
+
+BINARY(X)	Содержит двоичные строки. Длина фиксируемая, её вы указываете при объявлении.	Длина может быть любой в диапазоне от 0 до 255
+
+VARBINARY(X)	Содержит двоичные строки. Длина строк динамическая.	Длина может быть любой в диапазоне от 0 до 65,535
+
+# BLOB и TEXT
+
+BLOB	Содержит двоичные строки.	Максимальная длина 65,535
+TEXT	Содержит текстовые строки.	Максимальная длина 65,535
+
+TINYBLOB	Максимальная длина 255
+MEDIUMBLOB	Максимальная длина 16,777,215
+LONGBLOB	Максимальная длина 4,294,967,295
+TINYTEXT	Максимальная длина 255
+MEDIUMTEXT	Максимальная длина 16,777,215
+LONGTEXT	Максимальная длина 4,294,967,295
+
+# Числовой тип данных
+
+TINYINT	1 байт	от -128 до 127 (от -27 до 27-1) от 0 до 255 (от 0 до 28-1)
+SMALLINT	2 байта	от -32768 до 32767 (от -215 до 215-1) от 0 до 65535 (от 0 до 216-1)
+MEDIUMINT	3 байта	от -223 до 223-1 от 0 до 224-1
+INT / INTEGER(синонимы)	4 байта	от -231 до 231-1 от 0 до 232-1
+BIGINT	8 байт	от -263 до 263-1 от 0 до 264-1
+
+Точные вещественные числа
+
+DEC[(M,D)] / DECIMAL[(M,D)] (синонимы)	Зависит от параметров M и D
+
+CREATE TABLE Users (
+    ...
+    salary DECIMAL(5,2)
+);
+
+В данном примере объявляется, что в колонке salary будут храниться числа, имеющие максимум 5 цифр, причём 2 из которых отведены под десятичную часть. То есть, в данной колонке будут храниться значения в промежутке от -999.99 до 999.99.
+
+# Битовые числа
+
+BIT[(M)]	M бит	От 1 до 64 битов, в зависимости от значения M
+BOOL / BOOLEAN (синонимы)	1 бит	Либо 0, либо 1
+
+# Приближенные числа
+
+FLOAT[(M, D)]	4 байта	Минимальное значение ±1.17·10-39 Максимальное значение ±3.4·1038
+REAL[(M, D)] / DOUBLE[(M, D)] (синонимы)	8 байтов	Минимальное значение ±2.22·10-308 Максимальное значение ±1.79·10308
+
+Числовые типы данных с плавающей точкой также могут иметь параметр UNSIGNED
+
+# Работа с датами и временем
+
+DATE	Хранит значения даты в виде ГГГГ-ММ-ДД. Например, 2022-12-05	от 1000-01-01 до 9999-12-31	3 байта
+TIME	Хранит значения времени в формате ЧЧ:ММ:СС. (или в формате ЧЧЧ:ММ:СС для значений с большим количеством часов). Например, 800:50:50	от -838:59:59 до 838:59:59	3 байта
+DATETIME	Хранит значение даты и времени в виде ГГГГ-MM-ДД ЧЧ:ММ:СС. Например, 2022-12-05 10:37:22	от 1000-01-01 00:00:00 до 9999-12-31 23:59:59	8 байта
+TIMESTAMP	Хранит значение даты и времени в виде ГГГГ-MM-ДД ЧЧ:ММ:СС. Например, 2022-12-05 10:37:22	от 1970-01-01 00:00:01 до 2038-01-19 03:14:07	4 байта
+
+DATETIME
+Хранит значения в диапазоне от 1000-01-01 00:00:00 до 9999-12-31 23:59:59 и при этом занимает 8 байт. Этот тип данных не зависит от временной зоны, установленной в MySQL. Он всегда отображается ровно в таком виде, в котором был установлен и в котором хранится в базе данных. То есть при изменении часового пояса, отображение времени не изменится.
+
+TIMESTAMP
+Хранит сколько прошло секунд с 1970-01-01 00:00:00 по нулевому часовому поясу и занимает 4 байта. При выборках отображается с учётом текущего часового пояса. Часовой пояс можно задать в настройках операционной системы, где работает MySQL, в глобальных настройках MySQL или в конкретной сессии. В базе данных при создании записи с типом TIMESTAMP значение сохраняется по нулевому часовому поясу.
+
+CREATE TABLE date_table (datetime TIMESTAMP);
+INSERT INTO date_table VALUES("2022-06-16 16:37:23");
+INSERT INTO date_table VALUES("22.05.31 8+15+04");
+INSERT INTO date_table VALUES("2014/02/22 16*37*22");
+INSERT INTO date_table VALUES("20220616163723");
+INSERT INTO date_table VALUES("2021-02-12");
+SELECT * FROM date_table;
+
+
+# Представления, VIEW
+
+CREATE [OR REPLACE]
+VIEW имя_представления [(имена_полей_представления)]
+AS select_выражение
+
+
+CREATE VIEW ViewUsers AS
+    SELECT id,
+           name,
+           CONCAT(SUBSTR(email, 1, 2), '****', SUBSTR(email, -4)) AS email
+FROM Users;
+
+SELECT * FROM ViewUsers;
+
+
+# Индексы в SQL
+
+CREATE INDEX idx_email
+    ON Users (email);
+
+SHOW INDEX FROM Users;
+
+DROP INDEX idx_email ON Users;
+
+CREATE UNIQUE INDEX idx_email
+    ON Users (email);
+
+CREATE INDEX idx_full_name
+    ON Student (last_name, first_name);
+
+# EXPLAIN показывает, как СУБД планирует выполнить запрос, не запуская его фактически
+
+EXPLAIN
+  SELECT id, first_name, last_name
+  FROM Student
+  WHERE first_name LIKE 'A%'
+  AND last_name LIKE 'L%';

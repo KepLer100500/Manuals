@@ -1,0 +1,287 @@
+1.
+select name 
+from Passenger
+
+2.
+SELECT name
+from Company
+
+3.
+SELECT *
+from Trip
+WHERE town_from = 'Moscow'
+
+4.
+select name
+from Passenger
+where name like '%man'
+
+5.
+select count(plane) as count
+from Trip
+where plane = 'TU-134'
+
+6.
+SELECT DISTINCT Company.name
+FROM Trip
+	JOIN Company ON Trip.company = Company.id
+WHERE Trip.plane = 'Boeing'
+
+7.
+select DISTINCT plane
+FROM Trip
+where town_to = 'Moscow'
+
+8.
+SELECT town_to,
+	sec_to_time(TIMESTAMPDIFF(second, time_out, time_in)) AS flight_time
+FROM Trip
+WHERE town_from = 'Paris'
+
+9.
+SELECT Company.name
+FROM Trip
+	JOIN Company ON Trip.company = Company.id
+WHERE Trip.town_from = 'Vladivostok'
+
+10.
+SELECT *
+FROM Trip
+WHERE time_out >= '1900-01-01 10:00:00'
+	AND time_out <= '1900-01-01 14:00:00'
+
+11.
+SELECT name
+FROM Passenger
+WHERE LENGTH(name) = (
+		SELECT max(LENGTH(name))
+		FROM Passenger
+	)
+
+12.
+SELECT Trip.id,
+	COUNT(Pass_in_trip.id) AS COUNT
+FROM Trip
+	LEFT JOIN Pass_in_trip ON Pass_in_trip.trip = Trip.id
+GROUP BY Trip.id
+
+13.
+SELECT name
+FROM Passenger
+GROUP BY name
+HAVING COUNT(name) > 1
+ORDER BY name
+
+14.
+SELECT town_to
+FROM Trip
+	JOIN Pass_in_trip ON Trip.id = Pass_in_trip.trip
+	JOIN Passenger ON Pass_in_trip.passenger = Passenger.id
+WHERE Passenger.name = 'Bruce Willis'
+
+15.
+SELECT time_in
+FROM Trip
+	JOIN Pass_in_trip ON Trip.id = Pass_in_trip.trip
+	JOIN Passenger ON Pass_in_trip.passenger = Passenger.id
+WHERE Passenger.name = 'Steve Martin'
+	AND Trip.town_to = 'London'
+
+16.
+SELECT Passenger.name,
+	COUNT(*) AS COUNT
+FROM Passenger
+	JOIN Pass_in_trip ON Passenger.id = Pass_in_trip.passenger
+GROUP BY Passenger.id
+HAVING COUNT(trip) > 0
+ORDER BY COUNT(trip) DESC,
+	name ASC
+
+17.
+SELECT FamilyMembers.member_name,
+	FamilyMembers.status,
+	sum(amount * unit_price) AS costs
+FROM FamilyMembers
+	JOIN Payments ON FamilyMembers.member_id = Payments.family_member
+WHERE year(date) = '2005'
+GROUP BY family_member
+
+18.
+SELECT member_name
+FROM FamilyMembers
+WHERE birthday = (
+		SELECT min(birthday)
+		FROM FamilyMembers
+	)
+
+19.
+SELECT DISTINCT STATUS
+FROM FamilyMembers
+	JOIN Payments ON FamilyMembers.member_id = Payments.family_member
+	JOIN Goods ON Payments.good = Goods.good_id
+WHERE Goods.good_name = 'potato'
+
+20.
+SELECT FamilyMembers.status,
+	FamilyMembers.member_name,
+	sum(Payments.amount * Payments.unit_price) AS costs
+FROM FamilyMembers
+	JOIN Payments ON FamilyMembers.member_id = Payments.family_member
+	JOIN Goods ON Payments.good = Goods.good_id
+	JOIN GoodTypes ON Goods.type = GoodTypes.good_type_id
+WHERE GoodTypes.good_type_name = 'entertainment'
+GROUP BY Payments.family_member
+
+21.
+SELECT good_name
+FROM Goods
+	JOIN Payments ON Goods.good_id = Payments.good
+GROUP BY good
+HAVING COUNT(amount) > 1
+
+22.
+SELECT member_name
+FROM FamilyMembers
+WHERE STATUS = 'mother'
+
+23.
+SELECT good_name,
+	max(unit_price) AS unit_price
+FROM Payments
+	JOIN Goods ON Payments.good = Goods.good_id
+	JOIN GoodTypes ON Goods.type = GoodTypes.good_type_id
+WHERE good_type_name = 'delicacies'
+GROUP BY good_name
+ORDER BY unit_price DESC
+LIMIT 1
+
+~
+
+SELECT good_name,
+	unit_price
+FROM Payments
+	JOIN Goods ON Payments.good = Goods.good_id
+	JOIN GoodTypes ON Goods.type = GoodTypes.good_type_id
+WHERE unit_price = (
+		SELECT max(unit_price)
+		FROM Payments
+			JOIN Goods ON Payments.good = Goods.good_id
+			JOIN GoodTypes ON Goods.type = GoodTypes.good_type_id
+		WHERE good_type_name = 'delicacies'
+	)
+
+24.
+SELECT member_name,
+	sum(amount * unit_price) AS costs
+FROM FamilyMembers
+	JOIN Payments ON FamilyMembers.member_id = Payments.family_member
+WHERE YEAR(date) = 2005
+	AND MONTH(date) = 6
+GROUP BY member_id
+
+25.
+select good_name from Goods
+EXCEPT
+SELECT DISTINCT good_name
+FROM Goods
+	JOIN Payments ON Goods.good_id = Payments.good
+WHERE YEAR(date) = 2005
+
+26.
+SELECT good_type_name
+FROM GoodTypes
+EXCEPT
+SELECT good_type_name
+FROM GoodTypes
+	JOIN Goods ON GoodTypes.good_type_id = Goods.type
+	JOIN Payments ON Goods.good_id = Payments.good
+WHERE YEAR(date) = 2005
+
+27.
+SELECT good_type_name,
+	sum(amount * unit_price) AS costs
+FROM Payments
+	JOIN Goods ON Payments.good = Goods.good_id
+	RIGHT JOIN GoodTypes ON Goods.type = GoodTypes.good_type_id
+	WHERE YEAR(date) = 2005
+GROUP BY good_type_name
+
+28.
+SELECT COUNT(*) AS COUNT
+FROM Trip
+WHERE town_from = 'Rostov'
+	AND town_to = 'Moscow'
+
+29.
+SELECT DISTINCT Passenger.name
+FROM Passenger
+	JOIN Pass_in_trip ON Passenger.id = Pass_in_trip.passenger
+	JOIN Trip ON Pass_in_trip.trip = Trip.id
+WHERE town_to = 'Moscow'
+	AND plane = 'TU-134'
+
+30.
+SELECT trip,
+	COUNT(passenger) AS COUNT
+FROM Pass_in_trip
+GROUP BY trip
+ORDER BY COUNT DESC
+
+31.
+SELECT *
+FROM FamilyMembers
+WHERE member_name LIKE '%Quincey%'
+
+32.
+SELECT FLOOR(avg(DATEDIFF(NOW(), birthday) / 365)) AS age
+FROM FamilyMembers
+
+33.
+SELECT avg(unit_price) AS cost
+FROM Payments
+	JOIN Goods ON Payments.good = Goods.good_id
+WHERE good_name LIKE '%caviar'
+
+34.
+SELECT COUNT(name) AS COUNT
+FROM Class
+WHERE name LIKE '%10%'
+
+35.
+SELECT COUNT(DISTINCT classroom) AS COUNT
+FROM Schedule
+WHERE date = '2019-09-02'
+
+36.
+SELECT *
+FROM Student
+WHERE address LIKE '%ul. Pushkina%'
+
+37.
+SELECT min(FLOOR(DATEDIFF(NOW(), birthday) / 365)) AS year
+FROM Student
+
+38.
+SELECT COUNT(first_name) AS COUNT
+FROM Student
+WHERE first_name = 'Anna'
+
+39.
+SELECT COUNT(student) AS COUNT
+FROM Student_in_class
+	JOIN Class ON Class.id = Student_in_class.class
+WHERE name = '10 B'
+
+40.
+SELECT Subject.name AS subjects
+FROM Subject
+	JOIN Schedule ON Subject.id = Schedule.subject
+	JOIN Teacher ON Schedule.teacher = Teacher.id
+WHERE Teacher.last_name = 'Romashkin'
+	AND Teacher.first_name LIKE 'P%'
+	AND Teacher.middle_name LIKE 'P%'
+
+41.
+SELECT start_pair
+FROM Timepair
+LIMIT 3, 1
