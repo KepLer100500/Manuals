@@ -1,0 +1,433 @@
+git config --global user.name "KepLer"
+git config --global user.email "kepler007@mail.ru"
+
+git config --global init.defaultBranch main # Имя ветки по умолчанию
+
+# Корректная обработка окончаний строк
+# Linux
+git config --global core.autocrlf input
+git config --global core.safecrlf warn
+# Windows
+git config --global core.autocrlf true 
+git config --global core.safecrlf warn
+
+mkdir work
+cd work
+touch hello.html
+git init
+git add hello.html
+git commit -m "Initial Commit"
+git status
+git branch -m master main # переименовать ветку в main
+
+git add hello.html # добавить в индекс
+git status
+git reset # снять индексацию изменений
+git status
+
+git add a.html
+git add b.html
+git commit -m "Changes for a and b"
+
+git add c.html
+git commit -m "Unrelated change to c"
+
+git log --pretty=oneline
+git log --oneline --max-count=2
+git log --oneline --since="5 minutes ago"
+git log --oneline --until="5 minutes ago"
+git log --oneline --author="Your Name"
+git log --oneline --all
+git log --all --pretty=format:"%h %cd %s (%an)" --since="7 days ago"
+
+git log --pretty=format:"%h %ad | %s%d [%an]" --date=short
+
+# настроить формат вывода истории по умолчанию
+git config --global format.pretty '%h %ad | %s%d [%an]'
+git config --global log.date short
+
+git log # теперь красивый
+
+# Получение старых версий
+
+git checkout 1f3f616ee5fbe3626c3647019a565c7edc87368b
+cat hello.html
+
+git switch main # Вернитесь к последней версии в ветке main
+cat hello.html
+
+
+git tag v1 # Создайте тег первой версии
+git log
+
+git checkout v1^ # переключимся на предыдущую версию
+cat hello.html
+
+git tag v1-beta
+git log
+
+git checkout v1
+git checkout v1-beta
+
+git tag # Просмотр тегов
+
+# Отмена локальных изменений (до индексации)
+
+git checkout hello.html # или git checkout .
+git status
+cat hello.html
+
+# Отмена проиндексированных изменений (перед коммитом)
+
+git add hello.html
+git status
+git reset HEAD hello.html # сбрасывает область подготовки к HEAD
+git checkout hello.html
+git status
+cat hello.html
+
+# Отмена коммитов
+
+git add hello.html
+git commit -m "Oops, we didn't want this commit"
+git revert HEAD # в редакторе коммит-сообщение сохраняем, получаем новый коммит - откатывающий файл
+git log # видим 2 последних коммита
+
+# Удаление коммитов из ветки
+
+git log
+git tag oops
+git reset --hard v1 #  рабочая директория должна быть приведена к состоянию тега v1
+git log
+git log --all # покажет и отменённые коммиты
+
+# Удаление тега
+
+git tag -d oops # Тег oops больше не будет отображаться в репозитории
+git log --all
+
+# Внесение изменений в коммиты
+
+git add hello.html
+git commit -m "Added copyright statement"
+git log
+nano hello.html # меняем файл
+git add hello.html
+git commit --amend -m "Added copyright statement with email"
+
+# Создание ветки
+
+git switch -c style
+git status
+git add style.css
+git commit -m "Added css stylesheet"
+nano hello.html
+git add hello.html
+git commit -m "Included stylesheet into hello.html"
+git branch # список веток
+
+# Переключение веток
+
+git switch main
+cat hello.html
+git switch style
+cat hello.html
+
+# Перемещение файлов
+
+git log hello.html # история изменений конкретного файла
+git log style.css # история изменений конкретного файла
+
+git show v1 # просмотр изменений в конкретном коммите
+git show 2ca2925
+
+mv hello.html index.html # небезопасное перемещение
+git status
+git add .
+git status
+
+mkdir css
+git mv style.css css/style.css # безопасное перемещение
+git status
+
+git commit -m "Renamed hello.html; moved style.css"
+git log css/style.css # коммиты для файла
+git log --follow css/style.css # история файла до его перемещения
+
+# Изменения в ветке main
+
+git switch main
+git add README
+git commit -m "Added README"
+
+git log --all --graph #  просмотр веток и их расхождения
+
+git switch style # переключаемся на ветку style
+git merge main # слияние ветки main с веткой style, сохраняем описание
+git log --all --graph
+
+# конфликт
+
+git switch main
+nano index.html
+git add index.html
+git commit -m "Added meta title"
+git log --all --graph
+
+После коммита «Added README» ветка main была объединена с веткой style, но в настоящее время в main есть дополнительный коммит, который не был слит с style.
+Последнее изменение в main конфликтует с некоторыми изменениями в style. 
+
+# Слияние main в ветку style
+
+git switch style
+git merge main
+
+	Auto-merging index.html
+	CONFLICT (content): Merge conflict in index.html
+	Automatic merge failed; fix conflicts and then commit the result.
+
+git status
+
+	both modified:   index.html
+
+nano index.html
+
+$ cat index.html
+<!-- Author: KepLer (kepler007@mail.ru) -->
+<html>
+  <head>
+<<<<<<< HEAD:index.html
+<link type="text/css" rel="stylesheet" media="all" href="style.css" />
+=======
+    <title>Hello World Page</title>
+>>>>>>> main:hello.html
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <p>Let's learn Git together.</p>
+  </body>
+</html>
+
+Часть между <<<<<<< >>>>>>> является конфликтом. Верхняя часть соответствует ветке style, которая является текущей веткой (или HEAD) репозитория. Нижняя часть соответствует изменениям из ветки main. Git не может решить, какие изменения применить, поэтому он просит вас разрешить конфликт вручную. Вы можете оставить изменения из ветки style или из main, либо объединить их любым удобным способом. Вы также можете внести в файл любые другие изменения.
+
+git merge --abort # Отмена слияния
+git status
+
+# Решение конфликта
+
+nano index.html
+
+<!-- Author: KepLer (kepler007@mail.ru) -->
+<html>
+  <head>
+    <title>Hello World Page</title>
+    <link type="text/css" rel="stylesheet" media="all" href="style.css" />
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <p>Let's learn Git together.</p>
+  </body>
+</html>
+
+git add index.html
+git commit -m "Resolved merge conflict"
+git status
+git log --all --graph
+
+# rebase против merge
+# Сброс ветки style
+
+git switch style
+git log --graph
+
+*   e919d2c 2024-10-14 | Resolved merge conflict (HEAD -> style) [KepLer]
+|\
+| * 20999ff 2024-10-14 | Added meta title (main) [KepLer]
+* | 1fe3296 2024-10-14 | Merge branch 'main' into style [KepLer]
+|\|
+| * 4230c2c 2024-10-14 | Added README [KepLer]
+* | 87badd6 2024-10-14 | Renamed hello.html; moved style.css [KepLer]
+* | 38fcf7e 2024-10-14 | Included stylesheet into hello.html [KepLer]
+* | 2ca2925 2024-10-14 | Added css stylesheet [KepLer]
+|/
+* b5c98b1 2024-10-14 | Added copyright statement with email [KepLer]
+* 6e6a585 2024-10-14 | Added HTML header (tag: v1) [KepLer]
+* c946bb9 2024-10-14 | Added standard HTML page tags (tag: v1-beta) [KepLer]
+* aa860a8 2024-10-14 |  On branch main  Changes to be committed:        deleted:    b.html      deleted:    c.html      renamed:    a.html -> hello.html [KepLer]
+* 9fce5b1 2024-10-14 | deleted hello [KepLer]
+* 4acc337 2024-10-14 | Unrelated change to c [KepLer]
+* 7be496d 2024-10-14 | Changes for a and b [KepLer]
+* 1f3f616 2024-10-14 | Init commit [KepLer]
+
+коммит «Renamed hello.html; moved style.css» был последним на ветке style перед слиянием
+
+git reset --hard HEAD~2 # сбросим ветку style к этому коммиту # или git reset --hard 87badd6
+
+git log --graph
+
+* 87badd6 2024-10-14 | Renamed hello.html; moved style.css (HEAD -> style) [KepLer]
+* 38fcf7e 2024-10-14 | Included stylesheet into hello.html [KepLer]
+* 2ca2925 2024-10-14 | Added css stylesheet [KepLer]
+* b5c98b1 2024-10-14 | Added copyright statement with email [KepLer]
+* 6e6a585 2024-10-14 | Added HTML header (tag: v1) [KepLer]
+* c946bb9 2024-10-14 | Added standard HTML page tags (tag: v1-beta) [KepLer]
+* aa860a8 2024-10-14 |  On branch main  Changes to be committed:        deleted:    b.html      deleted:    c.html      renamed:    a.html -> hello.html [KepLer]
+* 9fce5b1 2024-10-14 | deleted hello [KepLer]
+* 4acc337 2024-10-14 | Unrelated change to c [KepLer]
+* 7be496d 2024-10-14 | Changes for a and b [KepLer]
+* 1f3f616 2024-10-14 | Init commit [KepLer]
+
+# Перебазирование
+
+git switch style
+git rebase main
+
+Auto-merging hello.html
+CONFLICT (content): Merge conflict in hello.html
+error: could not apply 38fcf7e... Included stylesheet into hello.html
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+Could not apply 38fcf7e... Included stylesheet into hello.html
+
+git status
+
+interactive rebase in progress; onto 20999ff
+Last commands done (2 commands done):
+   pick 2ca2925 Added css stylesheet
+   pick 38fcf7e Included stylesheet into hello.html
+Next command to do (1 remaining command):
+   pick 87badd6 Renamed hello.html; moved style.css
+  (use "git rebase --edit-todo" to view and edit)
+You are currently rebasing branch 'style' on '20999ff'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Unmerged paths:
+  (use "git restore --staged <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+        both modified:   hello.html
+
+nano hello.html
+
+  GNU nano 7.2                       hello.html
+<!-- Author: KepLer (kepler007@mail.ru) -->
+<html>
+  <head>
+<<<<<<< HEAD
+    <title>Hello World Page</title>
+=======
+<link type="text/css" rel="stylesheet" media="all" href="style.css" />
+>>>>>>> 38fcf7e (Included stylesheet into hello.html)
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <p>Let's learn Git together.</p>
+  </body>
+</html>
+
+Правим файл
+
+<!-- Author: KepLer (kepler007@mail.ru) -->
+<html>
+  <head>
+    <title>Hello World Page</title>
+    <link type="text/css" rel="stylesheet" media="all" href="style.css" />
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <p>Let's learn Git together.</p>
+  </body>
+</html>
+
+git add . # добавим файл в индекс
+git rebase --continue # продолжаем перебазирование. Изменим текст коммита. Мы можем оставить текст без изменений.
+
+git status
+git log --all --graph
+
+# Когда использовать команду rebase, а когда команду merge?
+
+Используйте команду rebase:
+
+- Когда вы получаете изменения из удаленного репозитория и хотите применить их к своей локальной ветке.
+- Если вы хотите, чтобы история коммитов была линейной и легко читаемой.
+
+Не используйте команду rebase:
+
+- Если текущая ветка является публичной и общей. Переписывание таких веток будет мешать работе других членов команды.
+- Если важна точная история ветки коммитов (поскольку команда rebase переписывает историю коммитов).
+
+Учитывая приведенные выше рекомендации, я предпочитаю использовать команду rebase для краткосрочных, локальных веток и команду merge для веток в публичном репозитории.
+
+# Слияние в ветку main
+
+git switch main
+git merge style
+
+Updating 20999ff..edaa41c
+Fast-forward
+ css/style.css            | 3 +++
+ hello.html => index.html | 1 +
+ 2 files changed, 4 insertions(+)
+ create mode 100644 css/style.css
+ rename hello.html => index.html (73%)
+
+# Несколько репозиториев
+
+git clone work home # клонирует work, создаёт home
+
+git remote # инфо об удалённых (не локальных) репозиториях
+
+git branch # просмотр веток
+
+git branch -a # просмотр веток (в том числе удалённых - removed)
+
+cd work
+nano README
+git add README
+git commit -m "Changed README in original repo"
+
+cd ../home
+git fetch # подтягиваем коммиты из work
+git log --all
+
+git merge origin/main # сливаем подтянутые изменения в локальную ветку main
+
+git pull # и подтягивает и сливает изменения - эквивалент fetch + merge
+
+# Добавление ветки наблюдения
+
+git branch --track style origin/style # добавить локальную ветку, которая отслеживает изменения удаленной ветки
+git branch -a
+git log --max-count=2
+
+# Чистые репозитории
+
+cd ..
+git clone --bare work work.git
+ls work.git
+
+# Добавление удаленного репозитория
+
+cd work
+git remote add shared ../work.git # Добавить чистый репозиторий в качестве удаленного репозитория
+
+git remote # покажет shared
+
+# Отправка изменений
+
+git switch main
+nano README
+git add README
+git commit -m "Added shared comment to readme"
+git push shared main # Отправка изменений на удаленный чистый репозиторий
+
+# Подтягивание общих изменений
+
+git remote add shared ../work.git
+git branch --track shared main
+git pull shared main
+cat README
