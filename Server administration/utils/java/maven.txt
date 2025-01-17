@@ -27,6 +27,15 @@ mvn archetype:generate
 mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4	# interactive mode
 mvn archetype:generate -DgroupId=com.kepler -DartifactId=my-project -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false		# config inline
 
+# Install aspose-cad-24.9.jar
+
+mvn install:install-file 
+-Dfile=aspose-cad-24.9.jar 
+-DgroupId=com.aspose 
+-DartifactId=aspose-cad 
+-Dversion=24.9 
+-Dpackaging=jar
+
 # Blocks pom.xml
 
 <packaging>jar</packaging>
