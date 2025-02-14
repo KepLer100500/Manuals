@@ -1,0 +1,5 @@
+# Сгенерировать ssh ключ на удалённом сервере
+kepler@remote:~$ ssh-keygen -t rsa -b 4096 -C "kepler@mail.com"
+
+# Скопировать ключ с удалённого сервера на локальный
+kepler@local:~$ ssh-copy-id kepler@192.168.0.123
