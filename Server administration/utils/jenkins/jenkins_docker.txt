@@ -1,0 +1,52 @@
+mkdir -p /opt/jenkins_home
+sudo chown -R $USER:$USER /opt/jenkins_home
+
+# первый запуск
+
+docker run -d \
+  --name jenkins \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  --restart unless-stopped \
+  -v /opt/jenkins_home:/var/jenkins_home \
+  -u $(id -u):$(id -g) \
+  jenkins/jenkins:lts
+  
+-d — запуск в фоновом режиме.
+-p 8080:8080 — веб-интерфейс Jenkins.
+-p 50000:50000 — порт для подключения агентов (необязательно, но рекомендовано).
+--restart unless-stopped — автоматический рестарт при перезагрузке сервера.
+-v /opt/jenkins_home:/var/jenkins_home — монтируем постоянное хранилище.
+-u $(id -u):$(id -g) — запуск от текущего пользователя, чтобы не было проблем с правами на файлы.
+jenkins/jenkins:lts — образ Jenkins LTS (Long Term Support), рекомендован для продакшена.
+
+docker start jenkins # повторные запуски
+
+# Пароль
+
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+http://<ваш_сервер>:8080
+
+---
+
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - /opt/jenkins_home:/var/jenkins_home
+    restart: unless-stopped
+    user: "${UID}:${GID}"
+
+
+export UID=$(id -u)
+export GID=$(id -g)
+docker-compose up -d
+docker-compose down
