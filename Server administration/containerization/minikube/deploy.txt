@@ -1,0 +1,11 @@
+minikube start --driver=docker
+eval $(minikube docker-env)
+docker build -t rest-app ./docker/
+eval $(minikube docker-env -u)
+kubectl apply -f ./kuber/deployment.yaml
+kubectl apply -f ./kuber/service.yaml
+minikube service rest-app-service --url
+kubectl get nodes
+kubectl get pods
+kubectl get services
+kubectl port-forward svc/rest-app-service 8083:8083 --address 0.0.0.0 &

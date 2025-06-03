@@ -1,0 +1,211 @@
+sudo usermod -aG docker $USER  # Добавить текущего пользователя в группу docker
+
+# Установка Minikube
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+# Установка kubectl (клиент Kubernetes)
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+kubectl version
+minikube version
+
+# Запуск Minikube
+minikube start --driver=docker
+
+# Проверка, что кластер работает:
+
+kubectl get nodes
+	NAME       STATUS   ROLES           AGE   VERSION
+	minikube   Ready    control-plane   10s   v1.28.3
+	
+# Сборка docker образа
+
+	FROM maven:3.8.5-openjdk-17-slim
+	COPY . /home/app/
+	WORKDIR /home/app/
+	EXPOSE 8083
+	CMD ["mvn","spring-boot:run"]
+
+# Или вот так
+
+	FROM openjdk:17-alpine
+	COPY . /home/app/
+	WORKDIR /home/app/
+	EXPOSE 8083
+	CMD ["java", "-jar", "app.jar"]
+
+	
+docker build -t rest-app . # сборка в локальном docker окружении
+docker run -d -p 8083:8083 rest-app # быстрый тест
+
+# Загрузка образа в Minikube
+
+eval $(minikube docker-env)  # Переключение на Docker Minikube
+docker build -t rest-app . # пересборка для Minikube
+eval $(minikube docker-env -u)  # Вернуться к локальному Docker
+
+### deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest-app
+  template:
+    metadata:
+      labels:
+        app: rest-app
+    spec:
+      containers:
+      - name: rest-app
+        image: rest-app
+        imagePullPolicy: Never  # Используем локальный образ (не из реестра)
+        ports:
+        - containerPort: 8083
+
+# service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-app-service
+spec:
+  selector:
+    app: rest-app
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083
+  type: NodePort
+
+# Применение настроек yaml
+
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+
+minikube ip
+minikube logs rest-app-646656cb7f-hsj84 # просмотр логов контейнера
+kubectl get nodes
+kubectl get pods
+kubectl get services
+
+kubectl port-forward [resource-type]/[resource-name] [local-port]:[resource-port]
+    [resource-type]: тип ресурса (например, pod, svc).
+    [resource-name]: имя ресурса.
+    [local-port]: локальный порт на вашем компьютере.
+    [resource-port]: порт на ресурсе Kubernetes.
+
+minikube service rest-app-service --url # get url -> http://192.168.49.2:31308
+
+kubectl port-forward svc/rest-app-service 8083:8083 --address 0.0.0.0
+kubectl port-forward svc/rest-app-service 8083:8083 --address 0.0.0.0 &
+http://192.168.162.144:8083/status
+
+minikube dashboard
+minikube dashboard --url
+minikube stop
+sudo systemctl restart docker
+minikube start --driver=docker
+
+---
+
+# Работа с запущенными подами
+
+kubectl logs my-pod                                 # вывести логи пода (в stdout)
+kubectl logs -l name=myLabel                        # вывести логи пода с меткой myLabel (в stdout)
+kubectl logs my-pod --previous                      # вывести логи пода (в stdout) по предыдущему экземпляру контейнера
+kubectl logs my-pod -c my-container                 # вывести логи контейнера пода (в stdout, при работе с несколькими контейнерами)
+kubectl logs -l name=myLabel -c my-container        # вывести логи пода с меткой myLabel (в stdout)
+kubectl logs my-pod -c my-container --previous      # вывести логи контейнера пода (в stdout, при работе с несколькими контейнерами) по предыдущему экземпляру контейнера
+kubectl logs -f my-pod                              # вывести логи пода в режиме реального времени (в stdout)
+kubectl logs -f my-pod -c my-container              # вывести логи контейнера пода в режиме реального времени (в stdout, при работе с несколькими контейнерами)
+kubectl logs -f -l name=myLabel --all-containers    # вывести логи всех подов с меткой myLabel (в stdout)
+kubectl run -i --tty busybox --image=busybox -- sh  # запустить под как интерактивную оболочку
+kubectl run nginx --image=nginx --restart=Never -n
+mynamespace                                         # Запустить под nginx в заданном пространстве имён
+kubectl run nginx --image=nginx --restart=Never     # Запустить под nginx и записать его спецификацию в файл pod.yaml
+--dry-run -o yaml > pod.yaml
+
+kubectl attach my-pod -i                            # Прикрепить к запущенному контейнеру
+kubectl port-forward my-pod 5000:6000               # Переадресовать порт 5000 в локальной машине на порт 6000 в поде my-pod
+kubectl exec my-pod -- ls /                         # Выполнить команду в существующем поде (в случае одного контейнера).
+kubectl exec my-pod -c my-container -- ls /         # Выполнить команду в существующем поде (в случае нескольких контейнеров)
+kubectl top pod POD_NAME --containers               # Показать метрики по заданному поду вместе с его контейнерами
+
+# Удаление ресурсов
+
+kubectl delete -f ./pod.json                                              # Удалить под по типу и имени в pod.json
+kubectl delete pod,service baz foo                                        # Удалить поды и сервисы с одноимёнными именам "baz" и "foo"
+kubectl delete pods,services -l name=myLabel                              # Удалить поды и сервисы с именем метки myLabel
+kubectl -n my-ns delete pod,svc --all                                     # Удалить все поды и сервисы в пространстве имен my-ns
+# Удалить все поды, соответствующие pattern1 или pattern2 в awk
+kubectl get pods  -n mynamespace --no-headers=true | awk '/pattern1|pattern2/{print $1}' | xargs  kubectl delete -n mynamespace pod
+minikube delete # Очисти текущий кластер!!!
+
+# Get-команды с основном выводом
+kubectl get services                          # Вывести все сервисы в пространстве имён
+kubectl get pods --all-namespaces             # Вывести все поды во всех пространств имён
+kubectl get pods -o wide                      # Вывести все поды в текущем пространстве имён с подробностями
+kubectl get deployment my-dep                 # Вывести определённое развёртывание
+kubectl get pods                              # Вывести все поды в пространстве имён
+kubectl get pod my-pod -o yaml                # Получить информацию по поду в формате YAML
+
+# Посмотреть дополнительные сведения команды с многословным выводом
+kubectl describe nodes my-node
+kubectl describe pods my-pod
+
+# Вывести сервисы, отсортированные по имени
+kubectl get services --sort-by=.metadata.name
+
+# Вывести поды, отсортированные по количеству перезагрузок
+kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'
+
+# Вывести постоянные тома (PersistentVolumes), отсортированные по емкости
+kubectl get pv --sort-by=.spec.capacity.storage
+
+# Получить метку версии всех подов с меткой app=cassandra
+kubectl get pods --selector=app=cassandra -o \
+  jsonpath='{.items[*].metadata.labels.version}'
+
+# Получить все рабочие узлы (с помощью селектора исключаем узлы с меткой 'node-role.kubernetes.io/master')
+kubectl get node --selector='!node-role.kubernetes.io/master'
+
+# Получить все запущенные поды в пространстве имён
+kubectl get pods --field-selector=status.phase=Running
+
+# Получить внешние IP-адреса (ExternalIP) всех узлов
+kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="ExternalIP")].address}'
+
+# Вывести имена подов, принадлежащие к определённому RC
+# Использование команды "jq" помогает упросить поиск в jsonpath, подробнее смотрите на сайте https://stedolan.github.io/jq/
+sel=${$(kubectl get rc my-rc --output=json | jq -j '.spec.selector | to_entries | .[] | "\(.key)=\(.value),"')%?}
+echo $(kubectl get pods --selector=$sel --output=jsonpath={.items..metadata.name})
+
+# Показать метки всех подов (или любого другого объекта Kubernetes, которым можно прикреплять метки)
+kubectl get pods --show-labels
+
+# Получить готовые узлы
+JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}' \
+ && kubectl get nodes -o jsonpath="$JSONPATH" | grep "Ready=True"
+
+# Вывод декодированных секретов без внешних инструментов
+kubectl get secret my-secret -o go-template='{{range $k,$v := .data}}{{"### "}}{{$k}}{{"\n"}}{{$v|base64decode}}{{"\n\n"}}{{end}}'
+
+# Вывести все секреты, используемые сейчас в поде.
+kubectl get pods -o json | jq '.items[].spec.containers[].env[]?.valueFrom.secretKeyRef.name' | grep -v null | sort | uniq
+
+# Вывести все идентификаторы (containerID) контейнеров инициализации (initContainers) во всех подах.
+# Это полезно при очистке остановленных контейнеров, не удаляя при этом контейнеры инициализации.
+kubectl get pods --all-namespaces -o jsonpath='{range .items[*].status.initContainerStatuses[*]}{.containerID}{"\n"}{end}' | cut -d/ -f3
+
+# Вывести события, отсортированные по временной метке
+kubectl get events --sort-by=.metadata.creationTimestamp
+
+# Сравнить текущее состояние кластера с состоянием, в котором находился бы кластер в случае применения манифеста.
+kubectl diff -f ./my-manifest.yaml
