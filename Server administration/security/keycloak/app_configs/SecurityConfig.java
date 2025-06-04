@@ -15,9 +15,11 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import java.util.stream.Stream;
+
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +29,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(new MvcRequestMatcher(introspector, "/"))
+                        .permitAll()
                         .requestMatchers(new MvcRequestMatcher(introspector, "/login"))
                         .permitAll()
                         .requestMatchers(new MvcRequestMatcher(introspector, "/VAADIN/**"))
@@ -41,13 +45,14 @@ public class SecurityConfig {
                 )
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
+                        .loginPage("/")
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/")
                         .permitAll()
                 )
                 .csrf(csrf -> csrf.disable())
+                //.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .headers(headers -> headers
                         .frameOptions(frameOptions -> frameOptions.sameOrigin())
                 );
