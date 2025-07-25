@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.kepler";
+option java_outer_classname = "SignalProto";
+
+service MessageTransfer {
+    rpc SendSignal(SignalRequest) returns (SignalResponse) {}
+}
+
+message SignalRequest {
+    int32 id = 1;
+}
+
+message SignalResponse {
+    int32 id = 1;
+    string title = 2;
+    string timestamp = 3;
+    double value = 4;
+}
