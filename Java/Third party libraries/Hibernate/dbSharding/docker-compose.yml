@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres1:
+    image: postgres:15
+    container_name: postgres_shard_1
+    environment:
+      POSTGRES_DB: shard1
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5433:5432"
+
+  postgres2:
+    image: postgres:15
+    container_name: postgres_shard_2
+    environment:
+      POSTGRES_DB: shard2
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5434:5432"
+
+  postgres3:
+    image: postgres:15
+    container_name: postgres_shard_3
+    environment:
+      POSTGRES_DB: shard3
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5435:5432"
