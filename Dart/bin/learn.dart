@@ -1,7 +1,9 @@
 import 'package:learn/data_types.dart';
-
+import 'package:learn/operators.dart';
 
 void main(List<String> arguments) {
+  print("------------------------- Data types -------------------------");
+
   print("================ Numbers ================");
   learnNumbers();
   print("================ Strings ================");
@@ -26,4 +28,11 @@ void main(List<String> arguments) {
   learnDynamicVsObject();
   // print("================ Чтение данных с клавиатуры ================");
   // learnKeyboardRead();
+
+  print("------------------------- Operators -------------------------");
+
+  print("================ Что такое Pattern Matching и Destructuring ================");
+  learnPatternMatchingDestructuring();
+  print("================ Управление потоком выполнения кода ================");
+  learnBasicConstructions();
 }
