@@ -1,0 +1,6 @@
+train: dataset_l2/images/train
+val: dataset_l2/images/val
+
+names:
+  0: "Lienrik Lad"
+  1: "Lienrik"
