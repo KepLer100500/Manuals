@@ -1610,3 +1610,26 @@ Table: flag
 
 spbctf{jackdaws love my big sphinx of quartz}
 
+73) https://burp.2537ly.space/task2/
+
+https://www.dcode.fr/jsfuck-language
+
+...
+[+!+[]]+(+[![]]+[]
+...
+
+->
+
+const key = eval(1 + 2 + 3 + 4 + 5 - 2);
+
+key = 13
+
+---
+
+atob - ASCII to binary
+
+atob("WWhhYS1vYXdlLXllbHkteWVoLX5obn9oeS1maHQteWIteGNhYm5mLXllaC17bHhheS1kfi1eXW9OWUt2ZGN5aH9uaH15Untobnlif1JhYm5maGlw").split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ 13)).join('')
+
+->
+
+SPbCTF{intercept_vector_locked}
