@@ -1,0 +1,42 @@
+### On Codespaces ###
+
+sudo apt update
+sudo apt install -y dante-server
+sudo rm /etc/danted.conf; sudo nano /etc/danted.conf
+
+    logoutput: syslog
+    user.privileged: root
+    user.unprivileged: nobody
+
+    # The listening network interface or address.
+    internal: 0.0.0.0 port=1080
+
+    # The proxying network interface or address.
+    external: eth0
+
+    # socks-rules determine what is proxied through the external interface.
+    socksmethod: username
+
+    # client-rules determine who can connect to the internal interface.
+    clientmethod: none
+
+    client pass {
+        from: 0.0.0.0/0 to: 0.0.0.0/0
+    }
+
+    socks pass {
+        from: 0.0.0.0/0 to: 0.0.0.0/0
+    }
+
+sudo service danted restart
+sudo service danted status
+
+### On client ###
+
+gh codespace list
+gh codespace ssh -c silver-invention-71p51wr5rjq12p3g7 -- -D 1080 -N -o ServerAliveInterval=30 
+
+FoxyProxy config
+	127.0.0.1
+	1080
+	SOCKS5
